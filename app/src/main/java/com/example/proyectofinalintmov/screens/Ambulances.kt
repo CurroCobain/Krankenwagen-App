@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.barralateral.BarraLateral
-// import com.example.myapplication.bienvenida.Bienvenida
-// import com.example.myapplication.model.Routes
+import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.model.Routes
 
 @Composable
@@ -53,7 +52,7 @@ fun Ambulances(navController: NavHostController){
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth())
         {
-            // Bienvenida(bienvenidoADrHouseTextContent = "Bienvenido Dr House")
+            Bienvenida(bienvenidoADrHouseTextContent = "Bienvenido Dr House")
         }
     }
 }

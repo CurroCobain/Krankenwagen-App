@@ -17,8 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.barralateral.BarraLateral
-// import com.example.myapplication.bienvenida.Bienvenida
-// import com.example.myapplication.model.Routes
+import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.model.Routes
 
 @Composable
@@ -37,7 +36,7 @@ fun WelcomePage(navController: NavHostController){
         )
         {
             Text(
-                text = "Ambul",
+                text = "Inicio",
                 color = Color.Black,
                 fontSize = 30.sp,
                 modifier = Modifier.background(Color.White)
@@ -52,7 +51,7 @@ fun WelcomePage(navController: NavHostController){
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth())
         {
-            // Bienvenida(bienvenidoADrHouseTextContent = "Bienvenido Dr House")
+            Bienvenida(bienvenidoADrHouseTextContent = "Bienvenido Dr House")
         }
     }
 }
