@@ -1,0 +1,169 @@
+{
+  "name": "barra_lateral",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "pWXI4Vcqx2jEuM5dYJzrT7",
+    "node": "20:1551",
+    "version": "5154329467",
+    "component-id": "162df3c627a86eb093ed01068796a8174da97c9a"
+  },
+  "default": "Barra Lateral",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "vector",
+        "id": "Welc"
+      },
+      {
+        "type": "vector",
+        "id": "Hosp"
+      },
+      {
+        "type": "vector",
+        "id": "Amb"
+      },
+      {
+        "type": "vector",
+        "id": "doc"
+      }
+    ],
+    "modes": {
+      "Barra Lateral": {
+        "rules": [
+          {
+            "id": "top_level",
+            "padding": {
+              "left": "22.0",
+              "top": "80.0",
+              "right": "22.0",
+              "bottom": "80.0"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "main-axis-align": "start",
+            "children": [
+              "Welc",
+              "Hosp",
+              "Amb",
+              "doc"
+            ],
+            "item-spacing": "89.0",
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "111.42857142857143",
+              "saturation": "0.4628099173553719",
+              "value": "0.4745098039215686"
+            },
+            "clip-content": "false"
+          },
+          {
+            "id": "Welc",
+            "tap-handler": "$on Welc tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "100.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "88.89645385742188"
+              }
+            },
+            "vector-content": "welc.svg"
+          },
+          {
+            "id": "Hosp",
+            "tap-handler": "$on Hosp tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "100.0002670288086"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              }
+            },
+            "vector-content": "hosp.svg"
+          },
+          {
+            "id": "Amb",
+            "tap-handler": "$on Amb tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "100.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              }
+            },
+            "vector-content": "amb.svg"
+          },
+          {
+            "id": "doc",
+            "tap-handler": "$on doc tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "100.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "114.28571319580078"
+              }
+            },
+            "vector-content": "doc.svg"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on Welc tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Hosp tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Amb tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on doc tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Barra Lateral",
+      "size": {
+        "width": 144.00027465820312,
+        "height": 790.1821899414062
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
