@@ -1,0 +1,73 @@
+{
+  "name": "user",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "pWXI4Vcqx2jEuM5dYJzrT7",
+    "node": "12:891",
+    "version": "5162141145",
+    "component-id": "dd0655e1326d2944d7550fdd2b2dbc8c2be83f12"
+  },
+  "default": "User",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "vector",
+        "id": "Vector"
+      }
+    ],
+    "modes": {
+      "User": {
+        "rules": [
+          {
+            "id": "top_level",
+            "tap-handler": "$on User tapped",
+            "is-structured": "false",
+            "children": [
+              "Vector"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "vector.svg"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on User tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "User",
+      "size": {
+        "width": 80.0,
+        "height": 80.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

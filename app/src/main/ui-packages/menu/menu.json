@@ -1,0 +1,122 @@
+{
+  "name": "menu",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "pWXI4Vcqx2jEuM5dYJzrT7",
+    "node": "12:890",
+    "version": "5162182311",
+    "component-id": "e52be53d2459e19dc5177e3415a8cb9b79c396b6"
+  },
+  "default": "Menu",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "top_level_synth"
+      },
+      {
+        "type": "vector",
+        "id": "Vector"
+      },
+      {
+        "type": "vector",
+        "id": "Vector1"
+      }
+    ],
+    "modes": {
+      "Menu": {
+        "rules": [
+          {
+            "id": "top_level",
+            "tap-handler": "$on Menu tapped",
+            "is-structured": "false",
+            "children": [
+              "top_level_synth",
+              "Vector"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "top_level_synth",
+            "opacity": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "end",
+            "cross-axis-align": "start",
+            "children": [
+              "Vector1"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Vector",
+            "margin": {
+              "left": "20.0",
+              "top": "19.9320068359375",
+              "right": "20.0",
+              "bottom": "19.931991577148438"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "vector.svg"
+          },
+          {
+            "id": "Vector1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              }
+            },
+            "vector-content": "vector1.svg"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on Menu tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Menu",
+      "size": {
+        "width": 80.0,
+        "height": 80.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

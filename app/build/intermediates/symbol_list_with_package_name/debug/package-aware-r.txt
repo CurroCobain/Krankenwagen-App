@@ -87,6 +87,8 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable menu_vector
+drawable menu_vector1
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -100,6 +102,17 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable scroll_provincias_image_1
+drawable scroll_provincias_image_10
+drawable scroll_provincias_image_2
+drawable scroll_provincias_image_5
+drawable scroll_provincias_image_6
+drawable scroll_provincias_image_7
+drawable scroll_provincias_image_8
+drawable scroll_provincias_image_9
+drawable sesion_vector
+drawable user_sesion_vector
+drawable user_vector
 font relay_inter_black
 font relay_inter_bold
 font relay_inter_extrabold

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-49:/values-de/values-de.xml",
+            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-3:/values-de/values-de.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Cobain\\.gradle\\caches\\transforms-3\\97b5f65a1b4ff7e43bfb8ef22d97431a\\transformed\\material3-1.1.1\\res\\values-de\\values-de.xml",
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\97b5f65a1b4ff7e43bfb8ef22d97431a\\transformed\\material3-1.1.1\\res\\values-de\\values-de.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,24 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Cobain\\.gradle\\caches\\transforms-3\\7e0de00efec8260dc761d11f7167e95b\\transformed\\core-1.12.0\\res\\values-de\\values-de.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,255,355,455,563,668,786",
-                        "endColumns": "97,101,99,99,107,104,117,100",
-                        "endOffsets": "148,250,350,450,558,663,781,882"
-                    },
-                    "to": {
-                        "startLines": "6,7,8,9,10,11,12,63",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "587,685,787,887,987,1095,1200,6486",
-                        "endColumns": "97,101,99,99,107,104,117,100",
-                        "endOffsets": "680,782,882,982,1090,1195,1313,6582"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Cobain\\.gradle\\caches\\transforms-3\\9b21db496183ed9a26b0a82211508182\\transformed\\ui-release\\res\\values-de\\values-de.xml",
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\9b21db496183ed9a26b0a82211508182\\transformed\\ui-release\\res\\values-de\\values-de.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -52,6 +35,23 @@
                         "startOffsets": "1318,1414,5157,5255,5431,5595,5680,5772,5861,5949,6014,6078,6159,6326,6684,6763,6829",
                         "endColumns": "95,87,97,99,86,84,91,88,87,64,63,80,83,74,78,65,119",
                         "endOffsets": "1409,1497,5250,5350,5513,5675,5767,5856,5944,6009,6073,6154,6238,6396,6758,6824,6944"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\7e0de00efec8260dc761d11f7167e95b\\transformed\\core-1.12.0\\res\\values-de\\values-de.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,255,355,455,563,668,786",
+                        "endColumns": "97,101,99,99,107,104,117,100",
+                        "endOffsets": "148,250,350,450,558,663,781,882"
+                    },
+                    "to": {
+                        "startLines": "6,7,8,9,10,11,12,63",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "587,685,787,887,987,1095,1200,6486",
+                        "endColumns": "97,101,99,99,107,104,117,100",
+                        "endOffsets": "680,782,882,982,1090,1195,1313,6582"
                     }
                 }
             ]

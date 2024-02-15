@@ -1,0 +1,860 @@
+{
+  "name": "scroll_provincias",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "pWXI4Vcqx2jEuM5dYJzrT7",
+    "node": "54:81",
+    "version": "5162112439",
+    "component-id": "be8d0d60f589fc068449da16a9dc1efd15c55f50"
+  },
+  "default": "Scroll provincias",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "Almería"
+      },
+      {
+        "type": "group",
+        "id": "Cádiz"
+      },
+      {
+        "type": "group",
+        "id": "Córdoba"
+      },
+      {
+        "type": "group",
+        "id": "Granada"
+      },
+      {
+        "type": "group",
+        "id": "Huelva"
+      },
+      {
+        "type": "group",
+        "id": "Jaen"
+      },
+      {
+        "type": "group",
+        "id": "Málaga"
+      },
+      {
+        "type": "group",
+        "id": "Sevilla"
+      },
+      {
+        "type": "image",
+        "id": "image 5"
+      },
+      {
+        "type": "text",
+        "id": "ALMERÍA"
+      },
+      {
+        "type": "image",
+        "id": "image 6"
+      },
+      {
+        "type": "text",
+        "id": "CÁDIZ"
+      },
+      {
+        "type": "image",
+        "id": "image 1"
+      },
+      {
+        "type": "text",
+        "id": "CÓRDOBA"
+      },
+      {
+        "type": "image",
+        "id": "image 7"
+      },
+      {
+        "type": "text",
+        "id": "GRANADA"
+      },
+      {
+        "type": "image",
+        "id": "image 8"
+      },
+      {
+        "type": "text",
+        "id": "HUELVA"
+      },
+      {
+        "type": "image",
+        "id": "image 9"
+      },
+      {
+        "type": "text",
+        "id": "JAEN"
+      },
+      {
+        "type": "image",
+        "id": "image 10"
+      },
+      {
+        "type": "text",
+        "id": "MÁLAGA"
+      },
+      {
+        "type": "image",
+        "id": "image 2"
+      },
+      {
+        "type": "text",
+        "id": "SEVILLA"
+      }
+    ],
+    "modes": {
+      "Scroll provincias": {
+        "rules": [
+          {
+            "id": "top_level",
+            "padding": {
+              "top": "26.0",
+              "bottom": "26.0"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Almería",
+              "Cádiz",
+              "Córdoba",
+              "Granada",
+              "Huelva",
+              "Jaen",
+              "Málaga",
+              "Sevilla"
+            ],
+            "item-spacing": "67.0"
+          },
+          {
+            "id": "Almería",
+            "tap-handler": "$on Almería tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 5",
+              "ALMERÍA"
+            ]
+          },
+          {
+            "id": "Cádiz",
+            "tap-handler": "$on Cádiz tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 6",
+              "CÁDIZ"
+            ]
+          },
+          {
+            "id": "Córdoba",
+            "tap-handler": "$on Córdoba tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 1",
+              "CÓRDOBA"
+            ]
+          },
+          {
+            "id": "Granada",
+            "tap-handler": "$on Granada tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 7",
+              "GRANADA"
+            ]
+          },
+          {
+            "id": "Huelva",
+            "tap-handler": "$on Huelva tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 8",
+              "HUELVA"
+            ]
+          },
+          {
+            "id": "Jaen",
+            "tap-handler": "$on Jaen tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 9",
+              "JAEN"
+            ]
+          },
+          {
+            "id": "Málaga",
+            "tap-handler": "$on Málaga tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 10",
+              "MÁLAGA"
+            ]
+          },
+          {
+            "id": "Sevilla",
+            "tap-handler": "$on Sevilla tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "437.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "image 2",
+              "SEVILLA"
+            ]
+          },
+          {
+            "id": "image 5",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-77.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "283.0"
+              }
+            },
+            "image-content": "image_5.png",
+            "scale": "cover"
+          },
+          {
+            "id": "ALMERÍA",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "ALMERÍA",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "image 6",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-87.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "262.0"
+              }
+            },
+            "image-content": "image_6.png",
+            "scale": "cover"
+          },
+          {
+            "id": "CÁDIZ",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "CÁDIZ",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "image 1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-72.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "293.0"
+              }
+            },
+            "image-content": "image_1.png",
+            "scale": "cover"
+          },
+          {
+            "id": "CÓRDOBA",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "CÓRDOBA",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "image 7",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "20.0"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-74.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "311.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "288.0"
+              }
+            },
+            "image-content": "image_7.png",
+            "scale": "cover"
+          },
+          {
+            "id": "GRANADA",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "GRANADA",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "image 8",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "6.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-73.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "284.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "291.0"
+              }
+            },
+            "image-content": "image_8.png",
+            "scale": "cover"
+          },
+          {
+            "id": "HUELVA",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "HUELVA",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "image 9",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "20.0"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-87.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "311.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "255.0"
+              }
+            },
+            "image-content": "image_9.png",
+            "scale": "cover"
+          },
+          {
+            "id": "JAEN",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "JAEN",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "image 10",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "39.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-87.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "350.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "243.0"
+              }
+            },
+            "image-content": "image_10.png",
+            "scale": "cover"
+          },
+          {
+            "id": "MÁLAGA",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "MÁLAGA",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          },
+          {
+            "id": "image 2",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "-87.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "271.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "262.0"
+              }
+            },
+            "image-content": "image_2.png",
+            "scale": "cover"
+          },
+          {
+            "id": "SEVILLA",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "141.5"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "248.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "154.0"
+              }
+            },
+            "font-weight": "600.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "SEVILLA",
+            "italic": "true",
+            "overflow": "visible",
+            "max-lines": "-1",
+            "text-align-vertical": "center",
+            "text-size": "48.0",
+            "line-height": "1.2102272510528564",
+            "typeface": "Inter"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on Almería tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Cádiz tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Córdoba tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Granada tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Huelva tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Jaen tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Málaga tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Sevilla tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Scroll provincias",
+      "size": {
+        "width": 2637.0,
+        "height": 489.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

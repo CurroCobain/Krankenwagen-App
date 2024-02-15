@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.model.Routes
+import com.example.proyectofinalintmov.usersesion.UserSesion
 
 @Composable
 fun Ambulances(navController: NavHostController){
@@ -53,6 +55,13 @@ fun Ambulances(navController: NavHostController){
             modifier = Modifier.fillMaxWidth())
         {
             Bienvenida(bienvenidoADrHouseTextContent = "Bienvenido Dr House")
+            Column( verticalArrangement = Arrangement.Bottom,
+                modifier = Modifier.align(Alignment.End))
+            {
+                UserSesion(modifier = Modifier
+                    .padding(end = 10.dp, bottom = 10.dp)
+                    .fillMaxHeight())
+            }
         }
     }
 }
