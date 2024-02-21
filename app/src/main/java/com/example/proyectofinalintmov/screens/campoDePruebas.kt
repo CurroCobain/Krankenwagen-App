@@ -134,4 +134,22 @@ Scaffold(topBar = {
     })
  */
 
+
+
+sealed class Iterms_menu_lateral (
+    val icon : ImageVector,
+    val tittle: String,
+    val route: String
+){
+    object Item_menu: Iterms_menu_lateral(
+        Icons.Outlined.Menu,
+        "abrir menú",
+        Routes.PantallaWelcome.route
+    )
+    object Item_sesion: Iterms_menu_lateral(
+        Icons.Outlined.Person,
+        "sesión usuario",
+        Routes.PantallaWelcome.route
+    )
+}
  */

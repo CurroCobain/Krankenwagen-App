@@ -83,6 +83,7 @@ drawable barra_menu_usuario_a
 drawable barra_menu_usuario_b
 drawable barra_menu_usuario_rayas
 drawable barra_menu_usuario_vector
+drawable botoncito_rectangle_1
 drawable fondo
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -92,6 +93,8 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable icon_menu_a
+drawable icon_menu_b
 drawable menu_a
 drawable menu_b
 drawable notification_action_background
@@ -284,6 +287,7 @@ string dropdown_menu
 string expanded
 string in_progress
 string indeterminate
+string iniciar_sesi_n
 string m3c_bottom_sheet_pane_title
 string navigation_menu
 string not_selected

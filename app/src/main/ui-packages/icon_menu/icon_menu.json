@@ -1,0 +1,122 @@
+{
+  "name": "icon_menu",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "pWXI4Vcqx2jEuM5dYJzrT7",
+    "node": "12:890",
+    "version": "5197213486",
+    "component-id": "e52be53d2459e19dc5177e3415a8cb9b79c396b6"
+  },
+  "default": "IconMenu",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "top_level_synth"
+      },
+      {
+        "type": "vector",
+        "id": "b"
+      },
+      {
+        "type": "vector",
+        "id": "a"
+      }
+    ],
+    "modes": {
+      "IconMenu": {
+        "rules": [
+          {
+            "id": "top_level",
+            "tap-handler": "$on Menu tapped",
+            "is-structured": "false",
+            "children": [
+              "top_level_synth",
+              "b"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "top_level_synth",
+            "opacity": "100.0",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "main-axis-align": "end",
+            "cross-axis-align": "start",
+            "children": [
+              "a"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "b",
+            "margin": {
+              "left": "20.0",
+              "top": "19.9320068359375",
+              "right": "20.0",
+              "bottom": "19.931991577148438"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "b.svg"
+          },
+          {
+            "id": "a",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              }
+            },
+            "vector-content": "a.svg"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on Menu tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "IconMenu",
+      "size": {
+        "width": 80.0,
+        "height": 80.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

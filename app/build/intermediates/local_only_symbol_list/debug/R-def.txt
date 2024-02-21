@@ -15,9 +15,12 @@ drawable barra_menu_usuario_a
 drawable barra_menu_usuario_b
 drawable barra_menu_usuario_rayas
 drawable barra_menu_usuario_vector
+drawable botoncito_rectangle_1
 drawable fondo
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable icon_menu_a
+drawable icon_menu_b
 drawable menu_a
 drawable menu_b
 drawable scroll_provincias_image_1
@@ -46,6 +49,7 @@ string app_name
 string bienvenido
 string bienvenido_dr_house
 string confirmar
+string iniciar_sesi_n
 string welcome
 style Theme.ProyectoFinalIntMov
 xml backup_rules

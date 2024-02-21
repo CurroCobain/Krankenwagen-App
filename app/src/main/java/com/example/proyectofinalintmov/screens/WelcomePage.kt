@@ -1,26 +1,22 @@
 package com.example.proyectofinalintmov.screens
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.DrawerState
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,25 +30,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
-import com.example.proyectofinalintmov.barramenuusuario.BarraMenuUsuario
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
-import com.example.proyectofinalintmov.model.Iterms_menu_lateral
+import com.example.proyectofinalintmov.iconmenu.IconMenu
 import com.example.proyectofinalintmov.model.Routes
 import com.example.proyectofinalintmov.scrollprovincias.ScrollProvincias
+import com.example.proyectofinalintmov.sesion.Sesion
 import com.example.proyectofinalintmov.viewModels.WelcomePageViewModel
 
 @SuppressLint("RememberReturnType", "UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun WelcomePage(
-    navController: NavHostController, viewModel: WelcomePageViewModel
+    navController: NavHostController,
+    viewModel: WelcomePageViewModel,
+    showMenu: Boolean,
+    userRegistered: Boolean
 ) {
-    val showMenu by viewModel.showMenu.collectAsState()
-    val userRegistered by viewModel.userRegistererd.collectAsState()
+
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
@@ -69,15 +65,7 @@ fun WelcomePage(
             viewModel = viewModel
         )
     }, bottomBar = {
-        Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            BarraMenuUsuario(modifier = Modifier.padding(start = 100.dp),
-                onMenuTapped = {
-                viewModel.openMenu()
-            }, onSesionTapped = { viewModel.openSesion()
-            })
-        }
+        BarraMenu(viewModel = viewModel)
     })
 
 }
@@ -100,7 +88,8 @@ fun ContenidoWelcome(
             modifier = Modifier.fillMaxSize()
         )
         Row(modifier = Modifier.fillMaxSize()) {
-            BarraLateral(onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
+            BarraLateral(
+                onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
                 onAmbTapped = { navController.navigate(Routes.PantallaAmbulances.route) },
                 onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
@@ -111,17 +100,17 @@ fun ContenidoWelcome(
                     .padding(top = 100.dp)
             )
         }
-        if(menuDesplegado){
-            Menu(viewModel = viewModel)
+        if (menuDesplegado) {
+            DialogMenu(viewModel = viewModel)
         }
-        if(userDesplegado){
-            Sesion(viewModel = viewModel)
+        if (userDesplegado) {
+            DialogSesion(viewModel = viewModel)
         }
     }
 }
 
 @Composable
-fun Menu(viewModel: WelcomePageViewModel){
+fun DialogMenu(viewModel: WelcomePageViewModel) {
     Dialog(
         onDismissRequest = { viewModel.closeMenu() },
         content = {
@@ -138,10 +127,11 @@ fun Menu(viewModel: WelcomePageViewModel){
             }
         }
     )
+
 }
 
 @Composable
-fun Sesion(viewModel: WelcomePageViewModel){
+fun DialogSesion(viewModel: WelcomePageViewModel) {
     Dialog(
         onDismissRequest = { viewModel.closeSesion() },
         content = {
@@ -158,6 +148,30 @@ fun Sesion(viewModel: WelcomePageViewModel){
             }
         }
     )
+}
+
+@Composable
+fun BarraMenu(viewModel: WelcomePageViewModel) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 10.dp)
+    ) {
+        Spacer(modifier = Modifier.padding(start = 160.dp))
+        IconMenu(
+            modifier = Modifier
+                .width(80.dp)
+                .height(80.dp),
+            onMenuTapped = { viewModel.openMenu() }
+        )
+        Spacer(modifier = Modifier.fillMaxWidth(0.9f))
+        Sesion(
+            modifier = Modifier
+                .width(80.dp)
+                .height(80.dp)
+                .padding(end = 10.dp),
+            onSesionTapped = { viewModel.openSesion() })
+    }
 }
 
 
