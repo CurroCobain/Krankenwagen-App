@@ -79,8 +79,6 @@ drawable barra_lateral_amb
 drawable barra_lateral_doc
 drawable barra_lateral_hosp
 drawable barra_lateral_welc
-drawable barra_menu_usuario_a
-drawable barra_menu_usuario_b
 drawable barra_menu_usuario_rayas
 drawable barra_menu_usuario_vector
 drawable botoncito_rectangle_1
