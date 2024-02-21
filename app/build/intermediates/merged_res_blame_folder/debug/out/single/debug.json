@@ -8,10 +8,6 @@
         "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/barra_lateral_amb.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_menu_vector1.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/menu_vector1.xml"
-    },
-    {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "com.example.proyectofinalintmov.app-main-7:/mipmap-xhdpi/ic_launcher.webp"
     },
@@ -36,8 +32,8 @@
         "source": "com.example.proyectofinalintmov.app-main-7:/mipmap-hdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_menu_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/menu_vector.xml"
+        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_barra_menu_usuario_b.xml.flat",
+        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/barra_menu_usuario_b.xml"
     },
     {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
@@ -46,6 +42,10 @@
     {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_scroll_provincias_image_9.png.flat",
         "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/scroll_provincias_image_9.png"
+    },
+    {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_menu_b.xml.flat",
+        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/menu_b.xml"
     },
     {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/font_relay_inter_semibold.ttf.flat",
@@ -80,6 +80,10 @@
         "source": "com.example.proyectofinalintmov.app-main-7:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable_fondo.png.flat",
+        "source": "com.example.proyectofinalintmov.app-main-7:/drawable/fondo.png"
+    },
+    {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/font_relay_inter_black.ttf.flat",
         "source": "com.example.proyectofinalintmov.app-relay-1:/font/relay_inter_black.ttf"
     },
@@ -112,6 +116,10 @@
         "source": "com.example.proyectofinalintmov.app-main-7:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_barra_menu_usuario_a.xml.flat",
+        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/barra_menu_usuario_a.xml"
+    },
+    {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/font_relay_inter_extralight.ttf.flat",
         "source": "com.example.proyectofinalintmov.app-relay-1:/font/relay_inter_extralight.ttf"
     },
@@ -126,6 +134,10 @@
     {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_user_vector.xml.flat",
         "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/user_vector.xml"
+    },
+    {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_barra_menu_usuario_rayas.xml.flat",
+        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/barra_menu_usuario_rayas.xml"
     },
     {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/mipmap-xxhdpi_ic_launcher.webp.flat",
@@ -144,6 +156,10 @@
         "source": "com.example.proyectofinalintmov.app-main-7:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_menu_a.xml.flat",
+        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/menu_a.xml"
+    },
+    {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_user_sesion_vector.xml.flat",
         "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/user_sesion_vector.xml"
     },
@@ -154,6 +170,10 @@
     {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/font_relay_inter_bold.ttf.flat",
         "source": "com.example.proyectofinalintmov.app-relay-1:/font/relay_inter_bold.ttf"
+    },
+    {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_barra_menu_usuario_vector.xml.flat",
+        "source": "com.example.proyectofinalintmov.app-relay-1:/drawable-nodpi/barra_menu_usuario_vector.xml"
     },
     {
         "merged": "com.example.proyectofinalintmov.app-merged_res-5:/drawable-nodpi_scroll_provincias_image_7.png.flat",

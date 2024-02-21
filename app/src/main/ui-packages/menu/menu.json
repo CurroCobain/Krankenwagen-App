@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
     "node": "12:890",
-    "version": "5162182311",
+    "version": "5190186219",
     "component-id": "e52be53d2459e19dc5177e3415a8cb9b79c396b6"
   },
   "default": "Menu",
@@ -22,11 +22,11 @@
       },
       {
         "type": "vector",
-        "id": "Vector"
+        "id": "b"
       },
       {
         "type": "vector",
-        "id": "Vector1"
+        "id": "a"
       }
     ],
     "modes": {
@@ -38,7 +38,7 @@
             "is-structured": "false",
             "children": [
               "top_level_synth",
-              "Vector"
+              "b"
             ],
             "clip-content": "false"
           },
@@ -57,13 +57,13 @@
             "main-axis-align": "end",
             "cross-axis-align": "start",
             "children": [
-              "Vector1"
+              "a"
             ],
             "item-spacing": "10.0",
             "clip-content": "false"
           },
           {
-            "id": "Vector",
+            "id": "b",
             "margin": {
               "left": "20.0",
               "top": "19.9320068359375",
@@ -80,10 +80,10 @@
                 "value": "1.0"
               }
             },
-            "vector-content": "vector.svg"
+            "vector-content": "b.svg"
           },
           {
-            "id": "Vector1",
+            "id": "a",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -94,7 +94,7 @@
                 "value": "80.0"
               }
             },
-            "vector-content": "vector1.svg"
+            "vector-content": "a.svg"
           }
         ]
       }

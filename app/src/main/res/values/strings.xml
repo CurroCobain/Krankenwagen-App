@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ProyectoFinalIntMov</string>
+    <string name="bienvenido">Bienvenido Dr House</string>
+    <string name="welcome">Welcome Dr House</string>
+    <string name="bienvenido_dr_house">Bienvenido Dr House</string>
+    <string name="confirmar">confirmar</string>
+
 </resources>

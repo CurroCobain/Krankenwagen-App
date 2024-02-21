@@ -79,6 +79,11 @@ drawable barra_lateral_amb
 drawable barra_lateral_doc
 drawable barra_lateral_hosp
 drawable barra_lateral_welc
+drawable barra_menu_usuario_a
+drawable barra_menu_usuario_b
+drawable barra_menu_usuario_rayas
+drawable barra_menu_usuario_vector
+drawable fondo
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
@@ -87,8 +92,8 @@ drawable ic_call_decline
 drawable ic_call_decline_low
 drawable ic_launcher_background
 drawable ic_launcher_foreground
-drawable menu_vector
-drawable menu_vector1
+drawable menu_a
+drawable menu_b
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -224,6 +229,8 @@ mipmap ic_launcher
 mipmap ic_launcher_round
 string androidx_startup
 string app_name
+string bienvenido
+string bienvenido_dr_house
 string bottom_sheet_collapse_description
 string bottom_sheet_dismiss_description
 string bottom_sheet_drag_handle_description
@@ -238,6 +245,7 @@ string call_notification_screening_text
 string close_drawer
 string close_sheet
 string collapsed
+string confirmar
 string date_input_headline
 string date_input_headline_description
 string date_input_invalid_for_pattern
@@ -305,6 +313,7 @@ string time_picker_period_toggle_description
 string time_picker_pm
 string tooltip_long_press_label
 string tooltip_pane_description
+string welcome
 style DialogWindowTheme
 style FloatingDialogTheme
 style FloatingDialogWindowTheme

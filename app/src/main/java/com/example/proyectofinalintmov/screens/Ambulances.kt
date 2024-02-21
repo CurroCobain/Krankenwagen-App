@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.model.Routes
@@ -54,7 +56,7 @@ fun Ambulances(navController: NavHostController){
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth())
         {
-            Bienvenida(bienvenidoADrHouseTextContent = "Bienvenido Dr House")
+            Bienvenida(bienvenidoADrHouseTextContent = stringResource(R.string.welcome))
             Column( verticalArrangement = Arrangement.Bottom,
                 modifier = Modifier.align(Alignment.End))
             {

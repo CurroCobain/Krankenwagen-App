@@ -8,5 +8,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">ProyectoFinalIntMov</string>
+    <string name="bienvenido">Bienvenido Dr House</string>
+    <string name="bienvenido_dr_house">Bienvenido Dr House</string>
+    <string name="confirmar">confirmar</string>
+    <string name="welcome">Welcome Dr House</string>
     <style name="Theme.ProyectoFinalIntMov" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

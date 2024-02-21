@@ -1,0 +1,168 @@
+{
+  "name": "barra_menu_usuario",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "pWXI4Vcqx2jEuM5dYJzrT7",
+    "node": "70:105",
+    "version": "5190307636",
+    "component-id": "e2dec6fdd021c8ee2b538b6521e87e3a9a367cdb"
+  },
+  "default": "BarraMenuUsuario",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "group",
+        "id": "menu"
+      },
+      {
+        "type": "adin_component",
+        "id": "Sesion",
+        "key": "sesion"
+      },
+      {
+        "type": "group",
+        "id": "Group"
+      },
+      {
+        "type": "vector",
+        "id": "Vector"
+      },
+      {
+        "type": "vector",
+        "id": "rayas"
+      }
+    ],
+    "modes": {
+      "BarraMenuUsuario": {
+        "rules": [
+          {
+            "id": "top_level",
+            "padding": {
+              "left": "56.0",
+              "top": "12.0",
+              "right": "56.0",
+              "bottom": "12.0"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "cross-axis-align": "start",
+            "children": [
+              "menu",
+              "Sesion"
+            ],
+            "item-spacing": "778.0"
+          },
+          {
+            "id": "menu",
+            "tap-handler": "$on menu tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "80.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "Group"
+            ]
+          },
+          {
+            "id": "Sesion",
+            "tap-handler": "$on Sesion tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            }
+          },
+          {
+            "id": "Group",
+            "is-structured": "false",
+            "children": [
+              "Vector",
+              "rayas"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            }
+          },
+          {
+            "id": "rayas",
+            "margin": {
+              "left": "8.333328247070312",
+              "top": "11.66668701171875",
+              "right": "8.33333969116211",
+              "bottom": "11.666645050048828"
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "proportional",
+                "value": "1.0"
+              }
+            },
+            "vector-content": "rayas.svg"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on menu tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Sesion tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "BarraMenuUsuario",
+      "size": {
+        "width": 1050.0,
+        "height": 104.0
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

@@ -36,9 +36,9 @@ fun Menu(
         modifier = modifier
     ) {
         TopLevelSynth {
-            Vector1()
+            A()
         }
-        Vector(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f))
+        B(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f))
     }
 }
 
@@ -56,9 +56,9 @@ private fun MenuPreview() {
 }
 
 @Composable
-fun Vector1(modifier: Modifier = Modifier) {
+fun A(modifier: Modifier = Modifier) {
     RelayVector(
-        vector = painterResource(R.drawable.menu_vector1),
+        vector = painterResource(R.drawable.menu_a),
         modifier = modifier.requiredWidth(80.0.dp).requiredHeight(80.0.dp)
     )
 }
@@ -80,9 +80,9 @@ fun TopLevelSynth(
 }
 
 @Composable
-fun Vector(modifier: Modifier = Modifier) {
+fun B(modifier: Modifier = Modifier) {
     RelayVector(
-        vector = painterResource(R.drawable.menu_vector),
+        vector = painterResource(R.drawable.menu_b),
         modifier = modifier.padding(
             paddingValues = PaddingValues(
                 start = 20.0.dp,
