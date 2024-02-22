@@ -1,0 +1,89 @@
+{
+  "name": "arrow_back",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "pWXI4Vcqx2jEuM5dYJzrT7",
+    "node": "99:797",
+    "version": "5198619203",
+    "component-id": "00a9c9d0a42e89c605fe43cc2afe18012e349392"
+  },
+  "default": "arrowBack",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "vector",
+        "id": "Vector"
+      }
+    ],
+    "modes": {
+      "arrowBack": {
+        "rules": [
+          {
+            "id": "top_level",
+            "padding": {
+              "left": "9.0",
+              "top": "8.0",
+              "right": "9.0",
+              "bottom": "8.0"
+            },
+            "tap-handler": "$on arrowBack tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "main-axis-align": "end",
+            "cross-axis-align": "end",
+            "children": [
+              "Vector"
+            ],
+            "item-spacing": "10.0",
+            "clip-content": "false"
+          },
+          {
+            "id": "Vector",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "61.37999725341797"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "59.02333450317383"
+              }
+            },
+            "vector-content": "vector.svg"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on arrowBack tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "arrowBack",
+      "size": {
+        "width": 79.37999725341797,
+        "height": 75.02333068847656
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}

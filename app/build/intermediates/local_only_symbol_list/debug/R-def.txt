@@ -7,6 +7,7 @@ color purple_700
 color teal_200
 color teal_700
 color white
+drawable arrow_back_vector
 drawable barra_lateral_amb
 drawable barra_lateral_doc
 drawable barra_lateral_hosp
@@ -47,6 +48,7 @@ string app_name
 string bienvenido
 string bienvenido_dr_house
 string confirmar
+string elija_el_idioma_de_la_app
 string iniciar_sesi_n
 string welcome
 style Theme.ProyectoFinalIntMov

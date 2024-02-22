@@ -10,12 +10,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.proyectofinalintmov.navigation.NavManager
 import com.example.proyectofinalintmov.ui.theme.ProyectoFinalIntMovTheme
-import com.example.proyectofinalintmov.viewModels.WelcomePageViewModel
+import com.example.proyectofinalintmov.viewModels.KrankenwagenViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel : WelcomePageViewModel by viewModels()
+        val viewModel : KrankenwagenViewModel by viewModels()
         setContent {
             ProyectoFinalIntMovTheme {
                 // A surface container using the 'background' color from the theme

@@ -75,6 +75,7 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+drawable arrow_back_vector
 drawable barra_lateral_amb
 drawable barra_lateral_doc
 drawable barra_lateral_hosp
@@ -282,6 +283,7 @@ string default_error_message
 string default_popup_window_title
 string dialog
 string dropdown_menu
+string elija_el_idioma_de_la_app
 string expanded
 string in_progress
 string indeterminate

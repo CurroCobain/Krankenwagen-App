@@ -11,17 +11,24 @@ import com.example.proyectofinalintmov.screens.Ambulances
 import com.example.proyectofinalintmov.screens.Clinics
 import com.example.proyectofinalintmov.screens.Hospitals
 import com.example.proyectofinalintmov.screens.WelcomePage
-import com.example.proyectofinalintmov.viewModels.WelcomePageViewModel
+import com.example.proyectofinalintmov.viewModels.KrankenwagenViewModel
 
+/**
+ * Gestiona la navegación dentro de la aplicación.
+ * @param viewModel El ViewModel de la página de bienvenida.
+ */
 @Composable
-fun NavManager(viewModel: WelcomePageViewModel) {
+fun NavManager(viewModel: KrankenwagenViewModel) {
     val navController = rememberNavController()
     val showMenu by viewModel.showMenu.collectAsState()
     val userRegistered by viewModel.userRegistererd.collectAsState()
+
+    // Configuración del sistema de navegación
     NavHost(
-    navController = navController,
-    startDestination = Routes.PantallaWelcome.route
+        navController = navController,
+        startDestination = Routes.PantallaWelcome.route
     ) {
+        // Definición de las diferentes pantallas y sus rutas
         composable(Routes.PantallaWelcome.route) { WelcomePage(navController, viewModel, showMenu,userRegistered) }
         composable(Routes.PantallaAmbulances.route) { Ambulances(navController, viewModel, showMenu, userRegistered) }
         composable(Routes.PantallaHospitals.route) { Hospitals(navController, viewModel, showMenu,userRegistered) }
