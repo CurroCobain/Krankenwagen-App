@@ -23,7 +23,7 @@ import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.model.Routes
 import com.example.proyectofinalintmov.viewModels.KrankenwagenViewModel
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
 fun Ambulances(
     navController: NavHostController,
@@ -38,7 +38,7 @@ fun Ambulances(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Bienvenida(
-                bienvenidoADrHouseTextContent = stringResource(R.string.bienvenido_dr_house)
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr ${viewModel.nombreDoc.value}"
             )
         }
     }, content = {

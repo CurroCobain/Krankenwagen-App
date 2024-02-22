@@ -14,7 +14,7 @@ enum class AmbulanceTypes { doctor, nurse, driver }
 data class Ambulance(
     val id: String,
     val plate: String,
-    val isFree: Boolean,
-    val types: AmbulanceTypes
+    var isFree: Boolean,
+    var types: AmbulanceTypes
 )
 

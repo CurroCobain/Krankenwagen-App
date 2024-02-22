@@ -7,7 +7,7 @@ package com.example.proyectofinalintmov.data
  * @param email almacena el email del usuario
  */
 data class User (
-    val name: String,
-    val password: String,
+    var name: String,
+    var password: String,
     val email: String,
 )

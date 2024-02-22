@@ -48,18 +48,20 @@ fun DialogMenu(viewModel: KrankenwagenViewModel) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.2f),
+                    .fillMaxHeight(0.2f)
+                    .padding(top = 10.dp),
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.Center
             )
-            {
-                Text(text = stringResource(R.string.elija_el_idioma_de_la_app))
+            {// ------------------------- Texto menú  -------------------------
+                Text(text = "Menú")
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.3f),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                    .fillMaxHeight(0.3f)
+                    .padding(top = 10.dp),
+                horizontalArrangement = Arrangement.Center
             )
             {
                 Button(
@@ -68,16 +70,30 @@ fun DialogMenu(viewModel: KrankenwagenViewModel) {
                 ) {
                     Text(text = "Salir")
                 }
+            }
+            Spacer(modifier = Modifier.padding(10.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.3f),
+                horizontalArrangement = Arrangement.Center
+            )
+            {
                 Button(
-                    onClick = { viewModel.closeMenu() },
+                    onClick = {
+                        viewModel.closeMenu()
+                        viewModel.cambiaNombre("")
+                        viewModel.openSesion()
+                    },
                     colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                 ) {
-                    Text(text = "Volver")
+                    Text(text = "Cerrar sesión")
                 }
             }
         }
     }
 }
+
 
 /**
  * Composable que muestra un diálogo de sesión de usuario.
@@ -89,72 +105,179 @@ fun DialogMenu(viewModel: KrankenwagenViewModel) {
 fun DialogSesion(
     viewModel: KrankenwagenViewModel
 ) {
-    val nombreDoc = remember { mutableStateOf("")}
-    var mailDoc = remember { mutableStateOf("")}
-    var passDoc = remember { mutableStateOf("")}
+    val nombreDoc = remember { mutableStateOf("") }
+    val mailDoc = remember { mutableStateOf("") }
+    val passDoc = remember { mutableStateOf("") }
+    var initOrReg = remember { mutableStateOf(false) }
     Dialog(
-        onDismissRequest = { viewModel.closeSesion() }) {
+        onDismissRequest = { viewModel.closeSesion() })
+    {   // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.5f),
+                .fillMaxHeight(0.6f),
             shape = RoundedCornerShape(10.dp),
         ) {
-            Column(modifier = Modifier.background(color = Color(225,241,222))
-                .fillMaxSize())
-            {
-                Spacer(modifier = Modifier.padding(20.dp))
-                Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+            // si la sesión no se ha iniciado aparece la opción de registrarse
+            if (!initOrReg.value) {
+                Column(
+                    modifier = Modifier
+                        .background(color = Color(225, 241, 222))
+                        .fillMaxSize()
+                )
                 {
-                    TextField(value = nombreDoc.value,
-                        onValueChange = {
-                                newValue ->
-                            nombreDoc.value = newValue
-                        },
-                        label = { Text(text = "Nombre")},
-                        modifier = Modifier.border(width = 2.dp,color = Color.Black ))
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-                Row(modifier = Modifier.align(Alignment.CenterHorizontally))
-                {
-                    TextField(value = mailDoc.value,
-                        onValueChange = {
-                                newValue ->
-                            mailDoc.value = newValue
-                        },
-                        label = { Text(text = "Mail")},
-                        modifier = Modifier.border(width = 2.dp,color = Color.Black ))
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-                Row(modifier = Modifier.align(Alignment.CenterHorizontally))
-                {
-                    TextField(value = passDoc.value,
-                        onValueChange = {
-                                newValue ->
-                            passDoc.value = newValue
-                        },
-                        label = { Text(text = "Password")},
-                        modifier = Modifier.border(width = 2.dp,color = Color.Black ))
-                }
-                Spacer(modifier = Modifier.padding(20.dp))
-                Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
-                    Button(onClick = {
-                        viewModel.cambiaNombre(nombreDoc.value)
-                        viewModel.cambiaMail(mailDoc.value)
-                        viewModel.cambiaPass(passDoc.value)
-                        viewModel.closeSesion() },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)))
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    // ---------------------- TextField nombre ---------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
-                        Text(text = stringResource(R.string.confirmar))
+                        TextField(
+                            value = nombreDoc.value,
+                            onValueChange = { newValue ->
+                                nombreDoc.value = newValue
+                            },
+                            label = { Text(text = "Nombre") },
+                            modifier = Modifier.border(width = 2.dp, color = Color.Black)
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    // ------------------------ TextField mail -----------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {
+                        TextField(
+                            value = mailDoc.value,
+                            onValueChange = { newValue ->
+                                mailDoc.value = newValue
+                            },
+                            label = { Text(text = "Mail") },
+                            modifier = Modifier.border(width = 2.dp, color = Color.Black)
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    // ------------------------ TextField password -----------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {
+                        TextField(
+                            value = passDoc.value,
+                            onValueChange = { newValue ->
+                                passDoc.value = newValue
+                            },
+                            label = { Text(text = "Password") },
+                            modifier = Modifier.border(width = 2.dp, color = Color.Black)
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    // --------------------------- Botón confirmar ---------------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                        Button(
+                            onClick = {
+                                viewModel.cambiaNombre(nombreDoc.value)
+                                viewModel.cambiaMail(mailDoc.value)
+                                viewModel.cambiaPass(passDoc.value)
+                                viewModel.closeSesion()
+                            },
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        )
+                        {
+                            Text(text = stringResource(R.string.confirmar))
+                        }
+                        Spacer(modifier = Modifier.padding(10.dp))
+                        // -------------------------- Botón volver ---------------------------------
+                        Button(
+                            onClick = { viewModel.closeSesion() },
+                            colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
+                        )
+                        {
+                            Text(text = "Volver")
+                        }
+                    }
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    // -------------------------------- Ir a inicio de sesión ----------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {
+                        Text(text = "Ya está registrado?")
+                    }
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {// ---------------------- Botón iniciar sesion ------------------------------
+                        Button(
+                            onClick = { initOrReg.value = true },
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        )
+                        {
+                            Text(text = "Iniciar sesión")
+                        }
+                    }
+                }
+            } else { // Si el usuario ya está registrado puede acceder a inicio de sesión
+                Column(
+                    modifier = Modifier
+                        .background(color = Color(225, 241, 222))
+                        .fillMaxSize()
+                )
+                {
+                    Spacer(modifier = Modifier.padding(40.dp))
+                    // ------------------------ TextField mail -----------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {
+                        TextField(
+                            value = mailDoc.value,
+                            onValueChange = { newValue ->
+                                mailDoc.value = newValue
+                            },
+                            label = { Text(text = "Mail") },
+                            modifier = Modifier.border(width = 2.dp, color = Color.Black)
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    // ------------------------ TextField password -----------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {
+                        TextField(
+                            value = passDoc.value,
+                            onValueChange = { newValue ->
+                                passDoc.value = newValue
+                            },
+                            label = { Text(text = "Password") },
+                            modifier = Modifier.border(width = 2.dp, color = Color.Black)
+                        )
                     }
                     Spacer(modifier = Modifier.padding(20.dp))
-                    Button(onClick = { viewModel.closeSesion() },
-                        colors = ButtonDefaults.buttonColors(Color(233, 85, 85)))
+                    // --------------------- Botón confirmar --------------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
-                        Text(text = "Volver")
+                        Button(
+                            onClick = {
+                                viewModel.cambiaMail(mailDoc.value)
+                                viewModel.cambiaPass(passDoc.value)
+                                viewModel.getUser()
+                                viewModel.closeSesion()
+                            },
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        )
+                        {
+                            Text(text = stringResource(R.string.confirmar))
+                        }
+                        Spacer(modifier = Modifier.padding(20.dp))
+                        // ------------------------ Botón volver a registro ------------------------
+                        Button(
+                            onClick = { initOrReg.value = false },
+                            colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
+                        )
+                        {
+                            Text(text = "Volver a registro")
+                        }
+                    }
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    // Mensaje que aparece si hay error al iniciar sesión --------------------------
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {
+                        Text(
+                            text = " Error al inicio de sesión",
+                            color = Color.Red
+                        )
                     }
                 }
             }
         }
     }
 }
+

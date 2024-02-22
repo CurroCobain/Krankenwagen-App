@@ -2,7 +2,12 @@ package com.example.proyectofinalintmov.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.example.proyectofinalintmov.data.Ambulance
+import com.example.proyectofinalintmov.data.Clinic
+import com.example.proyectofinalintmov.data.Hospital
+import com.example.proyectofinalintmov.data.User
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlin.system.exitProcess
 
 
@@ -23,13 +28,14 @@ class KrankenwagenViewModel: ViewModel() {
         private set
     // lista de ambulancias filtradas
     var listAmbulancias = MutableStateFlow(mutableListOf<Ambulance>())
-        private set
+
     // lista de centros filtrados
-    var listCentros = MutableStateFlow(mutableListOf<Ambulance>())
-        private set
+    var listCentros = MutableStateFlow(mutableListOf<Clinic>())
+
     // lista de hospitales filtrados
-    var listHospitals = MutableStateFlow(mutableListOf<Ambulance>())
-        private set
+    private val  _listHospitals = MutableStateFlow(mutableListOf<Hospital>())
+    val listHospitals: StateFlow<MutableList<Hospital>> = _listHospitals.asStateFlow()
+
     // Nombre del usuario actual
     var nombreDoc = MutableStateFlow("")
         private set
@@ -39,8 +45,16 @@ class KrankenwagenViewModel: ViewModel() {
     // correo del usuario actual
     var nuevoMail = MutableStateFlow("")
         private set
+    var editHosp = MutableStateFlow(false)
+
      fun filterBy(filter: String){
         // TODO: realizar filtro de recursos por provincia
+    }
+    fun getHosp():MutableList<Hospital>{
+        val newList : MutableList<Hospital> = mutableListOf()
+        listHospitals.value.add(Hospital("h2","hosp2","ccc", "ccc", mutableListOf<Ambulance>(),"calle2"))
+        newList.addAll(listHospitals.value)
+        return newList
     }
 
     /**
@@ -101,5 +115,18 @@ class KrankenwagenViewModel: ViewModel() {
      */
     fun cambiaMail(valor: String){
         nuevoMail.value = valor
+    }
+    fun activaEdit(){
+        editHosp.value = true
+    }
+
+    fun desactivaEdit(){
+        editHosp.value = false
+    }
+
+    // -------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!! completar esta función !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!------------------------------------
+    fun getUser(){
+        val user: User? = null
+        nombreDoc.value = user!!.name
     }
 }

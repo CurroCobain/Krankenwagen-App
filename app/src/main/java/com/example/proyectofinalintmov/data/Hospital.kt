@@ -11,9 +11,10 @@ package com.example.proyectofinalintmov.data
  */
 data class Hospital(
     val id: String,
-    val name: String,
+    var name: String,
     val county: String,
     val city: String,
-    val ambulances: MutableList<Ambulance>,
+    var ambulances: MutableList<Ambulance>,
     val address: String,
+
 )

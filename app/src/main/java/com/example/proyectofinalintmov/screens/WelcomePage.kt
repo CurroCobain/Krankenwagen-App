@@ -111,34 +111,42 @@ fun ContenidoWelcome(
                     .fillMaxWidth()
                     .horizontalScroll(rememberScrollState())
                     .padding(top = 100.dp),
+                // Filtrar por Almería
                 onAlmerATapped = {
                     viewModel.filterBy("Almeria")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
+                // Filtrar por Cádiz
                 onCDizTapped = {
                     viewModel.filterBy("Cadiz")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
+                // Filtrar por Córdoba
                 onCRdobaTapped = {
                     viewModel.filterBy("Cordoba")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
+                // Filtrar por Granada
                 onGranadaTapped = {
                     viewModel.filterBy("Granada")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
+                // Filtrar por Huelva
                 onHuelvaTapped = {
                     viewModel.filterBy("Huelva")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
+                // Filtrar por Jaen
                 onJaenTapped = {
                     viewModel.filterBy("Jaen")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
+                // Filtrar por Málaga
                 onMLagaTapped = {
                     viewModel.filterBy("Malaga")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
+                // Filtrar por Sevilla
                 onSevillaTapped = {
                     viewModel.filterBy("Sevilla")
                     navController.navigate(Routes.PantallaHospitals.route)
@@ -171,6 +179,7 @@ fun BarraMenu(viewModel: KrankenwagenViewModel) {
             .padding(bottom = 10.dp)
     ) {
         Spacer(modifier = Modifier.padding(start = 160.dp))
+        // Icono de menú
         IconMenu(
             modifier = Modifier
                 .width(80.dp)
@@ -178,6 +187,7 @@ fun BarraMenu(viewModel: KrankenwagenViewModel) {
             onMenuTapped = { viewModel.openMenu() }
         )
         Spacer(modifier = Modifier.fillMaxWidth(0.9f))
+        // Icono registrarse/iniciar sesión
         Sesion(
             modifier = Modifier
                 .width(80.dp)
