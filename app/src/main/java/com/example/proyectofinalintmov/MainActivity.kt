@@ -11,11 +11,13 @@ import androidx.compose.ui.Modifier
 import com.example.proyectofinalintmov.krankenwagen.navigation.NavManager
 import com.example.proyectofinalintmov.ui.theme.ProyectoFinalIntMovTheme
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel : KrankenwagenViewModel by viewModels()
+        val sesionViewModel: SesionViewModel by viewModels()
         setContent {
             ProyectoFinalIntMovTheme {
                 // A surface container using the 'background' color from the theme
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavManager(viewModel)
+                    NavManager(viewModel, sesionViewModel)
                 }
             }
         }

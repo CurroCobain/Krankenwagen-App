@@ -18,8 +18,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 
 /**
@@ -36,7 +37,7 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewM
  * @param viewModel El ViewModel asociado al diálogo de menú.
  */
 @Composable
-fun DialogMenu(viewModel: KrankenwagenViewModel) {
+fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewModel) {
     Dialog(
         onDismissRequest = { viewModel.closeMenu() }) {
         Card(
@@ -82,7 +83,8 @@ fun DialogMenu(viewModel: KrankenwagenViewModel) {
                 Button(
                     onClick = {
                         viewModel.closeMenu()
-                        viewModel.cambiaNombre("")
+                        sesionViewModel.cambiaNombre("")
+                        sesionViewModel.cerrarSesion()
                         viewModel.openSesion()
                     },
                     colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -100,15 +102,16 @@ fun DialogMenu(viewModel: KrankenwagenViewModel) {
  * Recibe el siguiente parámetro
  * @param viewModel El ViewModel asociado al diálogo de sesión de usuario.
  */
-@SuppressLint("RememberReturnType")
+@SuppressLint("RememberReturnType", "StateFlowValueCalledInComposition")
 @Composable
 fun DialogSesion(
-    viewModel: KrankenwagenViewModel
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel
 ) {
-    val nombreDoc = remember { mutableStateOf("") }
-    val mailDoc = remember { mutableStateOf("") }
-    val passDoc = remember { mutableStateOf("") }
-    var initOrReg = remember { mutableStateOf(false) }
+    val nombreDoc by sesionViewModel.nombreDoc.collectAsState()
+    val mailDoc by sesionViewModel.nuevoMail.collectAsState()
+    val passDoc by sesionViewModel.nuevoPass.collectAsState()
+    val initOrReg by sesionViewModel.inirOrReg.collectAsState()
     Dialog(
         onDismissRequest = { viewModel.closeSesion() })
     {   // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
@@ -119,7 +122,7 @@ fun DialogSesion(
             shape = RoundedCornerShape(10.dp),
         ) {
             // si la sesión no se ha iniciado aparece la opción de registrarse
-            if (!initOrReg.value) {
+            if (!initOrReg) {
                 Column(
                     modifier = Modifier
                         .background(color = Color(225, 241, 222))
@@ -131,9 +134,9 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         TextField(
-                            value = nombreDoc.value,
+                            value = nombreDoc,
                             onValueChange = { newValue ->
-                                nombreDoc.value = newValue
+                                sesionViewModel.cambiaNombre(newValue)
                             },
                             label = { Text(text = "Nombre") },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
@@ -144,9 +147,9 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         TextField(
-                            value = mailDoc.value,
+                            value = mailDoc,
                             onValueChange = { newValue ->
-                                mailDoc.value = newValue
+                                sesionViewModel.cambiaMail(newValue)
                             },
                             label = { Text(text = "Mail") },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
@@ -157,9 +160,9 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         TextField(
-                            value = passDoc.value,
+                            value = passDoc,
                             onValueChange = { newValue ->
-                                passDoc.value = newValue
+                                sesionViewModel.cambiaPass(newValue)
                             },
                             label = { Text(text = "Password") },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
@@ -170,10 +173,10 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                         Button(
                             onClick = {
-                                viewModel.cambiaNombre(nombreDoc.value)
-                                viewModel.cambiaMail(mailDoc.value)
-                                viewModel.cambiaPass(passDoc.value)
-                                viewModel.closeSesion()
+                                sesionViewModel.createUser {
+                                    viewModel.closeSesion()
+                                    sesionViewModel.cambiaInit()
+                                }
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         )
@@ -199,7 +202,7 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {// ---------------------- Botón iniciar sesion ------------------------------
                         Button(
-                            onClick = { initOrReg.value = true },
+                            onClick = { sesionViewModel.cambiaInit() },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         )
                         {
@@ -219,9 +222,9 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         TextField(
-                            value = mailDoc.value,
+                            value = mailDoc,
                             onValueChange = { newValue ->
-                                mailDoc.value = newValue
+                                sesionViewModel.cambiaMail(newValue)
                             },
                             label = { Text(text = "Mail") },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
@@ -232,9 +235,9 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         TextField(
-                            value = passDoc.value,
+                            value = passDoc,
                             onValueChange = { newValue ->
-                                passDoc.value = newValue
+                                sesionViewModel.cambiaPass(newValue)
                             },
                             label = { Text(text = "Password") },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
@@ -246,9 +249,7 @@ fun DialogSesion(
                     {
                         Button(
                             onClick = {
-                                viewModel.cambiaMail(mailDoc.value)
-                                viewModel.cambiaPass(passDoc.value)
-                                viewModel.getUser()
+                                sesionViewModel.sesionInit { sesionViewModel.getUser() }
                                 viewModel.closeSesion()
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -259,7 +260,7 @@ fun DialogSesion(
                         Spacer(modifier = Modifier.padding(20.dp))
                         // ------------------------ Botón volver a registro ------------------------
                         Button(
-                            onClick = { initOrReg.value = false },
+                            onClick = { sesionViewModel.cambiaInit() },
                             colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
                         )
                         {

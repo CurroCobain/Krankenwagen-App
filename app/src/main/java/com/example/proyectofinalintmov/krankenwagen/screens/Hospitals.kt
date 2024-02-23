@@ -45,6 +45,7 @@ import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 /**
  * Scaffold que alberga la página de hospitales
@@ -60,8 +61,10 @@ fun Hospitals(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
     showMenu: Boolean,
-    userRegisterd: Boolean
+    userRegisterd: Boolean,
+    sesionViewModel: SesionViewModel
 ) {
+    val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
     viewModel.getHosp()
     viewModel.getHosp()
     viewModel.getHosp()
@@ -75,7 +78,7 @@ fun Hospitals(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr ${viewModel.nombreDoc.value}"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
             )
         }
     }, content = {
@@ -83,7 +86,8 @@ fun Hospitals(
             navController = navController,
             menuDesplegado = showMenu,
             userDesplegado = userRegisterd,
-            viewModel = viewModel
+            viewModel = viewModel,
+            sesionViewModel = sesionViewModel
         )
     }, bottomBar = {
         BarraMenu(viewModel = viewModel)
@@ -104,7 +108,8 @@ fun ContenidoHospitals(
     navController: NavHostController,
     menuDesplegado: Boolean,
     userDesplegado: Boolean,
-    viewModel: KrankenwagenViewModel
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel
 ) {
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -135,10 +140,10 @@ fun ContenidoHospitals(
                 )
             }
             if (menuDesplegado) {
-                DialogMenu(viewModel = viewModel)
+                DialogMenu(viewModel, sesionViewModel)
             }
             if (userDesplegado) {
-                DialogSesion(viewModel = viewModel)
+                DialogSesion(viewModel, sesionViewModel)
             }
         }
     }

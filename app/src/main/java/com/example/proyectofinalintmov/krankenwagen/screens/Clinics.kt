@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -21,6 +23,7 @@ import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
@@ -28,15 +31,16 @@ fun Clinics(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
     showMenu: Boolean,
-    userRegistered: Boolean
+    userRegistered: Boolean,
+    sesionViewModel: SesionViewModel
 ) {
-
+    val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr ${viewModel.nombreDoc.value}"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
             )
         }
     }, content = {
@@ -44,7 +48,8 @@ fun Clinics(
             navController = navController,
             menuDesplegado = showMenu,
             userDesplegado = userRegistered,
-            viewModel = viewModel
+            viewModel = viewModel,
+            sesionViewModel = sesionViewModel
         )
     }, bottomBar = {
         BarraMenu(viewModel = viewModel)
@@ -65,7 +70,8 @@ fun ContenidoClinics(
     navController: NavHostController,
     menuDesplegado: Boolean,
     userDesplegado: Boolean,
-    viewModel: KrankenwagenViewModel
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel
 ) {
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -86,10 +92,10 @@ fun ContenidoClinics(
             Text(text = "Clinics")
         }
         if (menuDesplegado) {
-            DialogMenu(viewModel = viewModel)
+            DialogMenu(viewModel, sesionViewModel)
         }
         if (userDesplegado) {
-            DialogSesion(viewModel = viewModel)
+            DialogSesion(viewModel, sesionViewModel)
         }
     }
 }

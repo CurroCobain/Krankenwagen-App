@@ -16,5 +16,8 @@ data class Ambulance(
     val plate: String,
     var isFree: Boolean,
     var types: AmbulanceTypes
-)
+){
+    constructor() : this("amb1", "1234ABC", true, AmbulanceTypes.doctor)
+}
+
 

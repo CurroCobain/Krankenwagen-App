@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,6 +31,7 @@ import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.scrollprovincias.ScrollProvincias
 import com.example.proyectofinalintmov.sesion.Sesion
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 /**
  * Scaffold que alberga la página de bienvenida
@@ -46,15 +49,17 @@ fun WelcomePage(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
     showMenu: Boolean,
-    userRegistered: Boolean
+    userRegistered: Boolean,
+    sesionViewModel: SesionViewModel
 ) {
+    val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr ${viewModel.nombreDoc.value}"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
             )
         }
     }, content = {
@@ -62,7 +67,8 @@ fun WelcomePage(
             navController = navController,
             menuDesplegado = showMenu,
             userDesplegado = userRegistered,
-            viewModel = viewModel
+            viewModel = viewModel,
+            sesionViewModel = sesionViewModel
         )
     }, bottomBar = {
         BarraMenu(viewModel = viewModel)
@@ -84,7 +90,8 @@ fun ContenidoWelcome(
     navController: NavHostController,
     menuDesplegado: Boolean,
     userDesplegado: Boolean,
-    viewModel: KrankenwagenViewModel
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -155,11 +162,11 @@ fun ContenidoWelcome(
         }
         // Si se pulsa menú se abre el diálogo correspondiente
         if (menuDesplegado) {
-            DialogMenu(viewModel = viewModel)
+            DialogMenu(viewModel, sesionViewModel)
         }
         // Si se pulsa sobre usuario se abre el diálogo correspondiente
         if (userDesplegado) {
-            DialogSesion(viewModel = viewModel)
+            DialogSesion(viewModel, sesionViewModel)
         }
     }
 }

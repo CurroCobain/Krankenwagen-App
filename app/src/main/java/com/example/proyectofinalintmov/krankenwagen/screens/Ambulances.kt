@@ -45,6 +45,7 @@ import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
@@ -52,9 +53,11 @@ fun Ambulances(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
     showMenu: Boolean,
-    userRegisterd: Boolean
+    userRegisterd: Boolean,
+    sesionViewModel: SesionViewModel
 
 ) {
+    val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
     viewModel.getAmb()
     viewModel.getAmb()
     viewModel.getAmb()
@@ -73,7 +76,7 @@ fun Ambulances(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr ${viewModel.nombreDoc.value}"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
             )
         }
     }, content = {
@@ -81,7 +84,8 @@ fun Ambulances(
             navController = navController,
             menuDesplegado = showMenu,
             userDesplegado = userRegisterd,
-            viewModel = viewModel
+            viewModel = viewModel,
+            sesionViewModel = sesionViewModel
         )
     }, bottomBar = {
         BarraMenu(viewModel = viewModel)
@@ -94,7 +98,8 @@ fun ContenidoAmbulances(
     navController: NavHostController,
     menuDesplegado: Boolean,
     userDesplegado: Boolean,
-    viewModel: KrankenwagenViewModel
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel
 ) {
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -114,21 +119,23 @@ fun ContenidoAmbulances(
                 onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
             Text(text = "Ambulances")
-            Column (verticalArrangement = Arrangement.Top,
+            Column(
+                verticalArrangement = Arrangement.Top,
                 modifier = Modifier.fillMaxSize()
             ) {
                 // LazyVerticalGrid con la lista de ambulancias
                 LazyAmbulance(
                     viewModel = viewModel,
                     arrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize() )
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
         if (menuDesplegado) {
-            DialogMenu(viewModel = viewModel)
+            DialogMenu(viewModel, sesionViewModel)
         }
         if (userDesplegado) {
-            DialogSesion(viewModel = viewModel)
+            DialogSesion(viewModel, sesionViewModel)
         }
     }
 }
@@ -145,32 +152,35 @@ fun LazyAmbulance(
     val selectedAmbulance = remember { mutableStateOf<Ambulance?>(null) }
     val context = LocalContext.current
     val miListaAmb by viewModel.listAmbulancias.collectAsState()
-    LazyVerticalGrid(columns = GridCells.Fixed(2),
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp)
-    ){
+    ) {
         items(miListaAmb) { ambulance ->
             Card(modifier = Modifier
                 .padding(50.dp)
                 .size(250.dp)
                 .clickable {
-                    selectedAmbulance.value = ambulance
+                    viewModel.selectAmbActual(ambulance)
                     viewModel.activaEditAmb()
                 })
             {
-                Column(horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.background(
-                        color = if (!ambulance.isFree)
-                            Color.Red
-                        else
-                            Color.Transparent
-                    )) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
                     Image(
                         painter = painterResource(id = R.drawable.barra_lateral_amb),
                         contentDescription = "Hosp avatar",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
-                            .fillMaxWidth(0.8f)
+                            .fillMaxWidth()
                             .height(200.dp)
+                            .background(
+                                color = if (!ambulance.isFree)
+                                    Color.Red
+                                else
+                                    Color.Transparent
+                                )
                     )
                     Text(
                         text = ambulance.plate,
@@ -180,9 +190,8 @@ fun LazyAmbulance(
             }
         }
     }
-    if (editar) {
-        selectedAmbulance?.value?.let { ambulance ->
-            EditarAmb(viewModel = viewModel, ambulance = ambulance)
-        }
+    if (editar)
+    {
+        EditarAmb(viewModel = viewModel)
     }
 }

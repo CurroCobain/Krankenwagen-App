@@ -6,6 +6,10 @@ import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.data.Clinic
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.example.proyectofinalintmov.krankenwagen.data.User
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,12 +25,17 @@ import kotlin.system.exitProcess
  * @param listHospitals lista que almacena los hospitales filtrados
  */
 class KrankenwagenViewModel: ViewModel() {
+
+    private val auth: FirebaseAuth = Firebase.auth
+
     // variable que se usa para desplegar el menú de opciones
-    var showMenu = MutableStateFlow( false)
+    var showMenu = MutableStateFlow(false)
         private set
+
     // variable que vamos a usar para acceder al panel de usario
     var userRegistererd = MutableStateFlow(false)
         private set
+
     // lista de ambulancias filtradas
     var listAmbulancias = MutableStateFlow(mutableListOf<Ambulance>())
 
@@ -34,36 +43,56 @@ class KrankenwagenViewModel: ViewModel() {
     var listCentros = MutableStateFlow(mutableListOf<Clinic>())
 
     // lista de hospitales filtrados
-    private val  _listHospitals = MutableStateFlow(mutableListOf<Hospital>())
+    private val _listHospitals = MutableStateFlow(mutableListOf<Hospital>())
     val listHospitals: StateFlow<MutableList<Hospital>> = _listHospitals.asStateFlow()
 
     // Nombre del usuario actual
     var nombreDoc = MutableStateFlow("")
         private set
+
     // password del usuario actual
     var nuevoPass = MutableStateFlow("")
         private set
+
     // correo del usuario actual
     var nuevoMail = MutableStateFlow("")
         private set
+
     // variable que permite activar la edición de un hospital
     var editHosp = MutableStateFlow(false)
+
     // variable que permite activar la edición de una ambulancia
     val editAmb = MutableStateFlow(false)
 
-     fun filterBy(filter: String){
+    // variable que muestra la ambulancia que se está gestionando en este momento
+    val ambActual = MutableStateFlow(Ambulance())
+
+    // variable que devuleve el valor del valor isFree de la ambulancia actual
+    var actualIsFree = MutableStateFlow(ambActual.value.isFree)
+
+    fun filterBy(filter: String) {
         // TODO: realizar filtro de recursos por provincia
     }
-    fun getHosp():MutableList<Hospital>{
-        val newListHosp : MutableList<Hospital> = mutableListOf()
-        listHospitals.value.add(Hospital("h2","hosp2","ccc", "ccc", mutableListOf<Ambulance>(),"calle2"))
+
+    fun getHosp(): MutableList<Hospital> {
+        val newListHosp: MutableList<Hospital> = mutableListOf()
+        listHospitals.value.add(
+            Hospital(
+                "h2",
+                "hosp2",
+                "ccc",
+                "ccc",
+                mutableListOf<Ambulance>(),
+                "calle2"
+            )
+        )
         newListHosp.addAll(listHospitals.value)
         return newListHosp
     }
 
-    fun getAmb():MutableList<Ambulance>{
-        val newListAmb : MutableList<Ambulance> = mutableListOf()
-        listAmbulancias.value.add(Ambulance("amb1","1234AAA",true,AmbulanceTypes.doctor))
+    fun getAmb(): MutableList<Ambulance> {
+        val newListAmb: MutableList<Ambulance> = mutableListOf()
+        listAmbulancias.value.add(Ambulance("amb1", "1234AAA", true, AmbulanceTypes.doctor))
         newListAmb.addAll(listAmbulancias.value)
         return newListAmb
     }
@@ -71,83 +100,66 @@ class KrankenwagenViewModel: ViewModel() {
     /**
      * Muestra el menu de opciones
      */
-     fun openMenu(){
+    fun openMenu() {
         showMenu.value = true;
     }
 
     /**
      * Cierra el menu de opciones
      */
-     fun closeMenu(){
+    fun closeMenu() {
         showMenu.value = false;
     }
 
     /**
      * Muestra el registro de usuario
      */
-     fun openSesion(){
+    fun openSesion() {
         userRegistererd.value = true;
     }
 
     /**
      * Cierra el registro de usuario
      */
-     fun closeSesion(){
+    fun closeSesion() {
         userRegistererd.value = false;
     }
 
     /**
      * Cambia el idioma del programa
      */
-    private fun cambiarIdioma(){
+    private fun cambiarIdioma() {
         // TODO:  seleccionar archivo de idioma
     }
 
-    fun closeApp(){
+    fun closeApp() {
         exitProcess(0)
-    }
 
-    /**
-     * Asigna el nombre del usuario
-     */
-     fun cambiaNombre(value: String){
-         nombreDoc.value = value
-     }
-
-    /**
-     * Asigna el password del usuario
-     */
-    fun cambiaPass(value: String){
-        nuevoPass.value = value
-    }
-
-    /**
-     * Asigna el correo del usuario
-     */
-    fun cambiaMail(valor: String){
-        nuevoMail.value = valor
     }
 
     /**
      * cambia el valor  de editHosp
      */
-    fun activaEditHosp(){
+    fun activaEditHosp() {
         editHosp.value = !editHosp.value
     }
 
     /**
      * cambia el valor  de editAmb
      */
-    fun activaEditAmb(){
+    fun activaEditAmb() {
         editAmb.value = !editAmb.value
     }
 
+    fun isFreeActualAmbul() {
+        ambActual.value.isFree = !ambActual.value.isFree
+        actualIsFree.value = ambActual.value.isFree
+    }
 
-
-
-    // -------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!! completar esta función !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!------------------------------------
-    fun getUser(){
-        val user: User? = null
-        nombreDoc.value = user!!.name
+    /**
+     * selecciona la ambulancia actual
+     */
+    fun selectAmbActual(ambulance: Ambulance) {
+        ambActual.value = ambulance
     }
 }

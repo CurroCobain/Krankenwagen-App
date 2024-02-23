@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "343736859964",
+    "project_id": "finalintmovil",
+    "storage_bucket": "finalintmovil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343736859964:android:1db4eabf042398539bf239",
+        "android_client_info": {
+          "package_name": "com.example.proyectofinalintmov"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjj8IC_-PFRsQHUMIXqmNqEHxxRZ87MF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

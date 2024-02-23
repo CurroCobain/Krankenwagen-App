@@ -49,7 +49,13 @@ string bienvenido
 string bienvenido_dr_house
 string confirmar
 string elija_el_idioma_de_la_app
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
 string iniciar_sesi_n
+string project_id
 string welcome
 style Theme.ProyectoFinalIntMov
 xml backup_rules

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gcm_defaultSenderId" translatable="false">343736859964</string>
+    <string name="google_api_key" translatable="false">AIzaSyCjj8IC_-PFRsQHUMIXqmNqEHxxRZ87MF8</string>
+    <string name="google_app_id" translatable="false">1:343736859964:android:1db4eabf042398539bf239</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCjj8IC_-PFRsQHUMIXqmNqEHxxRZ87MF8</string>
+    <string name="google_storage_bucket" translatable="false">finalintmovil.appspot.com</string>
+    <string name="project_id" translatable="false">finalintmovil</string>
+</resources>

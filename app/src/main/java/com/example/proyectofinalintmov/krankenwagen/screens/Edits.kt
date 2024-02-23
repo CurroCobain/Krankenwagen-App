@@ -1,5 +1,6 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +20,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,12 +60,13 @@ fun EditarHosp(
     }
 }
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun EditarAmb(
-    viewModel: KrankenwagenViewModel,
-    ambulance: Ambulance,
+    viewModel: KrankenwagenViewModel
 ) {
-    var selectedType by remember { mutableStateOf(ambulance.types) }
+    val myAmbulance by viewModel.actualIsFree.collectAsState()
+    val ambActual by viewModel.ambActual.collectAsState()
     var expanded by remember { mutableStateOf(false) } // Estado para controlar la expansión del DropdownMenu
 
     Dialog(
@@ -82,19 +85,19 @@ fun EditarAmb(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "Placa de Ambulancia: ${ambulance.plate}")
+                Text(text = "Placa de Ambulancia: ${ambActual.plate}")
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(onClick = {
-                    ambulance.isFree = !ambulance.isFree
+                    viewModel.isFreeActualAmbul()
                 },
-                    colors = if (ambulance.isFree)
+                    colors = if (myAmbulance)
                         ButtonDefaults.buttonColors(Color(74, 121, 66))
                      else
                         ButtonDefaults.buttonColors( Color.Red)
                 ) {
-                    Text(text = "Disponible: ${ambulance.isFree}")
+                    Text(text = "Disponible: $myAmbulance")
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -107,7 +110,7 @@ fun EditarAmb(
                 ) {
                     AmbulanceTypes.values().forEach { type ->
                         DropdownMenuItem(onClick = {
-                            selectedType = type
+                            ambActual.types = type
                             expanded = false // Cerrar el menú cuando se seleccione una opción
                         }) {
                             Text(text = type.name)
@@ -117,7 +120,7 @@ fun EditarAmb(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(text = "Tipo de Ambulancia: ${selectedType.name}",
+                Text(text = "Tipo de Ambulancia: ${ambActual.types}",
                     // Usamos clickable para hacer clic en el texto "Placa de Ambulancia"
                     modifier = Modifier.clickable { expanded = true })
 
