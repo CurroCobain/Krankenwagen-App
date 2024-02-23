@@ -2,6 +2,7 @@ package com.example.proyectofinalintmov.krankenwagen.viewModels
 
 import androidx.lifecycle.ViewModel
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
+import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.data.Clinic
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.example.proyectofinalintmov.krankenwagen.data.User
@@ -45,16 +46,26 @@ class KrankenwagenViewModel: ViewModel() {
     // correo del usuario actual
     var nuevoMail = MutableStateFlow("")
         private set
+    // variable que permite activar la edición de un hospital
     var editHosp = MutableStateFlow(false)
+    // variable que permite activar la edición de una ambulancia
+    val editAmb = MutableStateFlow(false)
 
      fun filterBy(filter: String){
         // TODO: realizar filtro de recursos por provincia
     }
     fun getHosp():MutableList<Hospital>{
-        val newList : MutableList<Hospital> = mutableListOf()
+        val newListHosp : MutableList<Hospital> = mutableListOf()
         listHospitals.value.add(Hospital("h2","hosp2","ccc", "ccc", mutableListOf<Ambulance>(),"calle2"))
-        newList.addAll(listHospitals.value)
-        return newList
+        newListHosp.addAll(listHospitals.value)
+        return newListHosp
+    }
+
+    fun getAmb():MutableList<Ambulance>{
+        val newListAmb : MutableList<Ambulance> = mutableListOf()
+        listAmbulancias.value.add(Ambulance("amb1","1234AAA",true,AmbulanceTypes.doctor))
+        newListAmb.addAll(listAmbulancias.value)
+        return newListAmb
     }
 
     /**
@@ -116,13 +127,23 @@ class KrankenwagenViewModel: ViewModel() {
     fun cambiaMail(valor: String){
         nuevoMail.value = valor
     }
+
+    /**
+     * cambia el valor  de editHosp
+     */
     fun activaEditHosp(){
-        editHosp.value = true
+        editHosp.value = !editHosp.value
     }
 
-    fun desactivaEditHosp(){
-        editHosp.value = false
+    /**
+     * cambia el valor  de editAmb
+     */
+    fun activaEditAmb(){
+        editAmb.value = !editAmb.value
     }
+
+
+
 
     // -------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!! completar esta función !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!------------------------------------
     fun getUser(){

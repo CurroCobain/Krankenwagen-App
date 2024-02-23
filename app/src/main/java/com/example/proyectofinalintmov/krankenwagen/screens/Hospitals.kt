@@ -125,7 +125,8 @@ fun ContenidoHospitals(
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
             Text(text = "Hospitals")
             Column(verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()) {
+                modifier = Modifier.fillMaxSize())
+            {
                 // LazyRow con la lista de hospitales
                 LazyHospital(
                     viewModel = viewModel,
