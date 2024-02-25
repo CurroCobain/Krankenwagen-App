@@ -1,18 +1,17 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.data.Clinic
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
-import com.example.proyectofinalintmov.krankenwagen.data.User
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 
@@ -24,13 +23,19 @@ import kotlin.system.exitProcess
  * @param listCentros lista que almacena los centros filtrados
  * @param listHospitals lista que almacena los hospitales filtrados
  */
-class KrankenwagenViewModel: ViewModel() {
-
-    private val auth: FirebaseAuth = Firebase.auth
+class KrankenwagenViewModel : ViewModel() {
+    private val firestore = Firebase.firestore
+    var message = MutableStateFlow("")
 
     // variable que se usa para desplegar el menú de opciones
     var showMenu = MutableStateFlow(false)
         private set
+
+    // variable que permite activar la creación de una ambulancia
+    var createAmb = MutableStateFlow(false)
+
+    // variable que permite activar la creación de un hospital
+    var createHosp = MutableStateFlow(false)
 
     // variable que vamos a usar para acceder al panel de usario
     var userRegistererd = MutableStateFlow(false)
@@ -46,83 +51,72 @@ class KrankenwagenViewModel: ViewModel() {
     private val _listHospitals = MutableStateFlow(mutableListOf<Hospital>())
     val listHospitals: StateFlow<MutableList<Hospital>> = _listHospitals.asStateFlow()
 
-    // Nombre del usuario actual
-    var nombreDoc = MutableStateFlow("")
-        private set
-
-    // password del usuario actual
-    var nuevoPass = MutableStateFlow("")
-        private set
-
-    // correo del usuario actual
-    var nuevoMail = MutableStateFlow("")
-        private set
-
     // variable que permite activar la edición de un hospital
     var editHosp = MutableStateFlow(false)
 
     // variable que permite activar la edición de una ambulancia
     val editAmb = MutableStateFlow(false)
 
-    // variable que muestra la ambulancia que se está gestionando en este momento
-    val ambActual = MutableStateFlow(Ambulance())
-
-    // variable que devuleve el valor del valor isFree de la ambulancia actual
-    var actualIsFree = MutableStateFlow(ambActual.value.isFree)
-
-    fun filterBy(filter: String) {
-        // TODO: realizar filtro de recursos por provincia
-    }
-
-    fun getHosp(): MutableList<Hospital> {
-        val newListHosp: MutableList<Hospital> = mutableListOf()
-        listHospitals.value.add(
-            Hospital(
-                "h2",
-                "hosp2",
-                "ccc",
-                "ccc",
-                mutableListOf<Ambulance>(),
-                "calle2"
-            )
-        )
-        newListHosp.addAll(listHospitals.value)
-        return newListHosp
-    }
-
-    fun getAmb(): MutableList<Ambulance> {
-        val newListAmb: MutableList<Ambulance> = mutableListOf()
-        listAmbulancias.value.add(Ambulance("amb1", "1234AAA", true, AmbulanceTypes.doctor))
-        newListAmb.addAll(listAmbulancias.value)
-        return newListAmb
+    fun getHosp(provincia: String) {
+        firestore.collection("Hospitals").whereEqualTo("county", provincia).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    listHospitals.value.add(document.toObject(Hospital::class.java))
+                }
+            }
+            .addOnFailureListener { exception ->
+                // TODO: añadir mensaje a campo de información, se debe crear campo de información
+            }
     }
 
     /**
-     * Muestra el menu de opciones
+     * Filtra las ambulancias por hospital de referencia
      */
-    fun openMenu() {
-        showMenu.value = true;
+    fun getAmb(hospital: String) {
+        firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                }
+            }
+            .addOnFailureListener { exception ->
+                // TODO: añadir mensaje a campo de información, se debe crear campo de información 
+            }
     }
 
+    fun getAllAmb(onSuccess: () -> Unit) {
+        listAmbulancias.value.clear()
+        viewModelScope.launch {
+            firestore.collection("Ambulances")
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                    }
+                }
+                .addOnCompleteListener {
+                    onSuccess()
+                }
+                .addOnFailureListener { exception ->
+                    message.value = "Error al recuperar las ambulancias"
+                }
+        }
+
+    }
+
+
     /**
-     * Cierra el menu de opciones
+     * Muestra o cierra el menu de opciones
      */
-    fun closeMenu() {
-        showMenu.value = false;
+    fun openCloseMenu() {
+        showMenu.value = !showMenu.value
     }
 
     /**
      * Muestra el registro de usuario
      */
-    fun openSesion() {
-        userRegistererd.value = true;
-    }
-
-    /**
-     * Cierra el registro de usuario
-     */
-    fun closeSesion() {
-        userRegistererd.value = false;
+    fun openCloseSesion() {
+        userRegistererd.value = !userRegistererd.value
     }
 
     /**
@@ -151,15 +145,12 @@ class KrankenwagenViewModel: ViewModel() {
         editAmb.value = !editAmb.value
     }
 
-    fun isFreeActualAmbul() {
-        ambActual.value.isFree = !ambActual.value.isFree
-        actualIsFree.value = ambActual.value.isFree
-    }
+
 
     /**
-     * selecciona la ambulancia actual
+     * Activa o desactiva la creación de ambulancias
      */
-    fun selectAmbActual(ambulance: Ambulance) {
-        ambActual.value = ambulance
+    fun acCreateAmb() {
+        createAmb.value = !createAmb.value
     }
 }

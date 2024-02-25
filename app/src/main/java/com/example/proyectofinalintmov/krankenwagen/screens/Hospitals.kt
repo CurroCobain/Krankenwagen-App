@@ -65,13 +65,7 @@ fun Hospitals(
     sesionViewModel: SesionViewModel
 ) {
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
-    viewModel.getHosp()
-    viewModel.getHosp()
-    viewModel.getHosp()
-    viewModel.getHosp()
-    viewModel.getHosp()
-    viewModel.getHosp()
-    viewModel.getHosp()
+
 
     Scaffold(topBar = {
         Column(

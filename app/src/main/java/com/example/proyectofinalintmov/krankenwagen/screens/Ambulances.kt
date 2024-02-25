@@ -28,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +45,7 @@ import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
+import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
@@ -54,22 +56,11 @@ fun Ambulances(
     viewModel: KrankenwagenViewModel,
     showMenu: Boolean,
     userRegisterd: Boolean,
-    sesionViewModel: SesionViewModel
+    sesionViewModel: SesionViewModel,
+    ambulancesViewModel: AmbulancesViewModel
 
 ) {
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
-    viewModel.getAmb()
 
     Scaffold(topBar = {
         Column(
@@ -85,7 +76,8 @@ fun Ambulances(
             menuDesplegado = showMenu,
             userDesplegado = userRegisterd,
             viewModel = viewModel,
-            sesionViewModel = sesionViewModel
+            sesionViewModel = sesionViewModel,
+            ambulancesViewModel = ambulancesViewModel
         )
     }, bottomBar = {
         BarraMenu(viewModel = viewModel)
@@ -99,8 +91,10 @@ fun ContenidoAmbulances(
     menuDesplegado: Boolean,
     userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
+    ambulancesViewModel: AmbulancesViewModel,
     sesionViewModel: SesionViewModel
 ) {
+    val message by viewModel.message.collectAsState()
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -115,7 +109,11 @@ fun ContenidoAmbulances(
             // Barra de navegación lateral
             BarraLateral(
                 onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
-                onAmbTapped = { navController.navigate(Routes.PantallaAmbulances.route) },
+                onAmbTapped = {
+                    viewModel.getAllAmb {
+                        navController.navigate(Routes.PantallaAmbulances.route)
+                    }
+                },
                 onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
             Text(text = "Ambulances")
@@ -126,9 +124,11 @@ fun ContenidoAmbulances(
                 // LazyVerticalGrid con la lista de ambulancias
                 LazyAmbulance(
                     viewModel = viewModel,
+                    ambulancesViewModel = ambulancesViewModel,
                     arrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxSize()
                 )
+                Text(text = message)
             }
         }
         if (menuDesplegado) {
@@ -145,12 +145,11 @@ fun ContenidoAmbulances(
 @Composable
 fun LazyAmbulance(
     viewModel: KrankenwagenViewModel,
+    ambulancesViewModel: AmbulancesViewModel,
     arrangement: Arrangement.HorizontalOrVertical,
     modifier: Modifier
 ) {
     val editar by viewModel.editAmb.collectAsState()
-    val selectedAmbulance = remember { mutableStateOf<Ambulance?>(null) }
-    val context = LocalContext.current
     val miListaAmb by viewModel.listAmbulancias.collectAsState()
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -161,7 +160,7 @@ fun LazyAmbulance(
                 .padding(50.dp)
                 .size(250.dp)
                 .clickable {
-                    viewModel.selectAmbActual(ambulance)
+                    ambulancesViewModel.asignAmbFields(ambulance)
                     viewModel.activaEditAmb()
                 })
             {
@@ -180,7 +179,7 @@ fun LazyAmbulance(
                                     Color.Red
                                 else
                                     Color.Transparent
-                                )
+                            )
                     )
                     Text(
                         text = ambulance.plate,
@@ -190,8 +189,7 @@ fun LazyAmbulance(
             }
         }
     }
-    if (editar)
-    {
-        EditarAmb(viewModel = viewModel)
+    if (editar) {
+        EditarAmb(viewModel, ambulancesViewModel)
     }
 }

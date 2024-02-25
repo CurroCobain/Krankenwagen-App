@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.proyectofinalintmov.krankenwagen.navigation.NavManager
+import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.ui.theme.ProyectoFinalIntMovTheme
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val viewModel : KrankenwagenViewModel by viewModels()
         val sesionViewModel: SesionViewModel by viewModels()
+        val ambulancesViewModel: AmbulancesViewModel by viewModels()
         setContent {
             ProyectoFinalIntMovTheme {
                 // A surface container using the 'background' color from the theme
@@ -25,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavManager(viewModel, sesionViewModel)
+                    NavManager(viewModel, sesionViewModel, ambulancesViewModel)
                 }
             }
         }

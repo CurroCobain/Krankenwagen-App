@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 class SesionViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
     private val firestore = Firebase.firestore
+    private val krankenwagenViewModel = KrankenwagenViewModel()
 
     var nombreDoc = MutableStateFlow("")
         private set
@@ -51,7 +52,7 @@ class SesionViewModel : ViewModel() {
         nuevoMail.value = valor
     }
 
-    fun cambiaInit(){
+    fun cambiaInit() {
         inirOrReg.value = !inirOrReg.value
     }
 
@@ -59,21 +60,26 @@ class SesionViewModel : ViewModel() {
      * Recupera el nombre del usuario
      */
     fun getUser() {
-        firestore.collection("Users").whereEqualTo("userId", auth.currentUser?.uid).get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    nombreDoc.value = document.getString("name")!!
+        sesionInit {
+            firestore.collection("Users").whereEqualTo("userId", auth.currentUser?.uid).get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        nombreDoc.value = document.getString("name")!!
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+                .addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents: ", exception)
+                }
+        }
     }
 
+    /**
+     * Inicia sesión
+     */
     fun sesionInit(onSuccess: () -> Unit) {
         viewModelScope.launch {
             try {
-                // DCS - Utiliza el servicio de autenticación de Firebase para validar al usuario
+                // Utiliza el servicio de autenticación de Firebase para validar al usuario
                 // por email y contraseña
                 auth.signInWithEmailAndPassword(nuevoMail.value, nuevoPass.value)
                     .addOnCompleteListener { task ->
@@ -81,25 +87,29 @@ class SesionViewModel : ViewModel() {
                             onSuccess()
                         } else {
                             Log.d("ERROR EN FIREBASE", "Usuario y/o contrasena incorrectos")
-                            // showAlert = true
+                            krankenwagenViewModel.message.value =
+                                "Usuario y/o contrasena incorrectos"
                         }
                     }
             } catch (e: Exception) {
                 Log.d("ERROR EN JETPACK", "ERROR: ${e.localizedMessage}")
+                krankenwagenViewModel.message.value = "Usuario y/o contrasena incorrectos"
             }
         }
     }
 
-
+    /**
+     * Registra un usuario nuevo
+     */
     fun createUser(onSuccess: () -> Unit) {
         viewModelScope.launch {
             try {
-                // DCS - Utiliza el servicio de autenticación de Firebase para registrar al usuario
+                // Utiliza el servicio de autenticación de Firebase para registrar al usuario
                 // por email y contraseña
                 auth.createUserWithEmailAndPassword(nuevoMail.value, nuevoPass.value)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            // DCS - Si se realiza con éxito, almacenamos el usuario en la colección "Users"
+                            // Si se realiza con éxito, almacenamos el usuario en la colección "Users"
                             saveUser(nombreDoc.value)
                             onSuccess()
                         } else {
@@ -113,7 +123,9 @@ class SesionViewModel : ViewModel() {
         }
     }
 
-
+    /**
+     * Guarda un usuario
+     */
     private fun saveUser(username: String) {
         val id = auth.currentUser?.uid
         val email = auth.currentUser?.email
@@ -124,7 +136,7 @@ class SesionViewModel : ViewModel() {
                 email = email.toString(),
                 name = username
             )
-            // DCS - Añade el usuario a la colección "Users" en la base de datos Firestore
+            // Añade el usuario a la colección "Users" en la base de datos Firestore
             firestore.collection("Users")
                 .add(user)
                 .addOnSuccessListener {
@@ -137,6 +149,9 @@ class SesionViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Cierra la sesión del usuario actual
+     */
     fun cerrarSesion() {
         auth.signOut()
         nombreDoc.value = ""

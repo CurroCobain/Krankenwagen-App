@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,7 +42,8 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
  * @param userDesplegado Indica si el diálogo de sesión de usuario está desplegado o no.
  * @param viewModel El ViewModel asociado a la pantalla de bienvenida.
  */
-@SuppressLint("RememberReturnType", "UnusedMaterial3ScaffoldPaddingParameter",
+@SuppressLint(
+    "RememberReturnType", "UnusedMaterial3ScaffoldPaddingParameter",
     "StateFlowValueCalledInComposition"
 )
 @Composable
@@ -85,6 +87,7 @@ fun WelcomePage(
  * @param userDesplegado Indica si el diálogo de sesión de usuario está desplegado o no.
  * @param viewModel El ViewModel asociado a la pantalla de bienvenida.
  */
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun ContenidoWelcome(
     navController: NavHostController,
@@ -108,7 +111,11 @@ fun ContenidoWelcome(
             // Barra lateral de navegación
             BarraLateral(
                 onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
-                onAmbTapped = { navController.navigate(Routes.PantallaAmbulances.route) },
+                onAmbTapped = {
+                    viewModel.getAllAmb {
+                        navController.navigate(Routes.PantallaAmbulances.route)
+                    }
+                },
                 onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) }
             )
@@ -120,46 +127,47 @@ fun ContenidoWelcome(
                     .padding(top = 100.dp),
                 // Filtrar por Almería
                 onAlmerATapped = {
-                    viewModel.filterBy("Almeria")
+                    viewModel.getHosp("Almeria")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
                 // Filtrar por Cádiz
                 onCDizTapped = {
-                    viewModel.filterBy("Cadiz")
+                    viewModel.getHosp("Cadiz")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
                 // Filtrar por Córdoba
                 onCRdobaTapped = {
-                    viewModel.filterBy("Cordoba")
+                    viewModel.getHosp("Cordoba")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
                 // Filtrar por Granada
                 onGranadaTapped = {
-                    viewModel.filterBy("Granada")
+                    viewModel.getHosp("Granada")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
                 // Filtrar por Huelva
                 onHuelvaTapped = {
-                    viewModel.filterBy("Huelva")
+                    viewModel.getHosp("Huelva")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
                 // Filtrar por Jaen
                 onJaenTapped = {
-                    viewModel.filterBy("Jaen")
+                    viewModel.getHosp("Jaen")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
                 // Filtrar por Málaga
                 onMLagaTapped = {
-                    viewModel.filterBy("Malaga")
+                    viewModel.getHosp("Malaga")
                     navController.navigate(Routes.PantallaHospitals.route)
                 },
                 // Filtrar por Sevilla
                 onSevillaTapped = {
-                    viewModel.filterBy("Sevilla")
+                    viewModel.getHosp("Sevilla")
                     navController.navigate(Routes.PantallaHospitals.route)
                 }
             )
         }
+        Text(text = viewModel.message.value)
         // Si se pulsa menú se abre el diálogo correspondiente
         if (menuDesplegado) {
             DialogMenu(viewModel, sesionViewModel)
@@ -170,7 +178,6 @@ fun ContenidoWelcome(
         }
     }
 }
-
 
 
 /**
@@ -191,7 +198,7 @@ fun BarraMenu(viewModel: KrankenwagenViewModel) {
             modifier = Modifier
                 .width(80.dp)
                 .height(80.dp),
-            onMenuTapped = { viewModel.openMenu() }
+            onMenuTapped = { viewModel.openCloseMenu() }
         )
         Spacer(modifier = Modifier.fillMaxWidth(0.9f))
         // Icono registrarse/iniciar sesión
@@ -200,7 +207,7 @@ fun BarraMenu(viewModel: KrankenwagenViewModel) {
                 .width(80.dp)
                 .height(80.dp)
                 .padding(end = 10.dp),
-            onSesionTapped = { viewModel.openSesion() }
+            onSesionTapped = { viewModel.openCloseSesion() }
         )
     }
 }

@@ -39,7 +39,7 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 @Composable
 fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewModel) {
     Dialog(
-        onDismissRequest = { viewModel.closeMenu() }) {
+        onDismissRequest = { viewModel.openCloseMenu() }) {
         Card(
             modifier = Modifier
                 .fillMaxWidth(0.5f)
@@ -82,10 +82,10 @@ fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewMode
             {
                 Button(
                     onClick = {
-                        viewModel.closeMenu()
+                        viewModel.openCloseMenu()
                         sesionViewModel.cambiaNombre("")
                         sesionViewModel.cerrarSesion()
-                        viewModel.openSesion()
+                        viewModel.openCloseSesion()
                     },
                     colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                 ) {
@@ -113,7 +113,7 @@ fun DialogSesion(
     val passDoc by sesionViewModel.nuevoPass.collectAsState()
     val initOrReg by sesionViewModel.inirOrReg.collectAsState()
     Dialog(
-        onDismissRequest = { viewModel.closeSesion() })
+        onDismissRequest = { viewModel.openCloseSesion() })
     {   // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
         Card(
             modifier = Modifier
@@ -174,7 +174,7 @@ fun DialogSesion(
                         Button(
                             onClick = {
                                 sesionViewModel.createUser {
-                                    viewModel.closeSesion()
+                                    viewModel.openCloseSesion()
                                     sesionViewModel.cambiaInit()
                                 }
                             },
@@ -186,7 +186,7 @@ fun DialogSesion(
                         Spacer(modifier = Modifier.padding(10.dp))
                         // -------------------------- Botón volver ---------------------------------
                         Button(
-                            onClick = { viewModel.closeSesion() },
+                            onClick = { viewModel.openCloseSesion()},
                             colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
                         )
                         {
@@ -250,7 +250,7 @@ fun DialogSesion(
                         Button(
                             onClick = {
                                 sesionViewModel.sesionInit { sesionViewModel.getUser() }
-                                viewModel.closeSesion()
+                                viewModel.openCloseSesion()
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         )
