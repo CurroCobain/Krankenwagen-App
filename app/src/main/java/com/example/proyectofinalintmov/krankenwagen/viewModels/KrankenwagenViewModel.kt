@@ -1,5 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
@@ -145,12 +147,14 @@ class KrankenwagenViewModel : ViewModel() {
         editAmb.value = !editAmb.value
     }
 
-
-
     /**
      * Activa o desactiva la creación de ambulancias
      */
     fun acCreateAmb() {
         createAmb.value = !createAmb.value
+    }
+
+    fun setMessage(text: String) {
+        message.value = text
     }
 }

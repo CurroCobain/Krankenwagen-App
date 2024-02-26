@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -94,7 +95,7 @@ fun ContenidoAmbulances(
     ambulancesViewModel: AmbulancesViewModel,
     sesionViewModel: SesionViewModel
 ) {
-    val message by viewModel.message.collectAsState()
+    val message by ambulancesViewModel.ambulanceMessage.collectAsState()
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -128,7 +129,7 @@ fun ContenidoAmbulances(
                     arrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxSize()
                 )
-                Text(text = message)
+                Text(text = message!!)
             }
         }
         if (menuDesplegado) {

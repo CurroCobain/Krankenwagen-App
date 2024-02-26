@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -23,12 +24,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 
 
 /**
@@ -112,6 +116,8 @@ fun DialogSesion(
     val mailDoc by sesionViewModel.nuevoMail.collectAsState()
     val passDoc by sesionViewModel.nuevoPass.collectAsState()
     val initOrReg by sesionViewModel.inirOrReg.collectAsState()
+    val context = LocalContext.current
+    val message by sesionViewModel.sesionMessage.collectAsState()
     Dialog(
         onDismissRequest = { viewModel.openCloseSesion() })
     {   // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
@@ -174,8 +180,10 @@ fun DialogSesion(
                         Button(
                             onClick = {
                                 sesionViewModel.createUser {
-                                    viewModel.openCloseSesion()
+                                    Toast.makeText(context, "Usuario registrado correctamente", Toast.LENGTH_LONG).show()
                                     sesionViewModel.cambiaInit()
+                                    sesionViewModel.setMessage("")
+                                    viewModel.openCloseSesion()
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -186,7 +194,10 @@ fun DialogSesion(
                         Spacer(modifier = Modifier.padding(10.dp))
                         // -------------------------- Botón volver ---------------------------------
                         Button(
-                            onClick = { viewModel.openCloseSesion()},
+                            onClick = {
+                                viewModel.openCloseSesion()
+                                sesionViewModel.setMessage("")
+                            },
                             colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
                         )
                         {
@@ -202,12 +213,22 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {// ---------------------- Botón iniciar sesion ------------------------------
                         Button(
-                            onClick = { sesionViewModel.cambiaInit() },
+                            onClick = {
+                                sesionViewModel.cambiaInit()
+                                sesionViewModel.setMessage("")
+                            },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         )
                         {
                             Text(text = "Iniciar sesión")
                         }
+                    }
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    {
+                        Text(
+                            text = message!!,
+                            color = Color.Red
+                        )
                     }
                 }
             } else { // Si el usuario ya está registrado puede acceder a inicio de sesión
@@ -249,8 +270,16 @@ fun DialogSesion(
                     {
                         Button(
                             onClick = {
-                                sesionViewModel.sesionInit { sesionViewModel.getUser() }
-                                viewModel.openCloseSesion()
+                                sesionViewModel.sesionInit {
+                                    sesionViewModel.getUser()
+                                    viewModel.openCloseSesion()
+                                    Toast.makeText(
+                                        context,
+                                        "Sesión iniciada correctamente",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    sesionViewModel.setMessage("")
+                                }
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         )
@@ -260,7 +289,10 @@ fun DialogSesion(
                         Spacer(modifier = Modifier.padding(20.dp))
                         // ------------------------ Botón volver a registro ------------------------
                         Button(
-                            onClick = { sesionViewModel.cambiaInit() },
+                            onClick = {
+                                sesionViewModel.cambiaInit()
+                                sesionViewModel.setMessage("")
+                            },
                             colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
                         )
                         {
@@ -272,7 +304,7 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         Text(
-                            text = " Error al inicio de sesión",
+                            text = message!!,
                             color = Color.Red
                         )
                     }

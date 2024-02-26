@@ -17,6 +17,7 @@ class SesionViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
     private val firestore = Firebase.firestore
     private val krankenwagenViewModel = KrankenwagenViewModel()
+    var sesionMessage = MutableStateFlow("")
 
     var nombreDoc = MutableStateFlow("")
         private set
@@ -87,13 +88,12 @@ class SesionViewModel : ViewModel() {
                             onSuccess()
                         } else {
                             Log.d("ERROR EN FIREBASE", "Usuario y/o contrasena incorrectos")
-                            krankenwagenViewModel.message.value =
-                                "Usuario y/o contrasena incorrectos"
+                            sesionMessage.value = "Usuario y/o contrasena incorrectos"
                         }
                     }
             } catch (e: Exception) {
                 Log.d("ERROR EN JETPACK", "ERROR: ${e.localizedMessage}")
-                krankenwagenViewModel.message.value = "Usuario y/o contrasena incorrectos"
+                sesionMessage.value = "Usuario y/o contrasena incorrectos"
             }
         }
     }
@@ -157,5 +157,10 @@ class SesionViewModel : ViewModel() {
         nombreDoc.value = ""
         nuevoMail.value = ""
         nuevoPass.value = ""
+        sesionMessage.value = ""
+    }
+
+    fun setMessage(text: String) {
+        sesionMessage.value = text
     }
 }

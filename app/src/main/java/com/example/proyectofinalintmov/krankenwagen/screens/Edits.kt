@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,6 +75,7 @@ fun EditarAmb(
     viewModel: KrankenwagenViewModel,
     ambulancesViewModel: AmbulancesViewModel
 ) {
+    val context = LocalContext.current
     val id by ambulancesViewModel.idAmb.collectAsState()
     val plate by ambulancesViewModel.plate.collectAsState()
     val isFree by ambulancesViewModel.isFree.collectAsState()
@@ -80,9 +83,13 @@ fun EditarAmb(
     val hosp by ambulancesViewModel.hosp.collectAsState()
     // Estado para controlar la expansión del DropdownMenu
     var expanded by remember { mutableStateOf(false) }
+    val message by ambulancesViewModel.ambulanceMessage.collectAsState()
 
     Dialog(
-        onDismissRequest = { viewModel.activaEditAmb() },
+        onDismissRequest = {
+            viewModel.activaEditAmb()
+            ambulancesViewModel.setMessage("")
+        },
     ) {
         Card(
             modifier = Modifier
@@ -97,9 +104,11 @@ fun EditarAmb(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "Matrícula: $plate",
+                Text(
+                    text = "Matrícula: $plate",
                     fontSize = 30.sp,
-                    modifier = Modifier.background(color = Color.LightGray))
+                    modifier = Modifier.background(color = Color.LightGray)
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -109,8 +118,12 @@ fun EditarAmb(
                     onValueChange = { newValue ->
                         ambulancesViewModel.setHosp(newValue)
                     },
-                    label = { Text("Hospital de referencia",
-                        fontSize = 30.sp) },
+                    label = {
+                        Text(
+                            "Hospital de referencia",
+                            fontSize = 30.sp
+                        )
+                    },
                     modifier = Modifier.padding(8.dp),
                     textStyle = TextStyle(fontSize = 30.sp)
                 )
@@ -119,9 +132,11 @@ fun EditarAmb(
 
                 // Campo de edición para la disponibilidad
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Disponible",
+                    Text(
+                        "Disponible",
                         fontSize = 30.sp,
-                        modifier = Modifier.background(color = Color.LightGray))
+                        modifier = Modifier.background(color = Color.LightGray)
+                    )
                     Spacer(modifier = Modifier.width(8.dp))
                     Switch(
                         checked = isFree,
@@ -135,9 +150,11 @@ fun EditarAmb(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row {
-                    Text("Tipo de Ambulancia   ",
+                    Text(
+                        "Tipo de Ambulancia   ",
                         fontSize = 30.sp,
-                        modifier = Modifier.background(color = Color.LightGray))
+                        modifier = Modifier.background(color = Color.LightGray)
+                    )
                     Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
                         Text(
                             text = type.name, // Mostrar el tipo de ambulancia actual
@@ -157,42 +174,61 @@ fun EditarAmb(
                                     ambulancesViewModel.setType(type)
                                     expanded = false
                                 }) {
-                                    Text(text = type.name,
-                                        fontSize = 30.sp)
+                                    Text(
+                                        text = type.name,
+                                        fontSize = 30.sp
+                                    )
                                 }
                             }
                         }
                     }
                 }
 
-
                 Spacer(modifier = Modifier.height(30.dp))
                 Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                     Button(
                         onClick = {
-                            ambulancesViewModel.updateAmbulance(id) { viewModel.getAllAmb { viewModel.activaEditAmb() } }
+                            ambulancesViewModel.updateAmbulance(id) {
+                                Toast.makeText(
+                                    context,
+                                    "Ambulancia actualizada correctamente",
+                                    Toast.LENGTH_SHORT
+                                )
+                                viewModel.getAllAmb { viewModel.activaEditAmb() }
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
-                        Text(text = "Guardar",
-                            fontSize = 20.sp)
+                        Text(
+                            text = "Guardar",
+                            fontSize = 20.sp
+                        )
                     }
                     Spacer(modifier = Modifier.padding(8.dp))
                     Button(
                         onClick = {
-                            ambulancesViewModel.deleteAmbulance(id) { viewModel.getAllAmb { viewModel.activaEditAmb() } }
+                            ambulancesViewModel.deleteAmbulance(id) {
+                                Toast.makeText(
+                                    context,
+                                    "Ambulancia borrada correctamente",
+                                    Toast.LENGTH_SHORT
+                                )
+                                viewModel.getAllAmb { viewModel.activaEditAmb() }
+                            }
                             viewModel.activaEditAmb()
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
-                        Text(text = "Borrar ambulancia",
-                            fontSize = 20.sp)
+                        Text(
+                            text = "Borrar ambulancia",
+                            fontSize = 20.sp
+                        )
                     }
                 }
 
                 Spacer(modifier = Modifier.padding(8.dp))
 
-                Row(horizontalArrangement = Arrangement.Center){
+                Row(horizontalArrangement = Arrangement.Center) {
                     Button(
                         onClick = {
                             ambulancesViewModel.resetFields()
@@ -200,9 +236,18 @@ fun EditarAmb(
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
-                        Text(text = "Volver",
-                            fontSize = 20.sp)
+                        Text(
+                            text = "Volver",
+                            fontSize = 20.sp
+                        )
                     }
+                }
+                Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                {
+                    Text(
+                        text = message!!,
+                        color = Color.Red
+                    )
                 }
             }
         }

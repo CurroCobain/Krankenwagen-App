@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
@@ -101,7 +102,11 @@ fun ContenidoClinics(
         Row(modifier = Modifier.fillMaxSize()) {
             BarraLateral(
                 onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
-                onAmbTapped = { navController.navigate(Routes.PantallaAmbulances.route) },
+                onAmbTapped = {
+                    viewModel.getAllAmb {
+                        navController.navigate(Routes.PantallaAmbulances.route)
+                    }
+                },
                 onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
             Text(text = "Clinics")
@@ -132,6 +137,7 @@ fun ContenidoClinics(
                             )
                             Text(
                                 text = "Crear Hospital",
+                                fontSize = 30.sp,
                                 style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.padding(top = 8.dp)
                             )
@@ -157,6 +163,7 @@ fun ContenidoClinics(
                             )
                             Text(
                                 text = "Crear Ambulancia",
+                                fontSize = 30.sp,
                                 style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.padding(top = 8.dp)
                             )
@@ -170,7 +177,7 @@ fun ContenidoClinics(
             if (userDesplegado) {
                 DialogSesion(viewModel, sesionViewModel)
             }
-            if (createAmb){
+            if (createAmb) {
                 CreateAmbulance(ambulancesViewModel, viewModel)
             }
         }

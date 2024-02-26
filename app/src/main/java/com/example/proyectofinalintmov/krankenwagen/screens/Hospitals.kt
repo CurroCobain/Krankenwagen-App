@@ -119,12 +119,18 @@ fun ContenidoHospitals(
             // Barra de navegación lateral
             BarraLateral(
                 onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
-                onAmbTapped = { navController.navigate(Routes.PantallaAmbulances.route) },
+                onAmbTapped = {
+                    viewModel.getAllAmb {
+                        navController.navigate(Routes.PantallaAmbulances.route)
+                    }
+                },
                 onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
             Text(text = "Hospitals")
-            Column(verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize())
+            Column(
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize()
+            )
             {
                 // LazyRow con la lista de hospitales
                 LazyHospital(
@@ -158,7 +164,8 @@ fun LazyHospital(
     LazyRow {
         items(miListaHosp) { hospital ->
             Card(modifier = Modifier
-                .padding(20.dp).size(250.dp)
+                .padding(20.dp)
+                .size(250.dp)
                 .clickable {
                     selectedHospital.value = hospital
                     viewModel.activaEditHosp()
@@ -169,7 +176,8 @@ fun LazyHospital(
                         painter = painterResource(id = R.drawable.barra_lateral_hosp),
                         contentDescription = "Hosp avatar",
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .height(200.dp)
                     )
                     Text(

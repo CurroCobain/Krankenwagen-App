@@ -24,6 +24,8 @@ class AmbulancesViewModel : ViewModel() {
 
     var hosp = MutableStateFlow("")
 
+    var ambulanceMessage = MutableStateFlow("")
+
 
     fun saveAmbulance() {
         viewModelScope.launch {
@@ -37,10 +39,10 @@ class AmbulancesViewModel : ViewModel() {
             firestore.collection("Ambulances")
                 .add(myAmbulance)
                 .addOnSuccessListener {
-                    krankenwagenViewModel.message.value = "Se guardó la ambulancia en la base de datos"
+                    ambulanceMessage. value = "Se guardó la ambulancia en la base de datos"
                 }
                 .addOnFailureListener {
-                    krankenwagenViewModel.message.value = " No se pudo guardar la ambulancia, revise los datos"
+                    ambulanceMessage.value = " No se pudo guardar la ambulancia, revise los datos"
                 }
         }
 
@@ -64,19 +66,19 @@ class AmbulancesViewModel : ViewModel() {
                             )
                             doc.reference.set(updatedAmbulance)
                                 .addOnSuccessListener {
-                                    krankenwagenViewModel.message.value = "Se actualizó la ambulancia en la base de datos"
+                                    ambulanceMessage. value = "Se actualizó la ambulancia en la base de datos"
                                     onSuccess()
                                 }
                                 .addOnFailureListener {
-                                    krankenwagenViewModel.message.value = "No se pudo actualizar la ambulancia, revise los datos"
+                                    ambulanceMessage. value = "No se pudo actualizar la ambulancia, revise los datos"
                                 }
                         }
                     }
                 } else {
-                    krankenwagenViewModel.message.value = "La ambulancia con ID $id no existe en la base de datos"
+                    ambulanceMessage. value = "La ambulancia con ID $id no existe en la base de datos"
                 }
             }.addOnFailureListener {
-                krankenwagenViewModel.message.value = "Error al acceder a la base de datos"
+                ambulanceMessage. value = "Error al acceder a la base de datos"
             }
         }
     }
@@ -90,18 +92,18 @@ class AmbulancesViewModel : ViewModel() {
                     document?.let { doc ->
                         doc.reference.delete()
                             .addOnSuccessListener {
-                                krankenwagenViewModel.message.value = "Se eliminó la ambulancia de la base de datos"
+                                ambulanceMessage. value = "Se eliminó la ambulancia de la base de datos"
                                 onSuccess()
                             }
                             .addOnFailureListener {
-                                krankenwagenViewModel.message.value = "No se pudo eliminar la ambulancia, intente nuevamente"
+                                ambulanceMessage. value = "No se pudo eliminar la ambulancia, intente nuevamente"
                             }
                     }
                 } else {
-                    krankenwagenViewModel.message.value = "La ambulancia con ID $id no existe en la base de datos"
+                    ambulanceMessage. value = "La ambulancia con ID $id no existe en la base de datos"
                 }
             }.addOnFailureListener {
-                krankenwagenViewModel.message.value = "Error al acceder a la base de datos"
+                ambulanceMessage. value = "Error al acceder a la base de datos"
             }
         }
     }
@@ -149,7 +151,7 @@ class AmbulancesViewModel : ViewModel() {
         isFree.value = false
         type.value = AmbulanceTypes.doctor
         hosp.value = ""
-        krankenwagenViewModel.message.value = ""
+        ambulanceMessage. value = ""
     }
 
     fun asignAmbFields(ambulance: Ambulance){
@@ -158,5 +160,8 @@ class AmbulancesViewModel : ViewModel() {
         isFree.value = ambulance.isFree
         type.value = ambulance.types
         hosp.value = ambulance.hospital
+    }
+    fun setMessage(text: String) {
+        ambulanceMessage.value = text
     }
 }

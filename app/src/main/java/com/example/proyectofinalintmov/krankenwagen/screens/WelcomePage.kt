@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -167,7 +168,6 @@ fun ContenidoWelcome(
                 }
             )
         }
-        Text(text = viewModel.message.value)
         // Si se pulsa menú se abre el diálogo correspondiente
         if (menuDesplegado) {
             DialogMenu(viewModel, sesionViewModel)
@@ -200,7 +200,9 @@ fun BarraMenu(viewModel: KrankenwagenViewModel) {
                 .height(80.dp),
             onMenuTapped = { viewModel.openCloseMenu() }
         )
-        Spacer(modifier = Modifier.fillMaxWidth(0.9f))
+        Spacer(modifier = Modifier
+            .fillMaxWidth(0.9f)
+            .align(Alignment.CenterVertically))
         // Icono registrarse/iniciar sesión
         Sesion(
             modifier = Modifier

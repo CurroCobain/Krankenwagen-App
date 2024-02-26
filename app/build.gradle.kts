@@ -77,4 +77,5 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
     // DCS - Base de datos Firestore
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-alpha06")
 }
