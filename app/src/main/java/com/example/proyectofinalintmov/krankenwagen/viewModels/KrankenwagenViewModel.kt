@@ -19,11 +19,11 @@ import kotlin.system.exitProcess
 
 /**
  * viewModel de la app
- * @param showMenu se usa para desplegar el menú de opciones
- * @param userRegistered se usa para gestionar el acceso a las funciones de edición de la app
- * @param listAmbulances lista que almacena las ambulancias filtradas
- * @param listCentros lista que almacena los centros filtrados
- * @param listHospitals lista que almacena los hospitales filtrados
+ * @property showMenu se usa para desplegar el menú de opciones
+ * @property userRegistered se usa para gestionar el acceso a las funciones de edición de la app
+ * @property listAmbulances lista que almacena las ambulancias filtradas
+ * @property listCentros lista que almacena los centros filtrados
+ * @property listHospitals lista que almacena los hospitales filtrados
  */
 class KrankenwagenViewModel : ViewModel() {
     private val firestore = Firebase.firestore
@@ -60,30 +60,36 @@ class KrankenwagenViewModel : ViewModel() {
     val editAmb = MutableStateFlow(false)
 
     fun getHosp(provincia: String) {
-        firestore.collection("Hospitals").whereEqualTo("county", provincia).get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    listHospitals.value.add(document.toObject(Hospital::class.java))
+        viewModelScope.launch {
+            firestore.collection("Hospitals").whereEqualTo("county", provincia).get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        listHospitals.value.add(document.toObject(Hospital::class.java))
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                // TODO: añadir mensaje a campo de información, se debe crear campo de información
-            }
+                .addOnFailureListener { exception ->
+                    // TODO: añadir mensaje a campo de información, se debe crear campo de información
+                }
+        }
+
     }
 
     /**
      * Filtra las ambulancias por hospital de referencia
      */
     fun getAmb(hospital: String) {
-        firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+        viewModelScope.launch {
+            firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                    }
                 }
-            }
-            .addOnFailureListener { exception ->
-                // TODO: añadir mensaje a campo de información, se debe crear campo de información 
-            }
+                .addOnFailureListener { exception ->
+                    // TODO: añadir mensaje a campo de información, se debe crear campo de información
+                }
+        }
+
     }
 
     fun getAllAmb(onSuccess: () -> Unit) {
@@ -104,6 +110,25 @@ class KrankenwagenViewModel : ViewModel() {
                 }
         }
 
+    }
+
+    fun getAllHosp(onSuccess: () -> Unit) {
+        listHospitals.value.clear()
+        viewModelScope.launch {
+            firestore.collection("Hospitals")
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        listHospitals.value.add(document.toObject(Hospital::class.java))
+                    }
+                }
+                .addOnCompleteListener {
+                    onSuccess()
+                }
+                .addOnFailureListener { exception ->
+                    message.value = "Error al recuperar los hospitales"
+                }
+        }
     }
 
 
@@ -152,6 +177,10 @@ class KrankenwagenViewModel : ViewModel() {
      */
     fun acCreateAmb() {
         createAmb.value = !createAmb.value
+    }
+
+    fun acCreateHosp(){
+        createHosp.value = !createHosp.value
     }
 
     fun setMessage(text: String) {

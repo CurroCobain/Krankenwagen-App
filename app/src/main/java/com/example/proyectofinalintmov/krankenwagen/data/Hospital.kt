@@ -14,7 +14,8 @@ data class Hospital(
     var name: String,
     val county: String,
     val city: String,
-    var ambulances: MutableList<Ambulance>,
     val address: String,
-
     )
+{
+    constructor(): this("hosp1", "Hospital random de Cádiz", "Cádiz","Cádiz","Calle 1 de Cádiz")
+}

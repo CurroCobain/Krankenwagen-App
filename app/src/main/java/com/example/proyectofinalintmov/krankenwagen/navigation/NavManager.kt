@@ -8,10 +8,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.screens.Ambulances
-import com.example.proyectofinalintmov.krankenwagen.screens.Clinics
+import com.example.proyectofinalintmov.krankenwagen.screens.Create
 import com.example.proyectofinalintmov.krankenwagen.screens.Hospitals
 import com.example.proyectofinalintmov.krankenwagen.screens.WelcomePage
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
@@ -23,7 +24,8 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 fun NavManager(
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
-    ambulancesViewModel: AmbulancesViewModel)
+    ambulancesViewModel: AmbulancesViewModel,
+    hospitalViewModel: HospitalViewModel)
 {
     val navController = rememberNavController()
     val showMenu by viewModel.showMenu.collectAsState()
@@ -42,6 +44,6 @@ fun NavManager(
         composable(Routes.PantallaHospitals.route) {
             Hospitals(navController, viewModel, showMenu,userRegistered, sesionViewModel) }
         composable(Routes.PantallaDocs.route) {
-            Clinics(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel) }
+            Create(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel) }
     }
 }

@@ -15,6 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Switch
@@ -40,32 +43,187 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
-import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 
 @Composable
 fun EditarHosp(
     viewModel: KrankenwagenViewModel,
-    hospital: Hospital
+    hospitalViewModel: HospitalViewModel,
 ) {
+    val idHosp by hospitalViewModel.idHosp.collectAsState()
+    val name by hospitalViewModel.name.collectAsState()
+    val county by hospitalViewModel.county.collectAsState()
+    val city by hospitalViewModel.city.collectAsState()
+    val address by hospitalViewModel.address.collectAsState()
+    val listAmbs by viewModel.listAmbulancias.collectAsState()
+    val message by hospitalViewModel.hospMessage.collectAsState()
+    val context = LocalContext.current
     Dialog(
-        onDismissRequest = { viewModel.activaEditHosp() })
-    {
+        onDismissRequest = {
+            viewModel.activaEditAmb()
+            hospitalViewModel.setMessage("")
+        }
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.5f),
+                .fillMaxHeight(0.7f),
             shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 modifier = Modifier
+                    .fillMaxWidth(0.7f)
                     .fillMaxSize()
-                    .background(color = Color(225, 241, 222))
+                    .background(color = Color(225, 241, 222)),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
-                Text(text = hospital.name)
+                Text(
+                    text = "id: $idHosp",
+                    fontSize = 30.sp,
+                    modifier = Modifier.background(color = Color.LightGray)
+                )
+                Text(
+                    text = "Provincia: $county",
+                    fontSize = 30.sp,
+                    modifier = Modifier.background(color = Color.LightGray)
+                )
+                Text(
+                    text = "Ciudad: $city",
+                    fontSize = 30.sp,
+                    modifier = Modifier.background(color = Color.LightGray)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Campo de edición para el nombre del hospital
+                TextField(
+                    value = name,
+                    onValueChange = { newValue ->
+                        hospitalViewModel.setName(name)
+                    },
+                    label = {
+                        Text(
+                            "Nombre",
+                            fontSize = 30.sp
+                        )
+                    },
+                    modifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 30.sp)
+                )
+                TextField(
+                    value = address,
+                    onValueChange = { newValue ->
+                        hospitalViewModel.setAddress(address)
+                    },
+                    label = {
+                        Text(
+                            "Dirección",
+                            fontSize = 30.sp
+                        )
+                    },
+                    modifier = Modifier.padding(8.dp),
+                    textStyle = TextStyle(fontSize = 30.sp)
+                )
+
+                Spacer(modifier = Modifier.height(30.dp))
+                Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+                    Button(
+                        onClick = {
+                            hospitalViewModel.updateHosp(idHosp) {
+                                Toast.makeText(
+                                    context,
+                                    "Ambulancia actualizada correctamente",
+                                    Toast.LENGTH_SHORT
+                                )
+                                viewModel.getAllHosp { viewModel.activaEditHosp() }
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
+                        Text(
+                            text = "Guardar",
+                            fontSize = 20.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Button(
+                        onClick = {
+                            hospitalViewModel.deleteHosp(idHosp) {
+                                Toast.makeText(
+                                    context,
+                                    "Ambulancia borrada correctamente",
+                                    Toast.LENGTH_SHORT
+                                )
+                                viewModel.getAllHosp { viewModel.activaEditHosp() }
+                            }
+                            viewModel.activaEditAmb()
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
+                        Text(
+                            text = "Borrar ambulancia",
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(8.dp))
+                Row(horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth(0.7f)) {
+                    Button(
+                        onClick = {
+                            hospitalViewModel.resetFields()
+                            viewModel.activaEditHosp()
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
+                        Text(
+                            text = "Volver",
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+                Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                {
+                    Text(
+                        text = message!!,
+                        color = Color.Red
+                    )
+                }
             }
         }
+        Column(horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize())
+        {
+            LazyColumn(){
+                items(listAmbs){ ambulance ->
+                    Button(onClick = {} ,
+                        modifier = Modifier.wrapContentSize(),
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
+                        Text(text = ambulance.plate)
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+
+
+@Composable
+fun AmbulanceItem(ambulance: Ambulance) {
+    Button(
+        onClick = { /* Handle button click */ },
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .fillMaxWidth()
+    ) {
+        Text(text = ambulance.plate)
     }
 }
 
@@ -253,10 +411,3 @@ fun EditarAmb(
         }
     }
 }
-
-/**
- * Todo
- * agregar texto resultado a crear ambulances
- * al crear cargar de nuevo las ambulances de la base de datos
- * al borrar desactivar edicion
- */

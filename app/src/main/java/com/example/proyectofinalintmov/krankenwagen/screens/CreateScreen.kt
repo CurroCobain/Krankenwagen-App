@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 
 @Composable
@@ -183,3 +184,129 @@ fun CreateAmbulance(
         }
     }
 }
+
+@Composable
+fun CreateHospital(
+    hospitalViewModel: HospitalViewModel,
+    viewModel: KrankenwagenViewModel
+) {
+    val id by hospitalViewModel.idHosp.collectAsState()
+    val name by hospitalViewModel.name.collectAsState()
+    val county by hospitalViewModel.county.collectAsState()
+    val city by hospitalViewModel.city.collectAsState()
+    val address by hospitalViewModel.address.collectAsState()
+    val message by hospitalViewModel.hospMessage.collectAsState()
+
+    Dialog(
+        onDismissRequest = { viewModel.acCreateHosp() }
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.7f),
+            shape = RoundedCornerShape(10.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color(225, 241, 222)),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                // Campo de edición para el id
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    TextField(
+                        value = id,
+                        onValueChange = { newValue ->
+                            hospitalViewModel.setIdHosp(newValue)
+                        },
+                        label = { Text("Identificador") },
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+                // Campo de edición para el nombre
+                TextField(
+                    value = name,
+                    onValueChange = { newValue ->
+                        hospitalViewModel.setName(newValue)
+                    },
+                    label = { Text("Nombre") },
+                    modifier = Modifier.padding(8.dp)
+                )
+
+                // Campo de edición para el condado
+                TextField(
+                    value = county,
+                    onValueChange = { newValue ->
+                        hospitalViewModel.setCounty(newValue)
+                    },
+                    label = { Text("Condado") },
+                    modifier = Modifier.padding(8.dp)
+                )
+
+                // Campo de edición para la ciudad
+                TextField(
+                    value = city,
+                    onValueChange = { newValue ->
+                        hospitalViewModel.setCity(newValue)
+                    },
+                    label = { Text("Ciudad") },
+                    modifier = Modifier.padding(8.dp)
+                )
+
+                // Campo de edición para la dirección
+                TextField(
+                    value = address,
+                    onValueChange = { newValue ->
+                        hospitalViewModel.setAddress(newValue)
+                    },
+                    label = { Text("Dirección") },
+                    modifier = Modifier.padding(8.dp)
+                )
+
+                // Botones
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(vertical = 16.dp)
+                ) {
+                    Button(onClick = {
+                        // Guarda el hospital con los datos ingresados
+                        hospitalViewModel.saveHospital()
+                    }) {
+                        Text("Guardar")
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Button(onClick = {
+                        // Borra todos los campos
+                        hospitalViewModel.resetFields()
+
+                    }) {
+                        Text("Limpiar")
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Button(onClick = {
+                        // Cierra el diálogo
+                        viewModel.acCreateHosp()
+                        hospitalViewModel.resetFields()
+                    }) {
+                        Text("Cerrar")
+                    }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    Text(
+                        text = message!!,
+                        color = Color.Red
+                    )
+                }
+            }
+        }
+    }
+}
+

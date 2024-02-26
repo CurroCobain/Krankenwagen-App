@@ -115,7 +115,11 @@ fun ContenidoAmbulances(
                         navController.navigate(Routes.PantallaAmbulances.route)
                     }
                 },
-                onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
+                onHospTapped = {
+                    viewModel.getAllHosp {
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
+                },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
             Text(text = "Ambulances")
             Column(
