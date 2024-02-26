@@ -117,7 +117,11 @@ fun ContenidoWelcome(
                         navController.navigate(Routes.PantallaAmbulances.route)
                     }
                 },
-                onHospTapped = { navController.navigate(Routes.PantallaHospitals.route) },
+                onHospTapped = {
+                    viewModel.getAllHosp {
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
+                },
                 onDocTapped = { navController.navigate(Routes.PantallaDocs.route) }
             )
             // Scroll con las imágenes de las provincias para poder filtrar los datos
@@ -200,9 +204,11 @@ fun BarraMenu(viewModel: KrankenwagenViewModel) {
                 .height(80.dp),
             onMenuTapped = { viewModel.openCloseMenu() }
         )
-        Spacer(modifier = Modifier
-            .fillMaxWidth(0.9f)
-            .align(Alignment.CenterVertically))
+        Spacer(
+            modifier = Modifier
+                .fillMaxWidth(0.9f)
+                .align(Alignment.CenterVertically)
+        )
         // Icono registrarse/iniciar sesión
         Sesion(
             modifier = Modifier
