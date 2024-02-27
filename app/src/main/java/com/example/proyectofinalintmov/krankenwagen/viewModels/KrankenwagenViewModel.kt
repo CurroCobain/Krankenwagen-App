@@ -75,6 +75,7 @@ class KrankenwagenViewModel : ViewModel() {
 
 
     fun getAllAmb(onSuccess: () -> Unit) {
+        firestore.clearPersistence()
         listAmbulancias.value.clear()
         viewModelScope.launch {
             firestore.collection("Ambulances")
@@ -98,22 +99,22 @@ class KrankenwagenViewModel : ViewModel() {
      * Filtra las ambulancias por hospital de referencia
      */
     fun getAmb(hospital: String, onSuccess: () -> Unit) {
+        firestore.clearPersistence()
         listAmbulancias.value.clear()
-        viewModelScope.launch {
-            firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        listAmbulancias.value.add(document.toObject(Ambulance::class.java))
-                        onSuccess()
-                    }
+        firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                    onSuccess()
                 }
-                .addOnFailureListener { exception ->
-                    // TODO: añadir mensaje a campo de información, se debe crear campo de información
-                }
-        }
+            }
+            .addOnFailureListener { exception ->
+                // TODO: añadir mensaje a campo de información, se debe crear campo de información
+            }
     }
 
     fun getAllHosp(onSuccess: () -> Unit) {
+        firestore.clearPersistence()
         listHospitals.value.clear()
         viewModelScope.launch {
             firestore.collection("Hospitals")
@@ -172,6 +173,7 @@ class KrankenwagenViewModel : ViewModel() {
     fun activaEditHosp() {
         editHosp.value = !editHosp.value
     }
+
     /**
      * Activa o desactiva la creación de ambulancias
      */
@@ -179,11 +181,15 @@ class KrankenwagenViewModel : ViewModel() {
         createAmb.value = !createAmb.value
     }
 
-    fun acCreateHosp(){
+    fun acCreateHosp() {
         createHosp.value = !createHosp.value
     }
 
     fun setMessage(text: String) {
         message.value = text
+    }
+
+    fun clearCache(){
+        firestore.clearPersistence()
     }
 }

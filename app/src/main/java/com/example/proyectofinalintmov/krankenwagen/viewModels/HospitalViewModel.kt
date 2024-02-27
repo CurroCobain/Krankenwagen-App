@@ -1,14 +1,11 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 
 /**
  * ViewModel para la gestión de los Hospitales
@@ -48,15 +45,17 @@ class HospitalViewModel : ViewModel() {
         private set
 
     // Almacena el mensaje de respuesta del sistema
-    var hospMessage = MutableStateFlow("")
+    var hospMessage = MutableStateFlow(0)
         private set
+
+    // Muestra la lista de ambulancias asociadas al hospital
+    var muestrAmbs = MutableStateFlow(false)
 
 
     /**
-     * Función para guardar un hosptial en la base de datos
+     * Función para guardar un hospital en la base de datos
      */
     fun saveHospital() {
-        viewModelScope.launch {
             // Creamos un objeto de tipo Hospital con los valores actuales
             val myHosp = Hospital(
                 idHosp.value,
@@ -65,74 +64,85 @@ class HospitalViewModel : ViewModel() {
                 city.value,
                 address.value
             )
+            // Verificamos si ya existe un hospital con el mismo nombre
             firestore.collection("Hospitals")
-                // Guardamos el objeto en la base de datos
-                .add(myHosp)
-                .addOnSuccessListener {
-                    // Si se completa correctamente modificamos el mensaje del sistema
-                    hospMessage.value = "Se guradó el hospital en la base de datos"
+                .whereEqualTo("id", myHosp.id) // Buscamos documentos con el mismo nombre
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
+                        // Si existe un hospital con el mismo nombre, mostramos un mensaje de error
+                        hospMessage.value = 1
+                    } else {
+                        firestore.collection("Hospitals")
+                            // Guardamos el objeto en la base de datos
+                            .add(myHosp)
+                            .addOnSuccessListener {
+                                // Si se completa correctamente modificamos el mensaje del sistema
+                                hospMessage.value = 2
+                            }
+                            // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
+                            .addOnFailureListener {
+                                hospMessage.value = 3
+                            }
+                    }
                 }
-                // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
-                .addOnFailureListener {
-                    hospMessage.value = " No se pudo guardar el hospital, revise los datos"
-                }
-        }
+
     }
 
     /**
      * Función para actualizar un hospital en la base de datos
      */
-    fun updateHosp(id: String, onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            // Buscamos en la base de datos un hospital con el id recibido
-            val hospRef = firestore.collection("Hospitals").whereEqualTo("id", id)
-            hospRef.get().addOnSuccessListener { querySnapshot ->
-                // Si la consulta devuelve una respuesta positiva
-                if (querySnapshot.isEmpty) {
-                    val document = querySnapshot.documents.firstOrNull()
-                    document?.let { doc ->
-                        // Convertimos en un objeto de tipo hospital el valor recibido
+    fun updateHosp(onSuccess: () -> Unit) {
+        // Consultamos la base de datos para encontrar el hospital con el campo "id" igual a idHosp.value
+        firestore.collection("Hospitals")
+            .whereEqualTo("id", idHosp.value)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                // Si la consulta devuelve resultados
+                if (!querySnapshot.isEmpty) {
+                    // Iteramos sobre los documentos encontrados (en caso de que haya más de uno)
+                    querySnapshot.documents.forEach { doc ->
+                        // Convertimos el documento a un objeto de tipo Hospital
                         val hospital = doc.toObject<Hospital>()
                         hospital?.let {
                             // Actualizamos los valores del objeto
                             val updatedHosp = Hospital(
-                                id,
+                                idHosp.value,
                                 name.value,
                                 county.value,
                                 city.value,
                                 address.value
                             )
-                            // Guardamos los nuevos valores en la base de datos
+                            // Guardamos los nuevos valores en el documento
                             doc.reference.set(updatedHosp)
                                 .addOnSuccessListener {
-                                    // Modificamos el mensaje de respuesta
-                                    hospMessage.value = "Se actualizó el hospital correctamente"
+                                    // La actualización fue exitosa
+                                    hospMessage.value = 4
                                     onSuccess()
                                 }
-                                .addOnFailureListener {
-                                    // Modificamos el mensaje de respuesta
-                                    hospMessage.value =
-                                        " No se puedo actualizar el hospital, revise los datos"
+                                .addOnFailureListener { e ->
+                                    // Ocurrió un error durante la actualización
+                                    hospMessage.value = 5
                                 }
                         }
-
                     }
                 } else {
-                    hospMessage.value = "El hospital con ID $id no existe en la base de datos"
+                    // No se encontró ningún hospital con el campo "id" igual a idHosp.value
+                    hospMessage.value = 6
                 }
-            }.addOnFailureListener {
-                hospMessage.value = "Error al acceder a la base de datos"
             }
-        }
+            .addOnFailureListener { e ->
+                // Ocurrió un error al realizar la consulta
+                hospMessage.value = 7
+            }
     }
 
     /**
      * Función para borrar un hospital en la base de datos
      */
     fun deleteHosp(id: String, onSuccess: () -> Unit) {
-        viewModelScope.launch {
             // Buscamos en la base de datos un hospital con el id recibido
-            val hospRef = firestore.collection("Hospitals").whereEqualTo("id", id)
+            val hospRef = firestore.collection("Hospitals").whereEqualTo("id", idHosp.value)
             hospRef.get().addOnSuccessListener { querySnapshot ->
                 // Si la consulta devuelve una respuesta positiva
                 if (querySnapshot.isEmpty) {
@@ -141,20 +151,20 @@ class HospitalViewModel : ViewModel() {
                         // Borramos el hospital de la base de datos
                         doc.reference.delete()
                             .addOnSuccessListener {
-                                hospMessage.value = "Hospital borrado correctamente"
+                                hospMessage.value = 8
                                 onSuccess()
                             }
                             .addOnFailureListener {
-                                hospMessage.value = "No se pudo borrar el hospital"
+                                hospMessage.value = 9
                             }
                     }
                 } else {
-                    hospMessage.value = "El hospital con ID $id no existe en la base de datos"
+                    hospMessage.value = 6
                 }
             }.addOnFailureListener {
-                hospMessage.value = "Error al acceder a la base de datos"
+                hospMessage.value = 7
             }
-        }
+
     }
 
     /**
@@ -192,6 +202,16 @@ class HospitalViewModel : ViewModel() {
         address.value = text
     }
 
+    /*
+    /**
+     * Función para cambiar el valor de muestrAmbs
+     */
+    fun setMuestrAmbs(){
+        muestrAmbs.value = !muestrAmbs.value
+    }
+
+     */
+
     /**
      * Resetea todos los valores
      */
@@ -202,7 +222,7 @@ class HospitalViewModel : ViewModel() {
         city.value = ""
         address.value = ""
         krankenwagenViewModel.listAmbulancias.value.clear()
-        hospMessage.value = ""
+        hospMessage.value = 0
     }
 
     /**
@@ -214,15 +234,26 @@ class HospitalViewModel : ViewModel() {
         county.value = hospital.county
         city.value = hospital.city
         address.value = hospital.address
+        muestrAmbs.value = false
         onSuccess()
-
     }
 
     /**
      * Función para actualizar el mensaje del sistema
      */
-    fun setMessage(text: String) {
-        hospMessage.value = text
+    fun setHospMessage(): String {
+        return when(hospMessage.value){
+            1 -> "Ya existe un hospital con este nombre en la base de datos"
+            2 -> "Se guardó el hospital en la base de datos"
+            3 -> "No se pudo guardar el hospital, revise los datos"
+            4 -> "Se actualizó el hospital correctamente"
+            5 -> "No se puedo actualizar el hospital, revise los datos"
+            6 -> "El hospital con ID indicado no existe en la base de datos"
+            7 -> "Error al acceder a la base de datos"
+            8 -> "Hospital borrado correctamente"
+            9 -> "No se pudo borrar el hospital"
+            else -> ""
+        }
     }
 
 }

@@ -38,10 +38,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
@@ -51,6 +51,7 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewM
 fun EditarHosp(
     viewModel: KrankenwagenViewModel,
     hospitalViewModel: HospitalViewModel,
+    ambulancesViewModel: AmbulancesViewModel
 ) {
     val idHosp by hospitalViewModel.idHosp.collectAsState()
     val name by hospitalViewModel.name.collectAsState()
@@ -58,8 +59,8 @@ fun EditarHosp(
     val city by hospitalViewModel.city.collectAsState()
     val address by hospitalViewModel.address.collectAsState()
     val listAmbs by viewModel.listAmbulancias.collectAsState()
-    val message by hospitalViewModel.hospMessage.collectAsState()
     val context = LocalContext.current
+    var muestrAmbs = remember { mutableStateOf( false) }
     Dialog(
         onDismissRequest = {
             viewModel.activaEditHosp()
@@ -69,159 +70,187 @@ fun EditarHosp(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.7f),
+                .fillMaxHeight(0.8f),
             shape = RoundedCornerShape(10.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(0.7f)
-                    .fillMaxSize()
-                    .background(color = Color(225, 241, 222)),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "id: $idHosp",
-                    fontSize = 30.sp,
-                    modifier = Modifier.background(color = Color.LightGray)
-                )
-                Text(
-                    text = "Provincia: $county",
-                    fontSize = 30.sp,
-                    modifier = Modifier.background(color = Color.LightGray)
-                )
-                Text(
-                    text = "Ciudad: $city",
-                    fontSize = 30.sp,
-                    modifier = Modifier.background(color = Color.LightGray)
-                )
+            Row(modifier = Modifier.fillMaxSize()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .fillMaxSize()
+                        .background(color = Color(225, 241, 222)),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Id: $idHosp",
+                        fontSize = 30.sp,
+                        modifier = Modifier.background(color = Color.LightGray)
+                    )
+                    Text(
+                        text = "Provincia: $county",
+                        fontSize = 30.sp,
+                        modifier = Modifier.background(color = Color.LightGray)
+                    )
+                    Text(
+                        text = "Ciudad: $city",
+                        fontSize = 30.sp,
+                        modifier = Modifier.background(color = Color.LightGray)
+                    )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                // Campo de edición para el nombre del hospital
-                TextField(
-                    value = name,
-                    onValueChange = { newValue ->
-                        hospitalViewModel.setName(name)
-                    },
-                    label = {
-                        Text(
-                            "Nombre",
-                            fontSize = 30.sp
-                        )
-                    },
-                    modifier = Modifier.padding(8.dp),
-                    textStyle = TextStyle(fontSize = 30.sp)
-                )
-                TextField(
-                    value = address,
-                    onValueChange = { newValue ->
-                        hospitalViewModel.setAddress(address)
-                    },
-                    label = {
-                        Text(
-                            "Dirección",
-                            fontSize = 30.sp
-                        )
-                    },
-                    modifier = Modifier.padding(8.dp),
-                    textStyle = TextStyle(fontSize = 30.sp)
-                )
-
-                Spacer(modifier = Modifier.height(30.dp))
-                Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-                    Button(
-                        onClick = {
-                            hospitalViewModel.updateHosp(idHosp) {
-                                Toast.makeText(
-                                    context,
-                                    "Hospital actualizado correctamente",
-                                    Toast.LENGTH_SHORT
-                                )
-                                viewModel.getAllHosp { viewModel.activaEditHosp() }
-                            }
+                    // Campo de edición para el nombre del hospital
+                    TextField(
+                        value = name,
+                        onValueChange = { newValue ->
+                            hospitalViewModel.setName(newValue)
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
-                    ) {
-                        Text(
-                            text = "Guardar",
-                            fontSize = 20.sp
-                        )
+                        label = {
+                            Text(
+                                "Nombre",
+                                fontSize = 30.sp
+                            )
+                        },
+                        modifier = Modifier.padding(8.dp),
+                        textStyle = TextStyle(fontSize = 30.sp)
+                    )
+                    TextField(
+                        value = address,
+                        onValueChange = { newValue ->
+                            hospitalViewModel.setAddress(newValue)
+                        },
+                        label = {
+                            Text(
+                                "Dirección",
+                                fontSize = 30.sp
+                            )
+                        },
+                        modifier = Modifier.padding(8.dp),
+                        textStyle = TextStyle(fontSize = 30.sp)
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+                        Button(
+                            onClick = {
+                                hospitalViewModel.updateHosp() {
+                                    Toast.makeText(
+                                        context,
+                                        hospitalViewModel.setHospMessage(),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        ) {
+                            Text(
+                                text = "Guardar",
+                                fontSize = 20.sp
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(8.dp))
+                        Button(
+                            onClick = {
+                                hospitalViewModel.deleteHosp(idHosp) {
+                                    Toast.makeText(
+                                        context,
+                                        hospitalViewModel.setHospMessage(),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        ) {
+                            Text(
+                                text = "Borrar hospital",
+                                fontSize = 20.sp
+                            )
+                        }
                     }
                     Spacer(modifier = Modifier.padding(8.dp))
-                    Button(
-                        onClick = {
-                            hospitalViewModel.deleteHosp(idHosp) {
-                                Toast.makeText(
-                                    context,
-                                    "Hospital borrado correctamente",
-                                    Toast.LENGTH_SHORT
-                                )
-                                viewModel.getAllHosp { viewModel.activaEditHosp() }
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(
-                            text = "Borrar hospital",
-                            fontSize = 20.sp
-                        )
+                        Button(
+                            onClick = {
+                                viewModel.getAmb(idHosp) {
+                                    muestrAmbs.value = true
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        ) {
+                            Text(
+                                text = "Ver ambulancias",
+                                fontSize = 20.sp
+                            )
+                        }
+                        Button(
+                            onClick = {
+                                viewModel.getAllAmb {
+                                    viewModel.getAllHosp {
+                                        hospitalViewModel.resetFields()
+                                        viewModel.activaEditHosp()
+                                    }
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        ) {
+                            Text(
+                                text = "Volver",
+                                fontSize = 20.sp
+                            )
+                        }
                     }
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
-                Row(horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth(0.7f)) {
-                    Button(
-                        onClick = {
-                            viewModel.activaEditHosp()
-                        },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
-                    ) {
-                        Text(
-                            text = "Volver",
-                            fontSize = 20.sp
-                        )
-                    }
-                }
-                Row(modifier = Modifier.align(Alignment.CenterHorizontally))
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                )
                 {
-                    Text(
-                        text = message!!,
-                        color = Color.Red
-                    )
-                }
-            }
-        }
-        Column(horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize())
-        {
-            LazyColumn(){
-                items(listAmbs){ ambulance ->
-                    Button(onClick = {} ,
-                        modifier = Modifier.wrapContentSize(),
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
-                    ) {
-                        Text(text = ambulance.plate)
+                    if (muestrAmbs.value) {
+                        Row(verticalAlignment = Alignment.Top)
+                        {
+                            Text(
+                                text = "Listado de ambulancias:",
+                                textAlign = TextAlign.Center,
+                                fontSize = 20.sp
+                            )
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                        {
+                            LazyColumn {
+                                items(listAmbs) { ambulance ->
+                                    Button(
+                                        onClick = {
+                                            ambulancesViewModel.asignAmbFields(ambulance)
+                                            viewModel.activaEditAmb()
+                                            viewModel.activaEditHosp()
+                                        },
+                                        modifier = Modifier.wrapContentSize(),
+                                        colors = ButtonDefaults.buttonColors(
+                                            if (!ambulance.isFree)
+                                                Color.Red
+                                            else
+                                                Color(74, 121, 66)
+                                        )
+                                    ) {
+                                        Text(text = ambulance.plate)
+                                    }
+                                }
+
+                            }
+                        }
                     }
                 }
-
             }
+
         }
-    }
-}
-
-
-
-@Composable
-fun AmbulanceItem(ambulance: Ambulance) {
-    Button(
-        onClick = { /* Handle button click */ },
-        modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-            .fillMaxWidth()
-    ) {
-        Text(text = ambulance.plate)
     }
 }
 
@@ -244,7 +273,7 @@ fun EditarAmb(
     Dialog(
         onDismissRequest = {
             viewModel.activaEditAmb()
-            ambulancesViewModel.setMessage("")
+            ambulancesViewModel.setMessage()
         },
     ) {
         Card(
@@ -344,13 +373,12 @@ fun EditarAmb(
                 Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                     Button(
                         onClick = {
-                            ambulancesViewModel.updateAmbulance(id) {
+                            ambulancesViewModel.updateAmbulance() {
                                 Toast.makeText(
                                     context,
-                                    "Ambulancia actualizada correctamente",
+                                    ambulancesViewModel.setMessage(),
                                     Toast.LENGTH_SHORT
-                                )
-                                viewModel.getAllAmb { viewModel.activaEditAmb() }
+                                ).show()
                             }
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -363,13 +391,12 @@ fun EditarAmb(
                     Spacer(modifier = Modifier.padding(8.dp))
                     Button(
                         onClick = {
-                            ambulancesViewModel.deleteAmbulance(id) {
+                            ambulancesViewModel.deleteAmbulance() {
                                 Toast.makeText(
                                     context,
-                                    "Ambulancia borrada correctamente",
+                                    ambulancesViewModel.setMessage(),
                                     Toast.LENGTH_SHORT
-                                )
-                                viewModel.getAllAmb { viewModel.activaEditAmb() }
+                                ).show()
                             }
                             viewModel.activaEditAmb()
                         },
@@ -387,8 +414,12 @@ fun EditarAmb(
                 Row(horizontalArrangement = Arrangement.Center) {
                     Button(
                         onClick = {
-                            ambulancesViewModel.resetFields()
-                            viewModel.activaEditAmb()
+                            viewModel.getAllAmb {
+                                viewModel.getAllHosp {
+                                    ambulancesViewModel.resetFields()
+                                    viewModel.activaEditAmb()
+                                }
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
@@ -397,13 +428,6 @@ fun EditarAmb(
                             fontSize = 20.sp
                         )
                     }
-                }
-                Row(modifier = Modifier.align(Alignment.CenterHorizontally))
-                {
-                    Text(
-                        text = message!!,
-                        color = Color.Red
-                    )
                 }
             }
         }

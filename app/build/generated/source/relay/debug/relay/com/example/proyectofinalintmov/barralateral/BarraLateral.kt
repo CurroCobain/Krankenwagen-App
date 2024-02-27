@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.example.proyectofinalintmov.R
 import com.google.relay.compose.MainAxisAlignment
@@ -27,17 +29,27 @@ fun BarraLateral(
     onWelcTapped: () -> Unit = {},
     onHospTapped: () -> Unit = {},
     onAmbTapped: () -> Unit = {},
-    onDocTapped: () -> Unit = {}
+    onAddTapped: () -> Unit = {}
 ) {
     TopLevel(modifier = modifier) {
         Welc(onWelcTapped = onWelcTapped)
         Hosp(onHospTapped = onHospTapped)
         Amb(onAmbTapped = onAmbTapped)
-        Doc(onDocTapped = onDocTapped)
+        Add(onAddTapped = onAddTapped) {
+            Vector(
+                modifier = Modifier.boxAlign(
+                    alignment = Alignment.Center,
+                    offset = DpOffset(
+                        x = 0.0.dp,
+                        y = 0.0.dp
+                    )
+                )
+            )
+        }
     }
 }
 
-@Preview(widthDp = 144, heightDp = 790)
+@Preview(widthDp = 144, heightDp = 776)
 @Composable
 private fun BarraLateralPreview() {
     MaterialTheme {
@@ -45,7 +57,7 @@ private fun BarraLateralPreview() {
             onWelcTapped = {},
             onHospTapped = {},
             onAmbTapped = {},
-            onDocTapped = {}
+            onAddTapped = {}
         )
     }
 }
@@ -84,13 +96,23 @@ fun Amb(
 }
 
 @Composable
-fun Doc(
-    onDocTapped: () -> Unit,
-    modifier: Modifier = Modifier
-) {
+fun Vector(modifier: Modifier = Modifier) {
     RelayVector(
-        vector = painterResource(R.drawable.barra_lateral_doc),
-        modifier = modifier.tappable(onTap = onDocTapped).requiredWidth(100.0.dp).requiredHeight(114.28571319580078.dp)
+        vector = painterResource(R.drawable.barra_lateral_vector),
+        modifier = modifier.requiredWidth(100.0.dp).requiredHeight(100.0.dp)
+    )
+}
+
+@Composable
+fun Add(
+    onAddTapped: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable RelayContainerScope.() -> Unit
+) {
+    RelayContainer(
+        isStructured = false,
+        content = content,
+        modifier = modifier.tappable(onTap = onAddTapped).requiredWidth(100.0.dp).requiredHeight(100.0.dp)
     )
 }
 

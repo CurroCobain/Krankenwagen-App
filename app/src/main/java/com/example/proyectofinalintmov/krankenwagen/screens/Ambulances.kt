@@ -2,6 +2,7 @@ package com.example.proyectofinalintmov.krankenwagen.screens
 
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -95,6 +96,7 @@ fun ContenidoAmbulances(
     ambulancesViewModel: AmbulancesViewModel,
     sesionViewModel: SesionViewModel
 ) {
+    val context = LocalContext.current
     val message by ambulancesViewModel.ambulanceMessage.collectAsState()
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -109,19 +111,55 @@ fun ContenidoAmbulances(
         Row(modifier = Modifier.fillMaxSize()) {
             // Barra de navegación lateral
             BarraLateral(
-                onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
+                onWelcTapped = {
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        navController.navigate(Routes.PantallaWelcome.route)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                },
                 onAmbTapped = {
-                    viewModel.getAllAmb {
-                        navController.navigate(Routes.PantallaAmbulances.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getAllAmb {
+                            navController.navigate(Routes.PantallaAmbulances.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 onHospTapped = {
-                    viewModel.getAllHosp {
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getAllHosp {
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
-                onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
-            Text(text = "Ambulances")
+                onAddTapped = {
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        navController.navigate(Routes.PantallaDocs.route)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            )
             Column(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier.fillMaxSize()
@@ -133,7 +171,6 @@ fun ContenidoAmbulances(
                     arrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxSize()
                 )
-                Text(text = message!!)
             }
         }
         if (menuDesplegado) {

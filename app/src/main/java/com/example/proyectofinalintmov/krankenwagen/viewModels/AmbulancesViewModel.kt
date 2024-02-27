@@ -1,5 +1,6 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 class AmbulancesViewModel : ViewModel() {
     // Inicialización del objeto de Firestore para acceder a la base de datos Firestore de Firebase
     private val firestore = Firebase.firestore
+    private val krankenwagenViewModel = KrankenwagenViewModel()
 
     // Almacena el id de la ambulancia actual
     var idAmb = MutableStateFlow("")
@@ -44,15 +46,15 @@ class AmbulancesViewModel : ViewModel() {
         private set
 
     // Almacena el mensaje de respuesta del sistema
-    var ambulanceMessage = MutableStateFlow("")
+    var ambulanceMessage = MutableStateFlow(0)
         private set
+
 
 
     /**
      * Función para guardar una ambulancia en la base de datos
      */
     fun saveAmbulance() {
-        viewModelScope.launch {
             // Creamos un objeto de tipo Ambulance con los valores actuales
             val myAmbulance = Ambulance(
                 idAmb.value,
@@ -61,73 +63,120 @@ class AmbulancesViewModel : ViewModel() {
                 type.value,
                 hosp.value
             )
-            firestore.collection("Ambulances")
-                // Guardamos el objeto en la base de datos
-                .add(myAmbulance)
-                .addOnSuccessListener {
-                    // Si se completa correctamente modificamos el mensaje del sistema
-                    ambulanceMessage. value = "Se guardó la ambulancia en la base de datos"
+            // Verificamos si ya existe un hospital con el mismo ID que hosp.value
+            firestore.collection("Hospitals")
+                .whereEqualTo("id",myAmbulance.hospital) // Buscamos el documento con el mismo ID que hosp.value
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty()) {
+                        // Si existe un hospital con el mismo ID, continuamos verificando la ambulancia
+                        firestore.collection("Ambulances")
+                            .whereEqualTo("id", myAmbulance.id) // Buscamos documentos con el mismo ID
+                            .get()
+                            .addOnSuccessListener { querySnapshot ->
+                                if (!querySnapshot.isEmpty) {
+                                    // Si existe una ambulancia con el mismo ID, mostramos un mensaje de error
+                                    ambulanceMessage.value = 2
+                                } else {
+                                    // Si no existe, verificamos si ya existe una ambulancia con la misma matrícula
+                                    firestore.collection("Ambulances")
+                                        .whereEqualTo("plate", myAmbulance.plate) // Buscamos documentos con la misma matrícula
+                                        .get()
+                                        .addOnSuccessListener { querySnapshot ->
+                                            if (!querySnapshot.isEmpty) {
+                                                // Si existe una ambulancia con la misma matrícula, mostramos un mensaje de error
+                                                ambulanceMessage.value = 2
+                                            } else {
+                                                // Si no existe, agregamos la nueva ambulancia a la base de datos
+                                                firestore.collection("Ambulances")
+                                                    .add(myAmbulance)
+                                                    .addOnSuccessListener {
+                                                        // Si se completa correctamente, modificamos el mensaje del sistema
+                                                        ambulanceMessage.value = 1
+                                                    }
+                                                    // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
+                                                    .addOnFailureListener {
+                                                        ambulanceMessage.value = 3
+                                                    }
+                                            }
+                                        }
+                                        .addOnFailureListener {
+                                            // Manejar errores de lectura
+                                            ambulanceMessage.value = 4
+                                        }
+                                }
+                            }
+                            .addOnFailureListener {
+                                // Manejar errores de lectura
+                                ambulanceMessage.value = 4
+                            }
+                    } else {
+                        // Si no existe un hospital con el mismo ID, mostramos un mensaje de error
+                        ambulanceMessage.value = 5
+                    }
                 }
-                // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
                 .addOnFailureListener {
-                    ambulanceMessage.value = " No se pudo guardar la ambulancia, revise los datos"
+                    // Manejar errores de lectura
+                    ambulanceMessage.value = 4
                 }
-        }
 
     }
 
     /**
      * Función para actualizar una ambulancia en la base de datos
      */
-    fun updateAmbulance(id: String, onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            // Buscamos en la base de datos una ambulancia con el id recibido
-            val ambulanceRef = firestore.collection("Ambulances").whereEqualTo("id", id)
-            ambulanceRef.get().addOnSuccessListener { querySnapshot ->
-                // Si la consulta devuelve una respuesta positiva
+    fun updateAmbulance(onSuccess: () -> Unit) {
+        // Consultamos la base de datos para encontrar la ambulancia con el campo "id" igual a idAmb.value
+        firestore.collection("Ambulances")
+            .whereEqualTo("id", idAmb.value)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                // Si la consulta devuelve resultados
                 if (!querySnapshot.isEmpty) {
-                    val document = querySnapshot.documents.firstOrNull()
-                    document?.let { doc ->
-                        // Convertimos en un objeto de tipo ambulancia el valor recibido
+                    // Iteramos sobre los documentos encontrados (en caso de que haya más de uno)
+                    querySnapshot.documents.forEach { doc ->
+                        // Convertimos el documento a un objeto de tipo Ambulance
                         val ambulance = doc.toObject<Ambulance>()
                         ambulance?.let {
                             // Actualizamos los valores del objeto
                             val updatedAmbulance = Ambulance(
-                                id,
+                                idAmb.value,
                                 plate.value,
                                 isFree.value,
                                 type.value,
                                 hosp.value
                             )
-                            // Guardamos los nuevos valores en la base de datos
+                            // Guardamos los nuevos valores en el documento
                             doc.reference.set(updatedAmbulance)
                                 .addOnSuccessListener {
-                                    // Modificamos el mensaje de respuesta
-                                    ambulanceMessage. value = "Se actualizó la ambulancia en la base de datos"
+                                    // La actualización fue exitosa
+                                    ambulanceMessage.value = 1
                                     onSuccess()
                                 }
-                                .addOnFailureListener {
-                                    // Modificamos el mensaje de respuesta
-                                    ambulanceMessage. value = "No se pudo actualizar la ambulancia, revise los datos"
+                                .addOnFailureListener { e ->
+                                    // Ocurrió un error durante la actualización
+                                    ambulanceMessage.value = 3
                                 }
                         }
                     }
                 } else {
-                    ambulanceMessage. value = "La ambulancia con ID $id no existe en la base de datos"
+                    // No se encontró ninguna ambulancia con el campo "id" igual a idAmb.value
+                    ambulanceMessage.value = 7
                 }
-            }.addOnFailureListener {
-                ambulanceMessage. value = "Error al acceder a la base de datos"
             }
-        }
+            .addOnFailureListener { e ->
+                // Ocurrió un error al realizar la consulta
+                ambulanceMessage.value = 6
+            }
+
     }
 
     /**
      * Función para borrar una ambulancia en la base de datos
      */
-    fun deleteAmbulance(id: String, onSuccess: () -> Unit) {
-        viewModelScope.launch {
+    fun deleteAmbulance(onSuccess: () -> Unit) {
             // Buscamos en la base de datos una ambulancia con el id recibido
-            val ambulanceRef = firestore.collection("Ambulances").whereEqualTo("id", id)
+            val ambulanceRef = firestore.collection("Ambulances").whereEqualTo("id", idAmb.value)
             ambulanceRef.get().addOnSuccessListener { querySnapshot ->
                 // Si la consulta devuelve una respuesta positiva
                 if (!querySnapshot.isEmpty) {
@@ -136,20 +185,20 @@ class AmbulancesViewModel : ViewModel() {
                         // Borramos la ambulancia de la base de datos
                         doc.reference.delete()
                             .addOnSuccessListener {
-                                ambulanceMessage. value = "Se eliminó la ambulancia de la base de datos"
+                                ambulanceMessage. value = 8
                                 onSuccess()
                             }
                             .addOnFailureListener {
-                                ambulanceMessage. value = "No se pudo eliminar la ambulancia, intente nuevamente"
+                                ambulanceMessage. value = 9
                             }
                     }
                 } else {
-                    ambulanceMessage. value = "La ambulancia con ID $id no existe en la base de datos"
+                    ambulanceMessage. value = 7
                 }
             }.addOnFailureListener {
-                ambulanceMessage. value = "Error al acceder a la base de datos"
+                ambulanceMessage. value = 6
             }
-        }
+
     }
 
     /**
@@ -195,7 +244,7 @@ class AmbulancesViewModel : ViewModel() {
         isFree.value = false
         type.value = AmbulanceTypes.doctor
         hosp.value = ""
-        ambulanceMessage. value = ""
+        ambulanceMessage. value = 0
     }
 
     /**
@@ -212,7 +261,18 @@ class AmbulancesViewModel : ViewModel() {
     /**
      * Función para actualizar el mensaje del sistema
      */
-    fun setMessage(text: String) {
-        ambulanceMessage.value = text
+    fun setMessage(): String {
+        return when(ambulanceMessage.value){
+            1 -> "Se actualizó la ambulancia en la base de datos"
+            2 -> "Ya existe una ambulancia con este ID en la base de datos"
+            3 -> "No se pudo guardar la ambulancia, revise los datos"
+            4 -> "Error al verificar la existencia de la ambulancia en la base de datos"
+            5 -> "No existe un hospital con este ID en la base de datos"
+            6 -> "Error al acceder a la base de datos"
+            7 -> "La ambulancia con el ID indicado no existe en la base de datos"
+            8 -> "Se eliminó la ambulancia de la base de datos"
+            9 -> "No se pudo eliminar la ambulancia, intente nuevamente"
+            else -> ""
+        }
     }
 }

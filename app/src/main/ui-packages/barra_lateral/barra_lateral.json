@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
     "node": "20:1551",
-    "version": "5198619203",
+    "version": "5235119082",
     "component-id": "162df3c627a86eb093ed01068796a8174da97c9a"
   },
   "default": "Barra Lateral",
@@ -29,8 +29,12 @@
         "id": "Amb"
       },
       {
+        "type": "group",
+        "id": "add"
+      },
+      {
         "type": "vector",
-        "id": "doc"
+        "id": "Vector"
       }
     ],
     "modes": {
@@ -57,7 +61,7 @@
               "Welc",
               "Hosp",
               "Amb",
-              "doc"
+              "add"
             ],
             "item-spacing": "89.0",
             "background-color": {
@@ -114,8 +118,8 @@
             "vector-content": "amb.svg"
           },
           {
-            "id": "doc",
-            "tap-handler": "$on doc tapped",
+            "id": "add",
+            "tap-handler": "$on add tapped",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -123,10 +127,37 @@
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
-                "value": "114.28571319580078"
+                "value": "100.0"
               }
             },
-            "vector-content": "doc.svg"
+            "is-structured": "false",
+            "children": [
+              "Vector"
+            ]
+          },
+          {
+            "id": "Vector",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "center",
+                "offset": "0.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "100.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "100.0"
+              }
+            },
+            "vector-content": "vector.svg"
           }
         ]
       }
@@ -148,7 +179,7 @@
       "required": false,
       "description": ""
     },
-    "on doc tapped": {
+    "on add tapped": {
       "data-type": "void-callback",
       "required": false,
       "description": ""
@@ -159,7 +190,7 @@
       "design": "Barra Lateral",
       "size": {
         "width": 144.00027465820312,
-        "height": 790.1821899414062
+        "height": 775.896484375
       }
     }
   ],

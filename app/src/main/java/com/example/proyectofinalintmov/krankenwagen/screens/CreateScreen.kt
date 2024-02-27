@@ -1,11 +1,9 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
-import android.graphics.Paint.Align
-import android.text.Layout
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -26,13 +24,13 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
@@ -51,7 +49,7 @@ fun CreateAmbulance(
     val type by ambulancesViewModel.type.collectAsState()
     val hosp by ambulancesViewModel.hosp.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    val message by ambulancesViewModel.ambulanceMessage.collectAsState()
+    val context = LocalContext.current
 
     Dialog(
         onDismissRequest = { viewModel.acCreateAmb() }
@@ -149,6 +147,11 @@ fun CreateAmbulance(
                     Button(onClick = {
                         // crea la ambulancia con los datos recibidos
                         ambulancesViewModel.saveAmbulance()
+                        Toast.makeText(
+                            context,
+                            ambulancesViewModel.setMessage(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }) {
                         Text("Crear")
                     }
@@ -158,7 +161,6 @@ fun CreateAmbulance(
                     Button(onClick = {
                         // Borra todos los campos
                         ambulancesViewModel.resetFields()
-
                     }) {
                         Text("Borrar Todo")
                     }
@@ -172,13 +174,6 @@ fun CreateAmbulance(
                     }) {
                         Text("Cerrar")
                     }
-                }
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                ){
-                    Text(text = message!!,
-                        color = Color.Red)
                 }
             }
         }
@@ -195,7 +190,7 @@ fun CreateHospital(
     val county by hospitalViewModel.county.collectAsState()
     val city by hospitalViewModel.city.collectAsState()
     val address by hospitalViewModel.address.collectAsState()
-    val message by hospitalViewModel.hospMessage.collectAsState()
+    val context = LocalContext.current
 
     Dialog(
         onDismissRequest = { viewModel.acCreateHosp() }
@@ -272,6 +267,12 @@ fun CreateHospital(
                     Button(onClick = {
                         // Guarda el hospital con los datos ingresados
                         hospitalViewModel.saveHospital()
+                        val message = hospitalViewModel.setHospMessage()
+                        Toast.makeText(
+                            context,
+                            message,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }) {
                         Text("Guardar")
                     }
@@ -295,15 +296,6 @@ fun CreateHospital(
                     }) {
                         Text("Cerrar")
                     }
-                }
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(vertical = 8.dp)
-                ) {
-                    Text(
-                        text = message!!,
-                        color = Color.Red
-                    )
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -93,6 +95,7 @@ fun ContenidoCreate(
 ) {
     val createAmb by viewModel.createAmb.collectAsState()
     val createHosp by viewModel.createHosp.collectAsState()
+    val context = LocalContext.current
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -105,19 +108,55 @@ fun ContenidoCreate(
         )
         Row(modifier = Modifier.fillMaxSize()) {
             BarraLateral(
-                onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
+                onWelcTapped = {
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        navController.navigate(Routes.PantallaWelcome.route)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                },
                 onAmbTapped = {
-                    viewModel.getAllAmb {
-                        navController.navigate(Routes.PantallaAmbulances.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getAllAmb {
+                            navController.navigate(Routes.PantallaAmbulances.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 onHospTapped = {
-                    viewModel.getAllHosp {
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getAllHosp {
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
-                onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
-            Text(text = "Clinics")
+                onAddTapped = {
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        navController.navigate(Routes.PantallaDocs.route)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            )
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center

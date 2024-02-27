@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -25,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,6 +35,7 @@ import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
+import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
@@ -54,11 +57,11 @@ fun Hospitals(
     userRegisterd: Boolean,
     sesionViewModel: SesionViewModel,
     hospitalViewModel: HospitalViewModel,
-    editHosp: Boolean
+    ambulancesViewModel: AmbulancesViewModel,
+    editHosp: Boolean,
+    editAmb: Boolean
 ) {
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
-
-
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
@@ -75,7 +78,9 @@ fun Hospitals(
             viewModel = viewModel,
             sesionViewModel = sesionViewModel,
             hospitalViewModel = hospitalViewModel,
-            editHosp = editHosp
+            editHosp = editHosp,
+            ambulancesViewModel = ambulancesViewModel,
+            editAmb = editAmb
         )
     }, bottomBar = {
         BarraMenu(viewModel = viewModel)
@@ -99,8 +104,11 @@ fun ContenidoHospitals(
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
     hospitalViewModel: HospitalViewModel,
-    editHosp: Boolean
+    ambulancesViewModel: AmbulancesViewModel,
+    editHosp: Boolean,
+    editAmb: Boolean
 ) {
+    val context = LocalContext.current
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -114,19 +122,55 @@ fun ContenidoHospitals(
         Row(modifier = Modifier.fillMaxSize()) {
             // Barra de navegación lateral
             BarraLateral(
-                onWelcTapped = { navController.navigate(Routes.PantallaWelcome.route) },
+                onWelcTapped = {
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        navController.navigate(Routes.PantallaWelcome.route)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                },
                 onAmbTapped = {
-                    viewModel.getAllAmb {
-                        navController.navigate(Routes.PantallaAmbulances.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getAllAmb {
+                            navController.navigate(Routes.PantallaAmbulances.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 onHospTapped = {
-                    viewModel.getAllHosp {
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getAllHosp {
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
-                onDocTapped = { navController.navigate(Routes.PantallaDocs.route) })
-            Text(text = "Hospitals")
+                onAddTapped = {
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        navController.navigate(Routes.PantallaDocs.route)
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            )
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxSize()
@@ -141,14 +185,11 @@ fun ContenidoHospitals(
                     editHosp = editHosp
                 )
             }
-            if (menuDesplegado) {
-                DialogMenu(viewModel, sesionViewModel)
-            }
-            if (userDesplegado) {
-                DialogSesion(viewModel, sesionViewModel)
-            }
-            if (editHosp) {
-                EditarHosp(viewModel, hospitalViewModel)
+            when {
+                menuDesplegado -> DialogMenu(viewModel, sesionViewModel)
+                userDesplegado -> DialogSesion(viewModel, sesionViewModel)
+                editHosp -> EditarHosp(viewModel, hospitalViewModel, ambulancesViewModel)
+                editAmb -> EditarAmb(viewModel, ambulancesViewModel)
             }
         }
     }
@@ -171,10 +212,8 @@ fun LazyHospital(
                 .padding(20.dp)
                 .size(250.dp)
                 .clickable {
-                    viewModel.getAmb(hospital.id) {
-                        hospitalViewModel.asignHospFields(hospital){
-                            viewModel.activaEditHosp()
-                        }
+                    hospitalViewModel.asignHospFields(hospital) {
+                        viewModel.activaEditHosp()
                     }
                 })
             {

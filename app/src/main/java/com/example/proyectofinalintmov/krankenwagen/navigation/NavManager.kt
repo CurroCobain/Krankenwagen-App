@@ -44,7 +44,7 @@ fun NavManager(
         composable(Routes.PantallaAmbulances.route) {
             Ambulances(navController, viewModel, showMenu, userRegistered, sesionViewModel, ambulancesViewModel) }
         composable(Routes.PantallaHospitals.route) {
-            Hospitals(navController, viewModel, showMenu,userRegistered, sesionViewModel, hospitalViewModel, editHosp) }
+            Hospitals(navController, viewModel, showMenu,userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
         composable(Routes.PantallaDocs.route) {
             Create(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel) }
     }

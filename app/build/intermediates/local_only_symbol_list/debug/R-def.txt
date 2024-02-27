@@ -11,6 +11,7 @@ drawable arrow_back_vector
 drawable barra_lateral_amb
 drawable barra_lateral_doc
 drawable barra_lateral_hosp
+drawable barra_lateral_vector
 drawable barra_lateral_welc
 drawable barra_menu_usuario_rayas
 drawable barra_menu_usuario_vector
