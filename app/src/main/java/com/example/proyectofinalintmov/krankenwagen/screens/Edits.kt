@@ -62,8 +62,8 @@ fun EditarHosp(
     val context = LocalContext.current
     Dialog(
         onDismissRequest = {
-            viewModel.activaEditAmb()
-            hospitalViewModel.setMessage("")
+            viewModel.activaEditHosp()
+            hospitalViewModel.resetFields()
         }
     ) {
         Card(
@@ -135,7 +135,7 @@ fun EditarHosp(
                             hospitalViewModel.updateHosp(idHosp) {
                                 Toast.makeText(
                                     context,
-                                    "Ambulancia actualizada correctamente",
+                                    "Hospital actualizado correctamente",
                                     Toast.LENGTH_SHORT
                                 )
                                 viewModel.getAllHosp { viewModel.activaEditHosp() }
@@ -154,17 +154,16 @@ fun EditarHosp(
                             hospitalViewModel.deleteHosp(idHosp) {
                                 Toast.makeText(
                                     context,
-                                    "Ambulancia borrada correctamente",
+                                    "Hospital borrado correctamente",
                                     Toast.LENGTH_SHORT
                                 )
                                 viewModel.getAllHosp { viewModel.activaEditHosp() }
                             }
-                            viewModel.activaEditAmb()
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
                         Text(
-                            text = "Borrar ambulancia",
+                            text = "Borrar hospital",
                             fontSize = 20.sp
                         )
                     }
@@ -174,7 +173,6 @@ fun EditarHosp(
                     modifier = Modifier.fillMaxWidth(0.7f)) {
                     Button(
                         onClick = {
-                            hospitalViewModel.resetFields()
                             viewModel.activaEditHosp()
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))

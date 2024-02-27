@@ -47,12 +47,10 @@ class HospitalViewModel : ViewModel() {
     var address = MutableStateFlow("")
         private set
 
-    // Almacena la lista de ambulancias asociadas al hospital actual
-    var listAmb = MutableStateFlow(mutableListOf<Ambulance>())
-        private set
     // Almacena el mensaje de respuesta del sistema
     var hospMessage = MutableStateFlow("")
         private set
+
 
     /**
      * Función para guardar un hosptial en la base de datos
@@ -84,18 +82,18 @@ class HospitalViewModel : ViewModel() {
     /**
      * Función para actualizar un hospital en la base de datos
      */
-    fun updateHosp(id: String, onSuccess: () -> Unit){
+    fun updateHosp(id: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
             // Buscamos en la base de datos un hospital con el id recibido
             val hospRef = firestore.collection("Hospitals").whereEqualTo("id", id)
-            hospRef.get().addOnSuccessListener {querySnapshot ->
+            hospRef.get().addOnSuccessListener { querySnapshot ->
                 // Si la consulta devuelve una respuesta positiva
-                if(querySnapshot.isEmpty){
+                if (querySnapshot.isEmpty) {
                     val document = querySnapshot.documents.firstOrNull()
-                    document?.let {doc ->
+                    document?.let { doc ->
                         // Convertimos en un objeto de tipo hospital el valor recibido
                         val hospital = doc.toObject<Hospital>()
-                        hospital?.let{
+                        hospital?.let {
                             // Actualizamos los valores del objeto
                             val updatedHosp = Hospital(
                                 id,
@@ -113,12 +111,13 @@ class HospitalViewModel : ViewModel() {
                                 }
                                 .addOnFailureListener {
                                     // Modificamos el mensaje de respuesta
-                                    hospMessage.value = " No se puedo actualizar el hospital, revise los datos"
+                                    hospMessage.value =
+                                        " No se puedo actualizar el hospital, revise los datos"
                                 }
                         }
 
                     }
-                }else{
+                } else {
                     hospMessage.value = "El hospital con ID $id no existe en la base de datos"
                 }
             }.addOnFailureListener {
@@ -130,13 +129,13 @@ class HospitalViewModel : ViewModel() {
     /**
      * Función para borrar un hospital en la base de datos
      */
-    fun deleteHosp(id: String, onSuccess: () -> Unit){
+    fun deleteHosp(id: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
             // Buscamos en la base de datos un hospital con el id recibido
             val hospRef = firestore.collection("Hospitals").whereEqualTo("id", id)
-            hospRef.get().addOnSuccessListener {querySnapshot ->
+            hospRef.get().addOnSuccessListener { querySnapshot ->
                 // Si la consulta devuelve una respuesta positiva
-                if(querySnapshot.isEmpty) {
+                if (querySnapshot.isEmpty) {
                     val document = querySnapshot.documents.firstOrNull()
                     document?.let { doc ->
                         // Borramos el hospital de la base de datos
@@ -149,7 +148,7 @@ class HospitalViewModel : ViewModel() {
                                 hospMessage.value = "No se pudo borrar el hospital"
                             }
                     }
-                }else{
+                } else {
                     hospMessage.value = "El hospital con ID $id no existe en la base de datos"
                 }
             }.addOnFailureListener {
@@ -161,71 +160,62 @@ class HospitalViewModel : ViewModel() {
     /**
      * Función para cambiar el valor de idHosp
      */
-    fun setIdHosp(text: String){
+    fun setIdHosp(text: String) {
         idHosp.value = text
     }
 
     /**
      * Función para cambiar el valor de name
      */
-    fun setName(text: String){
+    fun setName(text: String) {
         name.value = text
     }
 
     /**
      * Función para cambiar el valor de county
      */
-    fun setCounty(text: String){
+    fun setCounty(text: String) {
         county.value = text
     }
 
     /**
      * Función para cambiar el valor de county
      */
-    fun setCity(text: String){
+    fun setCity(text: String) {
         city.value = text
     }
 
     /**
      * Función para cambiar el valor de address
      */
-    fun setAddress(text: String){
+    fun setAddress(text: String) {
         address.value = text
-    }
-
-    /**
-     * Función para actualizar el valor de listAmb
-     */
-    fun actListAmb(){
-        listAmb.value.clear()
-        krankenwagenViewModel.getAmb(idHosp.value)
-        listAmb.value = krankenwagenViewModel.listAmbulancias.value
     }
 
     /**
      * Resetea todos los valores
      */
-    fun resetFields(){
+    fun resetFields() {
         idHosp.value = ""
         name.value = ""
         county.value = ""
         city.value = ""
         address.value = ""
-        listAmb.value.clear()
+        krankenwagenViewModel.listAmbulancias.value.clear()
         hospMessage.value = ""
     }
 
     /**
      * Función para asignar los valores de un Hospital recibido
      */
-    fun asignHospFields(hospital: Hospital){
+    fun asignHospFields(hospital: Hospital, onSuccess: () -> Unit) {
         idHosp.value = hospital.id
         name.value = hospital.name
         county.value = hospital.county
         city.value = hospital.city
         address.value = hospital.address
-        listAmb.value.clear()
-        krankenwagenViewModel.getAmb(hospital.id)
+        onSuccess()
+
     }
 
     /**

@@ -52,7 +52,9 @@ fun Hospitals(
     viewModel: KrankenwagenViewModel,
     showMenu: Boolean,
     userRegisterd: Boolean,
-    sesionViewModel: SesionViewModel
+    sesionViewModel: SesionViewModel,
+    hospitalViewModel: HospitalViewModel,
+    editHosp: Boolean
 ) {
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
 
@@ -71,7 +73,9 @@ fun Hospitals(
             menuDesplegado = showMenu,
             userDesplegado = userRegisterd,
             viewModel = viewModel,
-            sesionViewModel = sesionViewModel
+            sesionViewModel = sesionViewModel,
+            hospitalViewModel = hospitalViewModel,
+            editHosp = editHosp
         )
     }, bottomBar = {
         BarraMenu(viewModel = viewModel)
@@ -93,7 +97,9 @@ fun ContenidoHospitals(
     menuDesplegado: Boolean,
     userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
-    sesionViewModel: SesionViewModel
+    sesionViewModel: SesionViewModel,
+    hospitalViewModel: HospitalViewModel,
+    editHosp: Boolean
 ) {
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -129,9 +135,10 @@ fun ContenidoHospitals(
                 // LazyRow con la lista de hospitales
                 LazyHospital(
                     viewModel = viewModel,
-                    hospitalViewModel = HospitalViewModel(),
+                    hospitalViewModel = hospitalViewModel,
                     arrangement = Arrangement.Center,
-                    modifier = Modifier.horizontalScroll(rememberScrollState())
+                    modifier = Modifier.horizontalScroll(rememberScrollState()),
+                    editHosp = editHosp
                 )
             }
             if (menuDesplegado) {
@@ -139,6 +146,9 @@ fun ContenidoHospitals(
             }
             if (userDesplegado) {
                 DialogSesion(viewModel, sesionViewModel)
+            }
+            if (editHosp) {
+                EditarHosp(viewModel, hospitalViewModel)
             }
         }
     }
@@ -151,9 +161,9 @@ fun LazyHospital(
     viewModel: KrankenwagenViewModel,
     hospitalViewModel: HospitalViewModel,
     arrangement: Arrangement.HorizontalOrVertical,
-    modifier: Modifier
+    modifier: Modifier,
+    editHosp: Boolean
 ) {
-    val editar by viewModel.editHosp.collectAsState()
     val miListaHosp by viewModel.listHospitals.collectAsState()
     LazyRow {
         items(miListaHosp) { hospital ->
@@ -161,8 +171,11 @@ fun LazyHospital(
                 .padding(20.dp)
                 .size(250.dp)
                 .clickable {
-                    hospitalViewModel.asignHospFields(hospital)
-                    viewModel.activaEditHosp()
+                    viewModel.getAmb(hospital.id) {
+                        hospitalViewModel.asignHospFields(hospital){
+                            viewModel.activaEditHosp()
+                        }
+                    }
                 })
             {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -181,9 +194,6 @@ fun LazyHospital(
                 }
             }
         }
-    }
-    if (editar) {
-        EditarHosp(viewModel, hospitalViewModel)
     }
 }
 

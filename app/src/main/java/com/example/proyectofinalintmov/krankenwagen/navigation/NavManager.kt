@@ -30,6 +30,8 @@ fun NavManager(
     val navController = rememberNavController()
     val showMenu by viewModel.showMenu.collectAsState()
     val userRegistered by viewModel.userRegistererd.collectAsState()
+    val editHosp by viewModel.editHosp.collectAsState()
+    val editAmb by viewModel.editAmb.collectAsState()
 
     // Configuración del sistema de navegación
     NavHost(
@@ -42,7 +44,7 @@ fun NavManager(
         composable(Routes.PantallaAmbulances.route) {
             Ambulances(navController, viewModel, showMenu, userRegistered, sesionViewModel, ambulancesViewModel) }
         composable(Routes.PantallaHospitals.route) {
-            Hospitals(navController, viewModel, showMenu,userRegistered, sesionViewModel) }
+            Hospitals(navController, viewModel, showMenu,userRegistered, sesionViewModel, hospitalViewModel, editHosp) }
         composable(Routes.PantallaDocs.route) {
             Create(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel) }
     }

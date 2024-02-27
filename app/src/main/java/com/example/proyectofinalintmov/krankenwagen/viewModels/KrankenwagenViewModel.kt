@@ -50,14 +50,13 @@ class KrankenwagenViewModel : ViewModel() {
     var listCentros = MutableStateFlow(mutableListOf<Clinic>())
 
     // lista de hospitales filtrados
-    private val _listHospitals = MutableStateFlow(mutableListOf<Hospital>())
-    val listHospitals: StateFlow<MutableList<Hospital>> = _listHospitals.asStateFlow()
-
-    // variable que permite activar la edición de un hospital
-    var editHosp = MutableStateFlow(false)
+    val listHospitals = MutableStateFlow(mutableListOf<Hospital>())
 
     // variable que permite activar la edición de una ambulancia
     val editAmb = MutableStateFlow(false)
+
+    // variable que permite activar la edición de un hospital
+    var editHosp = MutableStateFlow(false)
 
     fun getHosp(provincia: String) {
         viewModelScope.launch {
@@ -74,23 +73,6 @@ class KrankenwagenViewModel : ViewModel() {
 
     }
 
-    /**
-     * Filtra las ambulancias por hospital de referencia
-     */
-    fun getAmb(hospital: String) {
-        viewModelScope.launch {
-            firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        listAmbulancias.value.add(document.toObject(Ambulance::class.java))
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    // TODO: añadir mensaje a campo de información, se debe crear campo de información
-                }
-        }
-
-    }
 
     fun getAllAmb(onSuccess: () -> Unit) {
         listAmbulancias.value.clear()
@@ -110,6 +92,25 @@ class KrankenwagenViewModel : ViewModel() {
                 }
         }
 
+    }
+
+    /**
+     * Filtra las ambulancias por hospital de referencia
+     */
+    fun getAmb(hospital: String, onSuccess: () -> Unit) {
+        listAmbulancias.value.clear()
+        viewModelScope.launch {
+            firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                        onSuccess()
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    // TODO: añadir mensaje a campo de información, se debe crear campo de información
+                }
+        }
     }
 
     fun getAllHosp(onSuccess: () -> Unit) {
@@ -159,19 +160,18 @@ class KrankenwagenViewModel : ViewModel() {
     }
 
     /**
-     * cambia el valor  de editHosp
-     */
-    fun activaEditHosp() {
-        editHosp.value = !editHosp.value
-    }
-
-    /**
      * cambia el valor  de editAmb
      */
     fun activaEditAmb() {
         editAmb.value = !editAmb.value
     }
 
+    /**
+     * cambia el valor  de editHosp
+     */
+    fun activaEditHosp() {
+        editHosp.value = !editHosp.value
+    }
     /**
      * Activa o desactiva la creación de ambulancias
      */
