@@ -38,20 +38,27 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewMod
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 
+
+/**
+ * Composable para la creación de ambulancias
+ */
 @Composable
 fun CreateAmbulance(
     ambulancesViewModel: AmbulancesViewModel,
     viewModel: KrankenwagenViewModel
 ) {
-    val idAmb by ambulancesViewModel.idAmb.collectAsState()
-    val plate by ambulancesViewModel.plate.collectAsState()
-    val isFree by ambulancesViewModel.isFree.collectAsState()
-    val type by ambulancesViewModel.type.collectAsState()
-    val hosp by ambulancesViewModel.hosp.collectAsState()
+    // Variables para la creación de ambulancias
+    val idAmb by ambulancesViewModel.idAmb.collectAsState() // Id de la ambulancia
+    val plate by ambulancesViewModel.plate.collectAsState() // Matrícula de la ambulancia
+    val isFree by ambulancesViewModel.isFree.collectAsState() // Estado de la ambulancia
+    val type by ambulancesViewModel.type.collectAsState() // Tipo de ambulancia
+    val hosp by ambulancesViewModel.hosp.collectAsState() // Hospital de referencia de la ambulancia
+    // Variable que se usa para controlar el DropdownMenu
     var expanded by remember { mutableStateOf(false) }
-    val context = LocalContext.current
+    // Variable que almacena el mensaje del sistema
     val message by ambulancesViewModel.ambulanceMessage.collectAsState()
 
+    // Diálogo de creación de ambulancia
     Dialog(
         onDismissRequest = { viewModel.acCreateAmb() }
     ) {
@@ -145,6 +152,7 @@ fun CreateAmbulance(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(vertical = 16.dp)
                 ) {
+                    // Botón crear ambulancia
                     Button(onClick = {
                         // crea la ambulancia con los datos recibidos
                         ambulancesViewModel.saveAmbulance() {}
@@ -154,6 +162,7 @@ fun CreateAmbulance(
 
                     Spacer(modifier = Modifier.width(16.dp))
 
+                    // Botón borrar todos los campos
                     Button(onClick = {
                         // Borra todos los campos
                         ambulancesViewModel.resetFields()
@@ -163,6 +172,7 @@ fun CreateAmbulance(
 
                     Spacer(modifier = Modifier.width(16.dp))
 
+                    // Botón cerrar el diálogo
                     Button(onClick = {
                         // Cierra el diálogo
                         ambulancesViewModel.resetFields()
@@ -171,6 +181,7 @@ fun CreateAmbulance(
                         Text("Cerrar")
                     }
                 }
+                // Mensaje del sistema
                 Row(horizontalArrangement = Arrangement.Center) {
                     Text(text = message)
                 }
@@ -179,19 +190,25 @@ fun CreateAmbulance(
     }
 }
 
+
+/**
+ * Composable para la creación de hospitales
+ */
 @Composable
 fun CreateHospital(
     hospitalViewModel: HospitalViewModel,
     viewModel: KrankenwagenViewModel
 ) {
-    val id by hospitalViewModel.idHosp.collectAsState()
-    val name by hospitalViewModel.name.collectAsState()
-    val county by hospitalViewModel.county.collectAsState()
-    val city by hospitalViewModel.city.collectAsState()
-    val address by hospitalViewModel.address.collectAsState()
-    val context = LocalContext.current
+    // Variables para la creación de hospitales
+    val id by hospitalViewModel.idHosp.collectAsState() // Id del hospital
+    val name by hospitalViewModel.name.collectAsState() // Nombre del hospital
+    val county by hospitalViewModel.county.collectAsState() // Provincia del hospital
+    val city by hospitalViewModel.city.collectAsState() // Ciudad del hospital
+    val address by hospitalViewModel.address.collectAsState() // Dirección del hospital
+    // Variable que almacena el mensaje del sistema
     val message by hospitalViewModel.hospMessage.collectAsState()
 
+    // Diálogo de creación de hospital
     Dialog(
         onDismissRequest = { viewModel.acCreateHosp() }
     ) {
@@ -264,15 +281,17 @@ fun CreateHospital(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.padding(vertical = 16.dp)
                 ) {
+                    // Botón crear hospital
                     Button(onClick = {
                         // Guarda el hospital con los datos ingresados
                         hospitalViewModel.saveHospital() {}
                     }) {
-                        Text("Guardar")
+                        Text("Crear")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
+                    // Botón borrar campos
                     Button(onClick = {
                         // Borra todos los campos
                         hospitalViewModel.resetFields()
@@ -283,6 +302,7 @@ fun CreateHospital(
 
                     Spacer(modifier = Modifier.width(16.dp))
 
+                    // Botón volver
                     Button(onClick = {
                         // Cierra el diálogo
                         viewModel.acCreateHosp()
@@ -291,6 +311,7 @@ fun CreateHospital(
                         Text("Cerrar")
                     }
                 }
+                // Mensaje de respuesta del sistema
                 Row (horizontalArrangement = Arrangement.Center){
                     Text(text = message)
                 }

@@ -13,22 +13,37 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel para la gestión del inicio de sesión y el registro de usuarios
+ * @property sesionMessage se usa para mostrar el mensaje del sistema
+ * @property nombreDoc se usa para almacenar el nombre del doctor activo
+ * @property initOrReg se usa para cambiar entre registro e inicio de sesión
+ * @property nuevoPass se usa para almacenar la contraseña del doctor
+ * @property nuevoMail se usa para almacenar el email del doctor
+ */
 class SesionViewModel : ViewModel() {
+    // Instancias de Firebase
     private val auth: FirebaseAuth = Firebase.auth
     private val firestore = Firebase.firestore
+
+    // ViewModel relacionado
     private val krankenwagenViewModel = KrankenwagenViewModel()
+
+    // Estado del mensaje de sesión
     var sesionMessage = MutableStateFlow("")
 
+    // Nombre del Doctor actual
     var nombreDoc = MutableStateFlow("")
         private set
 
-    var inirOrReg = MutableStateFlow(false)
+    // Estado de inicio o registro de sesión
+    var initOrReg = MutableStateFlow(false)
 
-    // password del usuario actual
+    // Password del usuario actual
     var nuevoPass = MutableStateFlow("")
         private set
 
-    // correo del usuario actual
+    // Correo del usuario actual
     var nuevoMail = MutableStateFlow("")
         private set
 
@@ -53,22 +68,31 @@ class SesionViewModel : ViewModel() {
         nuevoMail.value = valor
     }
 
+    /**
+     * Modifica el valor de initOrReg
+     */
     fun cambiaInit() {
-        inirOrReg.value = !inirOrReg.value
+        initOrReg.value = !initOrReg.value
     }
 
     /**
-     * Recupera el nombre del usuario
+     * Recupera el nombre del usuario desde Firestore.
+     * Se requiere que la sesión del usuario esté inicializada antes de llamar a esta función.
      */
     fun getUser() {
+        // Inicia la sesión del usuario y ejecuta el bloque de código proporcionado cuando la sesión está activa
         sesionInit {
+            // Realiza la consulta a Firestore para obtener el nombre del usuario actual
             firestore.collection("Users").whereEqualTo("userId", auth.currentUser?.uid).get()
                 .addOnSuccessListener { documents ->
+                    // Cuando se obtienen los documentos exitosamente
                     for (document in documents) {
+                        // Asigna el nombre del usuario a la variable `nombreDoc`
                         nombreDoc.value = document.getString("name")!!
                     }
                 }
                 .addOnFailureListener { exception ->
+                    // En caso de fallo al obtener el nombre del usuario
                     Log.w(TAG, "Error getting documents: ", exception)
                 }
         }
@@ -160,6 +184,9 @@ class SesionViewModel : ViewModel() {
         sesionMessage.value = ""
     }
 
+    /**
+     * Modifica el valor del mensaje del sistema
+     */
     fun setMessage(text: String) {
         sesionMessage.value = text
     }

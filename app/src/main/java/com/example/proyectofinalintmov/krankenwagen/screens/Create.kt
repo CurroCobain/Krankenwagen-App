@@ -39,6 +39,9 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
+/**
+ * Composable que alberga las opciones de crear ambulancia y crear hospital
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
 fun Create(
@@ -50,7 +53,10 @@ fun Create(
     ambulancesViewModel: AmbulancesViewModel,
     hospitalViewModel: HospitalViewModel
 ) {
+    // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
+
+    // Scaffold que compone la pantalla
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
@@ -60,6 +66,7 @@ fun Create(
             )
         }
     }, content = {
+        // Contenido del Scaffold
         ContenidoCreate(
             navController = navController,
             menuDesplegado = showMenu,
@@ -70,6 +77,7 @@ fun Create(
             hospitalViewModel = hospitalViewModel
         )
     }, bottomBar = {
+        // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(viewModel = viewModel)
     })
 
@@ -77,11 +85,6 @@ fun Create(
 
 /**
  * Composable que muestra el contenido de la pantalla de Centros de Salud.
- * Recibe los siguientes parámetros
- * @param navController Controlador de navegación para manejar las transiciones entre pantallas.
- * @param menuDesplegado Indica si el menú está desplegado o no.
- * @param userDesplegado Indica si el diálogo de sesión de usuario está desplegado o no.
- * @param viewModel El ViewModel asociado a la pantalla de bienvenida.
  */
 @Composable
 fun ContenidoCreate(
@@ -93,7 +96,9 @@ fun ContenidoCreate(
     ambulancesViewModel: AmbulancesViewModel,
     hospitalViewModel: HospitalViewModel
 ) {
+    // Se almacena el estado de createAmb para desplegar el diálogo de creación en función de dicho valor
     val createAmb by viewModel.createAmb.collectAsState()
+    // Se almacena el estado de createHosp para desplegar el diálogo de creación en función de dicho valor
     val createHosp by viewModel.createHosp.collectAsState()
     val context = LocalContext.current
     Box(
@@ -107,12 +112,16 @@ fun ContenidoCreate(
             modifier = Modifier.fillMaxSize()
         )
         Row(modifier = Modifier.fillMaxSize()) {
+            // Barra de navegación lateral
             BarraLateral(
+                // Icono de inicio
                 onWelcTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.setProv("")
                         navController.navigate(Routes.PantallaWelcome.route)
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -120,12 +129,15 @@ fun ContenidoCreate(
                         ).show()
                     }
                 },
+                // Icono de Ambulancias
                 onAmbTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.getAllAmb {
                             navController.navigate(Routes.PantallaAmbulances.route)
                         }
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -133,12 +145,15 @@ fun ContenidoCreate(
                         ).show()
                     }
                 },
+                // Icono de Hospitales
                 onHospTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.getAllHosp {
                             navController.navigate(Routes.PantallaHospitals.route)
                         }
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -146,10 +161,13 @@ fun ContenidoCreate(
                         ).show()
                     }
                 },
+                // Icono de Creación
                 onAddTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        navController.navigate(Routes.PantallaDocs.route)
+                        navController.navigate(Routes.PantallaCreate.route)
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -179,8 +197,9 @@ fun ContenidoCreate(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier.fillMaxSize()
                         ) {
+                            // Imagen de hospital
                             Image(
-                                painter = painterResource(id = R.drawable.barra_lateral_hosp),
+                                painter = painterResource(id = R.drawable.hospital),
                                 contentDescription = "Crear Hospital",
                                 modifier = Modifier.size(120.dp)
                             )
@@ -205,8 +224,9 @@ fun ContenidoCreate(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier.fillMaxSize()
                         ) {
+                            // Imagen de ambulancia
                             Image(
-                                painter = painterResource(id = R.drawable.barra_lateral_amb),
+                                painter = painterResource(id = R.drawable.ambulancia),
                                 contentDescription = "Crear Ambulancia",
                                 modifier = Modifier.size(120.dp)
                             )
@@ -220,6 +240,7 @@ fun ContenidoCreate(
                     }
                 }
             }
+            // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
             when {
                 menuDesplegado -> DialogMenu(viewModel, sesionViewModel)
                 userDesplegado -> DialogSesion(viewModel, sesionViewModel)

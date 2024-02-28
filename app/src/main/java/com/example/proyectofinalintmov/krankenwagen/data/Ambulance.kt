@@ -6,10 +6,11 @@ package com.example.proyectofinalintmov.krankenwagen.data
 enum class AmbulanceTypes { doctor, nurse, driver }
 /**
  * Clase que representa las Ambulancias
- * @param id almacena el id de la ambulancia
- * @param plate almacena la matrícula de la ambulancia
- * @param isFree indica si la ambulancia está disponible
- * @param types indica de que tipo es la ambulancia
+ * @property id almacena el id de la ambulancia
+ * @property plate almacena la matrícula de la ambulancia
+ * @property isFree indica si la ambulancia está disponible
+ * @property types indica de que tipo es la ambulancia
+ * @property hospital indica el hospital de referencia
  */
 data class Ambulance(
     val id: String,

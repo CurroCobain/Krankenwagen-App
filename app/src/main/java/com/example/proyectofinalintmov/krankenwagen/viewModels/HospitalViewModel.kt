@@ -16,7 +16,6 @@ import kotlinx.coroutines.launch
  * @property county se usa para almacenar la provincia del hospital actual
  * @property city se usa para almacenar la ciudad del hospital actual
  * @property address se usa para almacenar la dirección del hospital actual
- * @property listAmb se usa para almacenar la lista de ambulancias asociadas al hospital actual
  * @property hospMessage se usa para mostrar la respuesta del sistema
  */
 class HospitalViewModel : ViewModel() {
@@ -49,9 +48,6 @@ class HospitalViewModel : ViewModel() {
     // Almacena el mensaje de respuesta del sistema
     var hospMessage = MutableStateFlow("")
         private set
-
-    // Muestra la lista de ambulancias asociadas al hospital
-    var muestrAmbs = MutableStateFlow(false)
 
 
     /**
@@ -206,16 +202,6 @@ class HospitalViewModel : ViewModel() {
         address.value = text
     }
 
-    /*
-    /**
-     * Función para cambiar el valor de muestrAmbs
-     */
-    fun setMuestrAmbs(){
-        muestrAmbs.value = !muestrAmbs.value
-    }
-
-     */
-
     /**
      * Resetea todos los valores
      */
@@ -238,7 +224,6 @@ class HospitalViewModel : ViewModel() {
         county.value = hospital.county
         city.value = hospital.city
         address.value = hospital.address
-        muestrAmbs.value = false
         onSuccess()
     }
 }

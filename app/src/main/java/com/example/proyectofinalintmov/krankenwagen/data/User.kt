@@ -2,8 +2,9 @@ package com.example.proyectofinalintmov.krankenwagen.data
 
 /**
  * Clase Usuario del sistema
- * @param name almacena el nombre del usuario
- * @param email almacena el email del usuario
+ * @property name almacena el nombre del usuario
+ * @property email almacena el email del usuario
+ * @property userId almacena el id del usuario
  */
 data class User (
     val userId: String,

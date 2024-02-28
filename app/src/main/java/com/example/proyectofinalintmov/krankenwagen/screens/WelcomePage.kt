@@ -15,11 +15,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -39,11 +37,6 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 /**
  * Scaffold que alberga la página de bienvenida
- * Recibe los siguientes parámetros
- * @param navController Controlador de navegación para manejar las transiciones entre pantallas.
- * @param menuDesplegado Indica si el menú está desplegado o no.
- * @param userDesplegado Indica si el diálogo de sesión de usuario está desplegado o no.
- * @param viewModel El ViewModel asociado a la pantalla de bienvenida.
  */
 @SuppressLint(
     "RememberReturnType", "UnusedMaterial3ScaffoldPaddingParameter",
@@ -57,7 +50,10 @@ fun WelcomePage(
     userRegistered: Boolean,
     sesionViewModel: SesionViewModel
 ) {
+    // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
+
+    // Scaffold que compone la pantalla
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -68,6 +64,7 @@ fun WelcomePage(
             )
         }
     }, content = {
+        // Contenido del Scaffold
         ContenidoWelcome(
             navController = navController,
             menuDesplegado = showMenu,
@@ -76,6 +73,7 @@ fun WelcomePage(
             sesionViewModel = sesionViewModel
         )
     }, bottomBar = {
+        // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(viewModel = viewModel)
     })
 
@@ -84,11 +82,6 @@ fun WelcomePage(
 
 /**
  * Composable que muestra el contenido de la pantalla de bienvenida.
- * Recibe los siguientes parámetros
- * @param navController Controlador de navegación para manejar las transiciones entre pantallas.
- * @param menuDesplegado Indica si el menú está desplegado o no.
- * @param userDesplegado Indica si el diálogo de sesión de usuario está desplegado o no.
- * @param viewModel El ViewModel asociado a la pantalla de bienvenida.
  */
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -115,10 +108,12 @@ fun ContenidoWelcome(
             // Barra lateral de navegación
             BarraLateral(
                 onWelcTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.setProv("")
                         navController.navigate(Routes.PantallaWelcome.route)
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -127,11 +122,13 @@ fun ContenidoWelcome(
                     }
                 },
                 onAmbTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.getAllAmb {
                             navController.navigate(Routes.PantallaAmbulances.route)
                         }
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -140,11 +137,13 @@ fun ContenidoWelcome(
                     }
                 },
                 onHospTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.getAllHosp {
                             navController.navigate(Routes.PantallaHospitals.route)
                         }
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -153,9 +152,11 @@ fun ContenidoWelcome(
                     }
                 },
                 onAddTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        navController.navigate(Routes.PantallaDocs.route)
+                        navController.navigate(Routes.PantallaCreate.route)
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -172,61 +173,133 @@ fun ContenidoWelcome(
                     .padding(top = 100.dp),
                 // Filtrar por Almería
                 onAlmerATapped = {
-                    viewModel.getHosp("Almeria"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Almeria") {
+                            viewModel.setProv("Almeria")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
+
                 },
                 // Filtrar por Cádiz
                 onCDizTapped = {
-                    viewModel.getHosp("Cadiz"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Cadiz") {
+                            viewModel.setProv("Cadiz")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 // Filtrar por Córdoba
                 onCRdobaTapped = {
-                    viewModel.getHosp("Cordoba"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Cordoba") {
+                            viewModel.setProv("Cordoba")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 // Filtrar por Granada
                 onGranadaTapped = {
-                    viewModel.getHosp("Granada"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Granada") {
+                            viewModel.setProv("Granada")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 // Filtrar por Huelva
                 onHuelvaTapped = {
-                    viewModel.getHosp("Huelva"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Huelva") {
+                            viewModel.setProv("Huelva")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 // Filtrar por Jaen
                 onJaenTapped = {
-                    viewModel.getHosp("Jaen"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Jaen") {
+                            viewModel.setProv("Jaen")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 // Filtrar por Málaga
                 onMLagaTapped = {
-                    viewModel.getHosp("Malaga"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Malaga") {
+                            viewModel.setProv("Malaga")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 },
                 // Filtrar por Sevilla
                 onSevillaTapped = {
-                    viewModel.getHosp("Sevilla"){
-                        navController.navigate(Routes.PantallaHospitals.route)
+                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.getHosp("Sevilla") {
+                            viewModel.setProv("Sevilla")
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Debe iniciar sesión para poder acceder a la base de datos",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             )
         }
-        // Si se pulsa menú se abre el diálogo correspondiente
-        if (menuDesplegado) {
-            DialogMenu(viewModel, sesionViewModel)
-        }
-        // Si se pulsa sobre usuario se abre el diálogo correspondiente
-        if (userDesplegado) {
-            DialogSesion(viewModel, sesionViewModel)
+        // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
+        when {
+            // Si se pulsa menú se abre el diálogo correspondiente
+            menuDesplegado -> DialogMenu(viewModel, sesionViewModel)
+            // Si se pulsa sobre usuario se abre el diálogo correspondiente
+            userDesplegado -> DialogSesion(viewModel, sesionViewModel)
         }
     }
 }
@@ -234,8 +307,6 @@ fun ContenidoWelcome(
 
 /**
  * Composable que muestra la barra de menú.
- * Recibe el siguiente parámetro
- * @param viewModel El ViewModel asociado a la barra de menú.
  */
 @Composable
 fun BarraMenu(viewModel: KrankenwagenViewModel) {

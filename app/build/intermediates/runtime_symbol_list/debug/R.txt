@@ -106,6 +106,7 @@ int dimen notification_small_icon_size_as_large 0x7f030014
 int dimen notification_subtext_size 0x7f030015
 int dimen notification_top_pad 0x7f030016
 int dimen notification_top_pad_large_text 0x7f030017
+int drawable ambulancia 0x7f040044
 int drawable arrow_back_vector 0x7f040001
 int drawable barra_lateral_amb 0x7f040002
 int drawable barra_lateral_doc 0x7f040003
@@ -137,6 +138,7 @@ int drawable common_google_signin_btn_text_light_normal_background 0x7f04001c
 int drawable fondo 0x7f04001d
 int drawable googleg_disabled_color_18 0x7f04001e
 int drawable googleg_standard_color_18 0x7f04001f
+int drawable hospital 0x7f040045
 int drawable ic_call_answer 0x7f040020
 int drawable ic_call_answer_low 0x7f040021
 int drawable ic_call_answer_video 0x7f040022

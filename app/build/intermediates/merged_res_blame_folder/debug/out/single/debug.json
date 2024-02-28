@@ -16,6 +16,10 @@
         "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-2:\\drawable-nodpi\\scroll_provincias_image_6.png"
     },
     {
+        "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\drawable_hospital.png.flat",
+        "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-8:\\drawable\\hospital.png"
+    },
+    {
         "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\drawable-nodpi_menu_a.xml.flat",
         "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-2:\\drawable-nodpi\\menu_a.xml"
     },
@@ -26,6 +30,10 @@
     {
         "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\drawable_fondo.png.flat",
         "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-8:\\drawable\\fondo.png"
+    },
+    {
+        "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\drawable-nodpi_barra_lateral_vector.xml.flat",
+        "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-2:\\drawable-nodpi\\barra_lateral_vector.xml"
     },
     {
         "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\font_relay_inter_medium.ttf.flat",
@@ -90,6 +98,14 @@
     {
         "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\font_relay_inter_black.ttf.flat",
         "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-2:\\font\\relay_inter_black.ttf"
+    },
+    {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-6:/drawable_ambulancia.png.flat",
+        "source": "com.example.proyectofinalintmov.app-main-8:/drawable/ambulancia.png"
+    },
+    {
+        "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\drawable_ambulancia.png.flat",
+        "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-8:\\drawable\\ambulancia.png"
     },
     {
         "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\drawable_ic_launcher_background.xml.flat",
@@ -168,10 +184,6 @@
         "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-2:\\drawable-nodpi\\arrow_back_vector.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-6:/drawable-nodpi_barra_lateral_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-2:/drawable-nodpi/barra_lateral_vector.xml"
-    },
-    {
         "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
         "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-8:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
@@ -198,5 +210,9 @@
     {
         "merged": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-6:\\drawable-nodpi_menu_b.xml.flat",
         "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-2:\\drawable-nodpi\\menu_b.xml"
+    },
+    {
+        "merged": "com.example.proyectofinalintmov.app-merged_res-6:/drawable_hospital.png.flat",
+        "source": "com.example.proyectofinalintmov.app-main-8:/drawable/hospital.png"
     }
 ]

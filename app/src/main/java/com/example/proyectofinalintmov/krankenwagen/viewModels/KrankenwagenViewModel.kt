@@ -1,29 +1,28 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
-import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
-import com.example.proyectofinalintmov.krankenwagen.data.Clinic
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 
 /**
- * viewModel de la app
+ * ViewModel de la página principal y que gestiona funciones comunes a varias screens
  * @property showMenu se usa para desplegar el menú de opciones
- * @property userRegistered se usa para gestionar el acceso a las funciones de edición de la app
- * @property listAmbulances lista que almacena las ambulancias filtradas
- * @property listCentros lista que almacena los centros filtrados
+ * @property userRegistererd se usa para gestionar el acceso a las funciones de edición de la app
+ * @property listAmbulancias lista que almacena las ambulancias filtradas
  * @property listHospitals lista que almacena los hospitales filtrados
+ * @property message se usa para mostrar la respuesta del sistema
+ * @property createAmb se usa para desplegar el diálogo de creación de ambulancias
+ * @property createHosp se usa para desplegar el diálogo de creación de hospitales
+ * @property editAmb se usa para desplegar el diálogo de edición de ambulancias
+ * @property editHosp se usa para desplegar el diálogo de edición de hospitales
+ * @property provinciaFiltrar se usa para almacenar la provincia por la que se filtran los hospitales
  */
 class KrankenwagenViewModel : ViewModel() {
     private val firestore = Firebase.firestore
@@ -58,82 +57,134 @@ class KrankenwagenViewModel : ViewModel() {
     //variable que se uso para determinar si se filtra por provincia o no
     val provinciaFiltrar = MutableStateFlow("")
 
+    /**
+     * Obtiene la lista de hospitales para una provincia específica desde Firestore.
+     * @param provincia La provincia para la cual se desean obtener los hospitales.
+     * @param onSuccess La acción a ejecutar cuando se obtienen los hospitales exitosamente.
+     */
     fun getHosp(provincia: String, onSuccess: () -> Unit) {
+        // Se vacía la lista de hospitales para evitar duplicados
         listHospitals.value.clear()
+
+        // Se inicia una corutina para la operación asíncrona
         viewModelScope.launch {
+            // Se realiza la consulta a Firestore para obtener los hospitales de la provincia especificada
             firestore.collection("Hospitals").whereEqualTo("county", provincia).get()
                 .addOnSuccessListener { documents ->
+                    // Cuando se obtienen los documentos exitosamente
                     for (document in documents) {
+                        // Se añade cada hospital a la lista
                         listHospitals.value.add(document.toObject(Hospital::class.java))
+                        // Se ejecuta la acción onSuccess para manejar el éxito de la operación
                         onSuccess()
                     }
                 }
                 .addOnFailureListener { exception ->
-                    // TODO: añadir mensaje a campo de información, se debe crear campo de información
+                    // En caso de fallo al obtener los hospitales
+                    // TODO: añadir manejo de errores adecuado, como mostrar un mensaje de error
                 }
         }
-
     }
 
 
+    /**
+     * Obtiene todas las ambulancias desde Firestore.
+     * @param onSuccess La acción a ejecutar cuando se obtienen las ambulancias exitosamente.
+     */
     fun getAllAmb(onSuccess: () -> Unit) {
+        // Se limpia la caché local de Firestore para asegurar la obtención de los datos más recientes
         firestore.clearPersistence()
+
+        // Se vacía la lista de ambulancias para evitar duplicados
         listAmbulancias.value.clear()
+
+        // Se inicia una corutina para la operación asíncrona
         viewModelScope.launch {
+            // Se realiza la consulta a Firestore para obtener todas las ambulancias
             firestore.collection("Ambulances")
                 .get()
                 .addOnSuccessListener { documents ->
+                    // Cuando se obtienen los documentos exitosamente
                     for (document in documents) {
+                        // Se añade cada ambulancia a la lista
                         listAmbulancias.value.add(document.toObject(Ambulance::class.java))
                     }
                 }
                 .addOnCompleteListener {
+                    // Cuando la operación se completa exitosamente
+                    // Se ejecuta la acción onSuccess para manejar el éxito de la operación
                     onSuccess()
                 }
                 .addOnFailureListener { exception ->
+                    // En caso de fallo al obtener las ambulancias
+                    // Se establece un mensaje de error para manejarlo en la interfaz de usuario
                     message.value = "Error al recuperar las ambulancias"
                 }
         }
-
     }
 
     /**
-     * Filtra las ambulancias por hospital de referencia
+     * Filtra las ambulancias por hospital de referencia desde Firestore.
+     * @param hospital El hospital de referencia por el cual se desean filtrar las ambulancias.
+     * @param onSuccess La acción a ejecutar cuando se obtienen las ambulancias exitosamente.
      */
     fun getAmb(hospital: String, onSuccess: () -> Unit) {
+        // Se limpia la caché local de Firestore para asegurar la obtención de los datos más recientes
         firestore.clearPersistence()
+
+        // Se vacía la lista de ambulancias para evitar duplicados
         listAmbulancias.value.clear()
+
+        // Se realiza la consulta a Firestore para obtener las ambulancias filtradas por hospital de referencia
         firestore.collection("Ambulances").whereEqualTo("hospital", hospital).get()
             .addOnSuccessListener { documents ->
+                // Cuando se obtienen los documentos exitosamente
                 for (document in documents) {
+                    // Se añade cada ambulancia filtrada por hospital a la lista
                     listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                    // Se ejecuta la acción onSuccess para manejar el éxito de la operación
                     onSuccess()
                 }
             }
             .addOnFailureListener { exception ->
-                // TODO: añadir mensaje a campo de información, se debe crear campo de información
+                // En caso de fallo al obtener las ambulancias filtradas por hospital
+                // TODO: añadir manejo de errores adecuado, como mostrar un mensaje de error
             }
     }
 
+    /**
+     * Obtiene todos los hospitales desde Firestore.
+     * @param onSuccess La acción a ejecutar cuando se obtienen los hospitales exitosamente.
+     */
     fun getAllHosp(onSuccess: () -> Unit) {
+        // Se inicia una corutina para la operación asíncrona
         viewModelScope.launch {
+            // Se limpia la caché local de Firestore para asegurar la obtención de los datos más recientes
             firestore.clearPersistence()
+
+            // Se vacía la lista de hospitales para evitar duplicados
             listHospitals.value.clear()
-            viewModelScope.launch {
-                firestore.collection("Hospitals")
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        for (document in documents) {
-                            listHospitals.value.add(document.toObject(Hospital::class.java))
-                        }
+
+            // Se realiza la consulta a Firestore para obtener todos los hospitales
+            firestore.collection("Hospitals")
+                .get()
+                .addOnSuccessListener { documents ->
+                    // Cuando se obtienen los documentos exitosamente
+                    for (document in documents) {
+                        // Se añade cada hospital a la lista
+                        listHospitals.value.add(document.toObject(Hospital::class.java))
                     }
-                    .addOnCompleteListener {
-                        onSuccess()
-                    }
-                    .addOnFailureListener { exception ->
-                        message.value = "Error al recuperar los hospitales"
-                    }
-            }
+                }
+                .addOnCompleteListener {
+                    // Cuando la operación se completa exitosamente
+                    // Se ejecuta la acción onSuccess para manejar el éxito de la operación
+                    onSuccess()
+                }
+                .addOnFailureListener { exception ->
+                    // En caso de fallo al obtener los hospitales
+                    // Se establece un mensaje de error para manejarlo en la interfaz de usuario
+                    message.value = "Error al recuperar los hospitales"
+                }
         }
     }
 
@@ -152,27 +203,23 @@ class KrankenwagenViewModel : ViewModel() {
         userRegistererd.value = !userRegistererd.value
     }
 
-    /**
-     * Cambia el idioma del programa
-     */
-    private fun cambiarIdioma() {
-        // TODO:  seleccionar archivo de idioma
-    }
 
+    /**
+     * Cierra la aplicación
+     */
     fun closeApp() {
         exitProcess(0)
-
     }
 
     /**
-     * cambia el valor  de editAmb
+     * Cambia el valor  de editAmb
      */
     fun activaEditAmb() {
         editAmb.value = !editAmb.value
     }
 
     /**
-     * cambia el valor  de editHosp
+     * Cambia el valor  de editHosp
      */
     fun activaEditHosp() {
         editHosp.value = !editHosp.value
@@ -185,16 +232,22 @@ class KrankenwagenViewModel : ViewModel() {
         createAmb.value = !createAmb.value
     }
 
+    /**
+     * Activa o desactiva la creación de hospitales
+     */
     fun acCreateHosp() {
         createHosp.value = !createHosp.value
     }
 
+    /**
+     * Asigna un valor recibido a message
+     */
     fun setMessage(text: String) {
         message.value = text
     }
 
     /**
-     * función que modifica el valor de provinciaFiltrar
+     * Función que modifica el valor de provinciaFiltrar
      */
     fun setProv(text: String) {
         provinciaFiltrar.value = text

@@ -1,7 +1,6 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,22 +47,30 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewMod
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 
+/**
+ * Composable para la edición de hospitales
+ */
 @Composable
 fun EditarHosp(
     viewModel: KrankenwagenViewModel,
     hospitalViewModel: HospitalViewModel,
     ambulancesViewModel: AmbulancesViewModel
 ) {
-    val idHosp by hospitalViewModel.idHosp.collectAsState()
-    val name by hospitalViewModel.name.collectAsState()
-    val county by hospitalViewModel.county.collectAsState()
-    val city by hospitalViewModel.city.collectAsState()
-    val address by hospitalViewModel.address.collectAsState()
-    val listAmbs by viewModel.listAmbulancias.collectAsState()
-    val context = LocalContext.current
+    // Variables para la edición de hospitales
+    val idHosp by hospitalViewModel.idHosp.collectAsState() // Id del hospital
+    val name by hospitalViewModel.name.collectAsState() // Nombre del hospital
+    val county by hospitalViewModel.county.collectAsState() // Provincia del hospital
+    val city by hospitalViewModel.city.collectAsState() // Ciudad del hospital
+    val address by hospitalViewModel.address.collectAsState() // Dirección del hospital
+    val listAmbs by viewModel.listAmbulancias.collectAsState() // Listado de ambulancias asociadas al hospital
+    // Variable que se usa para indicar al sistema que busque las ambulancias asociadas y las muestre
     val muestrAmbs = remember { mutableStateOf(false) }
+    // Variable que muestra la respuesta del sistema
     val message by hospitalViewModel.hospMessage.collectAsState()
+    // Variable que muestra la provincia por la que se han filtrado los hospitales
+    val prov by viewModel.provinciaFiltrar.collectAsState()
 
+    // Diálogo de edición de hospitales
     Dialog(
         onDismissRequest = {
             viewModel.activaEditHosp()
@@ -72,7 +80,7 @@ fun EditarHosp(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.8f),
+                .fillMaxHeight(0.9f),
             shape = RoundedCornerShape(10.dp)
         ) {
             Row(modifier = Modifier.fillMaxSize()) {
@@ -84,16 +92,19 @@ fun EditarHosp(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
+                    // Texto id del hospital, no editable
                     Text(
                         text = "Id: $idHosp",
                         fontSize = 30.sp,
                         modifier = Modifier.background(color = Color.LightGray)
                     )
+                    // Texto provincia del hospital, no editable
                     Text(
                         text = "Provincia: $county",
                         fontSize = 30.sp,
                         modifier = Modifier.background(color = Color.LightGray)
                     )
+                    // Texto ciudad del hospital, no editable
                     Text(
                         text = "Ciudad: $city",
                         fontSize = 30.sp,
@@ -117,6 +128,7 @@ fun EditarHosp(
                         modifier = Modifier.padding(8.dp),
                         textStyle = TextStyle(fontSize = 30.sp)
                     )
+                    // Campo de edición para la dirección del hospital
                     TextField(
                         value = address,
                         onValueChange = { newValue ->
@@ -134,15 +146,10 @@ fun EditarHosp(
 
                     Spacer(modifier = Modifier.height(20.dp))
                     Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+                        // Botón para actualizar el hospital
                         Button(
                             onClick = {
-                                hospitalViewModel.updateHosp() {
-                                    Toast.makeText(
-                                        context,
-                                        message,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                                hospitalViewModel.updateHosp() {}
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         ) {
@@ -152,15 +159,10 @@ fun EditarHosp(
                             )
                         }
                         Spacer(modifier = Modifier.padding(8.dp))
+                        // Botón para borrar el hospital actual
                         Button(
                             onClick = {
-                                hospitalViewModel.deleteHosp(idHosp) {
-                                    Toast.makeText(
-                                        context,
-                                        message,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                                hospitalViewModel.deleteHosp(idHosp) {}
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         ) {
@@ -175,6 +177,7 @@ fun EditarHosp(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         modifier = Modifier.fillMaxWidth()
                     ) {
+                        // Botón para mostrar la lista de ambulancias asociadas
                         Button(
                             onClick = {
                                 viewModel.getAmb(idHosp) {
@@ -188,10 +191,12 @@ fun EditarHosp(
                                 fontSize = 20.sp
                             )
                         }
+                        // Botón para volver a la pantalla anterior
                         Button(
                             onClick = {
+                                // Recarga la lista de ambulancias y luego la de hospitales, resetea los campos de edición
                                 viewModel.getAllAmb {
-                                    viewModel.getAllHosp {
+                                    viewModel.getHosp(prov) {
                                         hospitalViewModel.resetFields()
                                         viewModel.activaEditHosp()
                                     }
@@ -205,11 +210,20 @@ fun EditarHosp(
                             )
                         }
                     }
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row(horizontalArrangement = Arrangement.Center) {
+                        Text(
+                            text = message,
+                            fontStyle = FontStyle.Italic,
+                            color = Color.Red
+                        )
+                    }
                 }
                 Column(
                     modifier = Modifier.fillMaxSize()
                 )
                 {
+                    // Columna que muestra la lista de ambulancias asociadas al hospital
                     if (muestrAmbs.value) {
                         Row(verticalAlignment = Alignment.Top)
                         {
@@ -226,6 +240,7 @@ fun EditarHosp(
                                 .fillMaxSize()
                         )
                         {
+                            // LazyColumn de la lista de ambulancias
                             LazyColumn {
                                 items(listAmbs) { ambulance ->
                                     Button(
@@ -236,6 +251,7 @@ fun EditarHosp(
                                         },
                                         modifier = Modifier.wrapContentSize(),
                                         colors = ButtonDefaults.buttonColors(
+                                            // Si la ambulancia está ocupada se muestra en rojo
                                             if (!ambulance.isFree)
                                                 Color.Red
                                             else
@@ -245,7 +261,6 @@ fun EditarHosp(
                                         Text(text = ambulance.plate)
                                     }
                                 }
-
                             }
                         }
                     }
@@ -256,22 +271,27 @@ fun EditarHosp(
     }
 }
 
+
+/**
+ * Composable para la edición de ambulancias
+ */
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun EditarAmb(
     viewModel: KrankenwagenViewModel,
     ambulancesViewModel: AmbulancesViewModel
 ) {
-    val context = LocalContext.current
-    val id by ambulancesViewModel.idAmb.collectAsState()
-    val plate by ambulancesViewModel.plate.collectAsState()
-    val isFree by ambulancesViewModel.isFree.collectAsState()
-    val type by ambulancesViewModel.type.collectAsState()
-    val hosp by ambulancesViewModel.hosp.collectAsState()
+    // Variables para la edición de ambulancias
+    val plate by ambulancesViewModel.plate.collectAsState() // Matrícula de la ambulancia
+    val isFree by ambulancesViewModel.isFree.collectAsState() // Estado de la ambulancia
+    val type by ambulancesViewModel.type.collectAsState() // Tipo de ambulancia
+    val hosp by ambulancesViewModel.hosp.collectAsState() // Hospital de referencia de la ambulancia
     // Estado para controlar la expansión del DropdownMenu
     var expanded by remember { mutableStateOf(false) }
+    // Variable que muestra el mensaje de respuesta del sistema
     val message by ambulancesViewModel.ambulanceMessage.collectAsState()
 
+    // Diálogo de edición de ambulancias
     Dialog(
         onDismissRequest = {
             viewModel.activaEditAmb()
@@ -281,7 +301,7 @@ fun EditarAmb(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.7f),
+                .fillMaxHeight(0.8f),
             shape = RoundedCornerShape(10.dp)
         ) {
             Column(
@@ -291,6 +311,7 @@ fun EditarAmb(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                // Campo de texto de la matrícula, no editable
                 Text(
                     text = "Matrícula: $plate",
                     fontSize = 30.sp,
@@ -335,7 +356,7 @@ fun EditarAmb(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-
+                // Campo de edición del tipo de ambulanacia
                 Row {
                     Text(
                         "Tipo de Ambulancia   ",
@@ -351,6 +372,7 @@ fun EditarAmb(
                             fontSize = 30.sp
                         )
                         Spacer(modifier = Modifier.padding(start = 8.dp))
+                        // Desplegable que muestra las distintas opciones entre los tipos de ambulancia
                         DropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
@@ -372,16 +394,14 @@ fun EditarAmb(
                 }
 
                 Spacer(modifier = Modifier.height(30.dp))
+
+                // Botones
                 Row(horizontalArrangement = Arrangement.SpaceEvenly) {
+                    // Botón guardar ambulancia
                     Button(
                         onClick = {
-                            ambulancesViewModel.updateAmbulance() {
-                                Toast.makeText(
-                                    context,
-                                    message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                            // Se guarda la ambulancia actual
+                            ambulancesViewModel.updateAmbulance() {}
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
@@ -391,15 +411,12 @@ fun EditarAmb(
                         )
                     }
                     Spacer(modifier = Modifier.padding(8.dp))
+
+                    // Botón borrar ambulancia
                     Button(
                         onClick = {
-                            ambulancesViewModel.deleteAmbulance() {
-                                Toast.makeText(
-                                    context,
-                                    message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
+                            // Se borra la ambulancia actual
+                            ambulancesViewModel.deleteAmbulance() {}
                             viewModel.activaEditAmb()
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -414,13 +431,15 @@ fun EditarAmb(
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Row(horizontalArrangement = Arrangement.Center) {
+                    // Botón volver
                     Button(
                         onClick = {
+                            // Se recarga la lista de ambulancias y se resetean los valores editables
                             viewModel.getAllAmb {
-                                viewModel.getAllHosp {
-                                    ambulancesViewModel.resetFields()
-                                    viewModel.activaEditAmb()
-                                }
+                                ambulancesViewModel.resetFields()
+                                viewModel.activaEditAmb()
+                                viewModel.activaEditHosp()
+
                             }
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -430,6 +449,15 @@ fun EditarAmb(
                             fontSize = 20.sp
                         )
                     }
+                }
+                Spacer(modifier = Modifier.padding(8.dp))
+                Row(horizontalArrangement = Arrangement.Center) {
+                    Text(
+                        // Mensaje de respuesta del sistema
+                        text = message,
+                        fontStyle = FontStyle.Italic,
+                        color = Color.Red
+                    )
                 }
             }
         }

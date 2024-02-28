@@ -2,12 +2,12 @@ package com.example.proyectofinalintmov.krankenwagen.data
 
 /**
  * Clase Hospital
- * @param id almacena el id del hospital
- * @param name almacena el nombre del hospital
- * @param county almacena la provincia del hospital
- * @param city almacena la localidad del hospital
- * @param ambulances de tipo mutableList, almacena las ambulancias que dependen del hospital
- * @param address almacena la direccion del hospital
+ * @property id almacena el id del hospital
+ * @property name almacena el nombre del hospital
+ * @property county almacena la provincia del hospital
+ * @property city almacena la localidad del hospital
+ * @property ambulances de tipo mutableList, almacena las ambulancias que dependen del hospital
+ * @property address almacena la direccion del hospital
  */
 data class Hospital(
     val id: String,

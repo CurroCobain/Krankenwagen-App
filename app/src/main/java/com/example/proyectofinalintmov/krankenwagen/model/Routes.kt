@@ -14,6 +14,6 @@ sealed class Routes(val route: String) {
    // Representa la ruta de la pantalla de hospitales.
     object PantallaHospitals : Routes("hospitals")
 
-   // Representa la ruta de la pantalla de centros de salud.
-    object PantallaDocs : Routes("docs")
+   // Representa la ruta de la pantalla de creación.
+    object PantallaCreate : Routes("create")
 }

@@ -18,7 +18,6 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 /**
  * Gestiona la navegación dentro de la aplicación.
- * @param viewModel El ViewModel de la página de bienvenida.
  */
 @Composable
 fun NavManager(
@@ -45,7 +44,7 @@ fun NavManager(
             Ambulances(navController, viewModel, showMenu, userRegistered, sesionViewModel, ambulancesViewModel) }
         composable(Routes.PantallaHospitals.route) {
             Hospitals(navController, viewModel, showMenu,userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
-        composable(Routes.PantallaDocs.route) {
+        composable(Routes.PantallaCreate.route) {
             Create(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel) }
     }
 }

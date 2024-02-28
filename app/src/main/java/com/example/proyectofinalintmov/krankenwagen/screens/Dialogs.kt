@@ -31,14 +31,10 @@ import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 
 
 /**
  * Composable que muestra un diálogo de menú.
- * Recibe el siguiente parámetro
- * @param viewModel El ViewModel asociado al diálogo de menú.
  */
 @Composable
 fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewModel) {
@@ -58,7 +54,8 @@ fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewMode
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.Center
             )
-            {// ------------------------- Texto menú  -------------------------
+            {
+                // Texto menú
                 Text(text = "Menú")
             }
             Row(
@@ -69,6 +66,7 @@ fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewMode
                 horizontalArrangement = Arrangement.Center
             )
             {
+                // Botón salir de la aplicación
                 Button(
                     onClick = { viewModel.closeApp() },
                     colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -84,8 +82,10 @@ fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewMode
                 horizontalArrangement = Arrangement.Center
             )
             {
+                // Botón cerrar sesión
                 Button(
                     onClick = {
+                        // Cierra la sesión del usuario actual y abre el diálogo de registro
                         viewModel.openCloseMenu()
                         sesionViewModel.cambiaNombre("")
                         sesionViewModel.cerrarSesion()
@@ -103,8 +103,6 @@ fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewMode
 
 /**
  * Composable que muestra un diálogo de sesión de usuario.
- * Recibe el siguiente parámetro
- * @param viewModel El ViewModel asociado al diálogo de sesión de usuario.
  */
 @SuppressLint("RememberReturnType", "StateFlowValueCalledInComposition")
 @Composable
@@ -112,11 +110,15 @@ fun DialogSesion(
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel
 ) {
-    val nombreDoc by sesionViewModel.nombreDoc.collectAsState()
-    val mailDoc by sesionViewModel.nuevoMail.collectAsState()
-    val passDoc by sesionViewModel.nuevoPass.collectAsState()
-    val initOrReg by sesionViewModel.inirOrReg.collectAsState()
+    // Variables para gestionar el registro y el inicio de sesión
+    val nombreDoc by sesionViewModel.nombreDoc.collectAsState() // Nombre del doctor
+    val mailDoc by sesionViewModel.nuevoMail.collectAsState() // Email del doctor
+    val passDoc by sesionViewModel.nuevoPass.collectAsState() // Contraseña del doctor
+    // Variable que gestiona el cambio entre registro e inicio de sesión
+    val initOrReg by sesionViewModel.initOrReg.collectAsState()
     val context = LocalContext.current
+
+    // Variable que almacena la respuesta del sistema
     val message by sesionViewModel.sesionMessage.collectAsState()
     Dialog(
         onDismissRequest = { viewModel.openCloseSesion() })
@@ -179,6 +181,7 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                         Button(
                             onClick = {
+                                // Lanzamos createUSer para crear el usuario, si finaliza correctamente se indica mediante un Toast
                                 sesionViewModel.createUser {
                                     Toast.makeText(context, "Usuario registrado correctamente", Toast.LENGTH_LONG).show()
                                     sesionViewModel.cambiaInit()
@@ -195,6 +198,7 @@ fun DialogSesion(
                         // -------------------------- Botón volver ---------------------------------
                         Button(
                             onClick = {
+                                // Cierra el diálogo y resetea el valor del mensaje del sistema
                                 viewModel.openCloseSesion()
                                 sesionViewModel.setMessage("")
                             },
@@ -214,6 +218,7 @@ fun DialogSesion(
                     {// ---------------------- Botón iniciar sesion ------------------------------
                         Button(
                             onClick = {
+                                // Cambia al modo inicio de sesión para usuarios ya registrados
                                 sesionViewModel.cambiaInit()
                                 sesionViewModel.setMessage("")
                             },
@@ -226,6 +231,7 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         Text(
+                            // Mensaje del sistema
                             text = message!!,
                             color = Color.Red
                         )
@@ -270,6 +276,7 @@ fun DialogSesion(
                     {
                         Button(
                             onClick = {
+                                // Se lanza sesionÍnit y si finaliza correctamente se indica mediante un Toast
                                 sesionViewModel.sesionInit {
                                     sesionViewModel.getUser()
                                     viewModel.openCloseSesion()
@@ -290,6 +297,7 @@ fun DialogSesion(
                         // ------------------------ Botón volver a registro ------------------------
                         Button(
                             onClick = {
+                                // Cambia al modo de registro de usuarios
                                 sesionViewModel.cambiaInit()
                                 sesionViewModel.setMessage("")
                             },
@@ -304,6 +312,7 @@ fun DialogSesion(
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         Text(
+                            // Mensaje del sistema
                             text = message!!,
                             color = Color.Red
                         )

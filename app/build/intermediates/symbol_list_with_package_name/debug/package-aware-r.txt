@@ -107,6 +107,7 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+drawable ambulancia
 drawable arrow_back_vector
 drawable barra_lateral_amb
 drawable barra_lateral_doc
@@ -138,6 +139,7 @@ drawable common_google_signin_btn_text_light_normal_background
 drawable fondo
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable hospital
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video

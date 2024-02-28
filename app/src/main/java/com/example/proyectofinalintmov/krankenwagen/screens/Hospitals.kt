@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -46,7 +46,6 @@ import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
-import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
@@ -55,11 +54,6 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 /**
  * Scaffold que alberga la página de hospitales
- * Recibe los siguientes parámetros
- * @param navController Controlador de navegación para manejar las transiciones entre pantallas.
- * @param menuDesplegado Indica si el menú está desplegado o no.
- * @param userDesplegado Indica si el diálogo de sesión de usuario está desplegado o no.
- * @param viewModel El ViewModel asociado a la pantalla de bienvenida.
  */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
@@ -74,16 +68,21 @@ fun Hospitals(
     editHosp: Boolean,
     editAmb: Boolean
 ) {
+    // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
+
+    // Scaffold que compone la pantalla
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Mensaje de bienvenida al Dr, se muestra el nombre una vez iniciada la sesión
             Bienvenida(
                 bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
             )
         }
     }, content = {
+        // Contenido del Scaffold
         ContenidoHospitals(
             navController = navController,
             menuDesplegado = showMenu,
@@ -96,18 +95,14 @@ fun Hospitals(
             editAmb = editAmb
         )
     }, bottomBar = {
+        // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(viewModel = viewModel)
     })
 
 }
 
 /**
- * Composable que muestra el contenido de la pantalla de hospitales.
- * Recibe los siguientes parámetros
- * @param navController Controlador de navegación para manejar las transiciones entre pantallas.
- * @param menuDesplegado Indica si el menú está desplegado o no.
- * @param userDesplegado Indica si el diálogo de sesión de usuario está desplegado o no.
- * @param viewModel El ViewModel asociado a la pantalla de bienvenida.
+ * Composable que crea el contenido de la pantalla de hospitales.
  */
 @Composable
 fun ContenidoHospitals(
@@ -122,8 +117,11 @@ fun ContenidoHospitals(
     editAmb: Boolean
 ) {
     val context = LocalContext.current
+    // Variable que se usa para gestionar el estado del dropDownMenu de selección de provincia
     var expanded by remember { mutableStateOf(false) }
+    // Lista que almacena los nombres de las provincias para mostrarlos en el dropDownMenu, sólo se usa aquí
     val provincias = listOf("Almeria", "Cadiz", "Cordoba", "Granada", "Huelva", "Jaen", "Malaga", "Sevilla")
+    // Variable que almacena la provincia seleccionada en el dropDownMenu
     val selectedProvincia = remember { mutableStateOf("Selecciona una provincia") }
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -139,10 +137,12 @@ fun ContenidoHospitals(
             // Barra de navegación lateral
             BarraLateral(
                 onWelcTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.setProv("")
                         navController.navigate(Routes.PantallaWelcome.route)
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -151,11 +151,13 @@ fun ContenidoHospitals(
                     }
                 },
                 onAmbTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.getAllAmb {
                             navController.navigate(Routes.PantallaAmbulances.route)
                         }
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -164,11 +166,13 @@ fun ContenidoHospitals(
                     }
                 },
                 onHospTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
                         viewModel.getAllHosp {
                             navController.navigate(Routes.PantallaHospitals.route)
                         }
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -177,9 +181,11 @@ fun ContenidoHospitals(
                     }
                 },
                 onAddTapped = {
+                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        navController.navigate(Routes.PantallaDocs.route)
+                        navController.navigate(Routes.PantallaCreate.route)
                     } else {
+                        // Si no se ha iniciado sesión se manda mensaje de error
                         Toast.makeText(
                             context,
                             "Debe iniciar sesión para poder acceder a la base de datos",
@@ -205,6 +211,7 @@ fun ContenidoHospitals(
                         )
                     }
 
+                    // Columna que muestra la provincia actual seleccionada y el dropDownMenu
                     Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
                             Text(
                                 text = selectedProvincia.value,
@@ -214,8 +221,9 @@ fun ContenidoHospitals(
                                 fontSize = 30.sp
                             )
 
-
                         Spacer(modifier = Modifier.padding(start = 8.dp, bottom =  8.dp))
+
+                        //DropDownMenu que muestra las provincias para filtrar hospitales
                         DropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
@@ -224,7 +232,9 @@ fun ContenidoHospitals(
                             provincias.forEach { provincia ->
                                 DropdownMenuItem(onClick = {
                                     selectedProvincia.value = provincia
+                                    // Se asigna el valor de SelectedProvincia a la variable que la gestiona en el HospitalViewModel
                                     viewModel.setProv(selectedProvincia.value)
+                                    // Se filtran los hospitales
                                     viewModel.getHosp(selectedProvincia.value){
                                         expanded = false
                                     }
@@ -246,6 +256,7 @@ fun ContenidoHospitals(
                     editHosp = editHosp
                 )
             }
+            // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
             when {
                 menuDesplegado -> DialogMenu(viewModel, sesionViewModel)
                 userDesplegado -> DialogSesion(viewModel, sesionViewModel)
@@ -256,6 +267,10 @@ fun ContenidoHospitals(
     }
 }
 
+
+/**
+ * Composable que muestra los hospitales de la base de datos, pueden aparecer filtrados por provincia o no
+ */
 @SuppressLint("StateFlowValueCalledInComposition")
 @Suppress("UNUSED_PARAMETER")
 @Composable
@@ -266,6 +281,7 @@ fun LazyHospital(
     modifier: Modifier,
     editHosp: Boolean
 ) {
+    // Varibale que muestra el valor de listHospitals del viewModel
     val miListaHosp by viewModel.listHospitals.collectAsState()
     LazyRow {
         items(miListaHosp) { hospital ->
@@ -273,24 +289,36 @@ fun LazyHospital(
                 .padding(20.dp)
                 .size(250.dp)
                 .clickable {
+                    // Al hacer click asignamos los valores del hospital clickado al hospitalViewModel
                     hospitalViewModel.asignHospFields(hospital) {
+                        // Tras asignar los valores activamos el menú de edición
                         viewModel.activaEditHosp()
                     }
                 })
             {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(
-                        painter = painterResource(id = R.drawable.barra_lateral_hosp),
-                        contentDescription = "Hosp avatar",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                    )
-                    Text(
-                        text = hospital.name,
-                        fontSize = 20.sp
-                    )
+                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.fillMaxSize()) {
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    Row (modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .fillMaxHeight(0.7f),
+                        horizontalArrangement = Arrangement.Center){
+                        // Imagen del hospital
+                        Image(
+                            painter = painterResource(id = R.drawable.hospital),
+                            contentDescription = "Hosp avatar",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+                    Row{
+                        // Nombre del hospital
+                        Text(
+                            text = hospital.name,
+                            fontSize = 20.sp
+                        )
+                    }
                 }
             }
         }
