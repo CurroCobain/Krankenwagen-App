@@ -1,6 +1,5 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
@@ -23,7 +22,6 @@ import kotlinx.coroutines.launch
 class AmbulancesViewModel : ViewModel() {
     // Inicialización del objeto de Firestore para acceder a la base de datos Firestore de Firebase
     private val firestore = Firebase.firestore
-    private val krankenwagenViewModel = KrankenwagenViewModel()
 
     // Almacena el id de la ambulancia actual
     var idAmb = MutableStateFlow("")

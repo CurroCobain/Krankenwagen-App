@@ -6,7 +6,6 @@ package com.example.proyectofinalintmov.krankenwagen.data
  * @property name almacena el nombre del hospital
  * @property county almacena la provincia del hospital
  * @property city almacena la localidad del hospital
- * @property ambulances de tipo mutableList, almacena las ambulancias que dependen del hospital
  * @property address almacena la direccion del hospital
  */
 data class Hospital(

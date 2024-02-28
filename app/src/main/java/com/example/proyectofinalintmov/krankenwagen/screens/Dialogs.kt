@@ -232,7 +232,7 @@ fun DialogSesion(
                     {
                         Text(
                             // Mensaje del sistema
-                            text = message!!,
+                            text = message,
                             color = Color.Red
                         )
                     }
@@ -313,7 +313,7 @@ fun DialogSesion(
                     {
                         Text(
                             // Mensaje del sistema
-                            text = message!!,
+                            text = message,
                             color = Color.Red
                         )
                     }

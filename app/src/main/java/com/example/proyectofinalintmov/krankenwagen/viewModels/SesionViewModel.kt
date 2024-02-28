@@ -26,9 +26,6 @@ class SesionViewModel : ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
     private val firestore = Firebase.firestore
 
-    // ViewModel relacionado
-    private val krankenwagenViewModel = KrankenwagenViewModel()
-
     // Estado del mensaje de sesión
     var sesionMessage = MutableStateFlow("")
 

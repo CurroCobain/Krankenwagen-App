@@ -26,7 +26,7 @@ import kotlin.system.exitProcess
  */
 class KrankenwagenViewModel : ViewModel() {
     private val firestore = Firebase.firestore
-    var message = MutableStateFlow("")
+    private var message = MutableStateFlow("")
 
     // variable que se usa para desplegar el menú de opciones
     var showMenu = MutableStateFlow(false)
@@ -81,7 +81,7 @@ class KrankenwagenViewModel : ViewModel() {
                 }
                 .addOnFailureListener { exception ->
                     // En caso de fallo al obtener los hospitales
-                    // TODO: añadir manejo de errores adecuado, como mostrar un mensaje de error
+                    message.value = "Error al obtener la lista de hospitales"
                 }
         }
     }
@@ -148,7 +148,7 @@ class KrankenwagenViewModel : ViewModel() {
             }
             .addOnFailureListener { exception ->
                 // En caso de fallo al obtener las ambulancias filtradas por hospital
-                // TODO: añadir manejo de errores adecuado, como mostrar un mensaje de error
+                message.value = "Error al obtener la lista de ambulancias"
             }
     }
 
@@ -237,13 +237,6 @@ class KrankenwagenViewModel : ViewModel() {
      */
     fun acCreateHosp() {
         createHosp.value = !createHosp.value
-    }
-
-    /**
-     * Asigna un valor recibido a message
-     */
-    fun setMessage(text: String) {
-        message.value = text
     }
 
     /**
