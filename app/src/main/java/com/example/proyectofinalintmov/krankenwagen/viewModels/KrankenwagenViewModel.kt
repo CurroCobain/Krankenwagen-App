@@ -46,9 +46,6 @@ class KrankenwagenViewModel : ViewModel() {
     // lista de ambulancias filtradas
     var listAmbulancias = MutableStateFlow(mutableListOf<Ambulance>())
 
-    // lista de centros filtrados
-    var listCentros = MutableStateFlow(mutableListOf<Clinic>())
-
     // lista de hospitales filtrados
     val listHospitals = MutableStateFlow(mutableListOf<Hospital>())
 
@@ -58,12 +55,17 @@ class KrankenwagenViewModel : ViewModel() {
     // variable que permite activar la edición de un hospital
     var editHosp = MutableStateFlow(false)
 
-    fun getHosp(provincia: String) {
+    //variable que se uso para determinar si se filtra por provincia o no
+    val provinciaFiltrar = MutableStateFlow("")
+
+    fun getHosp(provincia: String, onSuccess: () -> Unit) {
+        listHospitals.value.clear()
         viewModelScope.launch {
             firestore.collection("Hospitals").whereEqualTo("county", provincia).get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
                         listHospitals.value.add(document.toObject(Hospital::class.java))
+                        onSuccess()
                     }
                 }
                 .addOnFailureListener { exception ->
@@ -114,22 +116,24 @@ class KrankenwagenViewModel : ViewModel() {
     }
 
     fun getAllHosp(onSuccess: () -> Unit) {
-        firestore.clearPersistence()
-        listHospitals.value.clear()
         viewModelScope.launch {
-            firestore.collection("Hospitals")
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        listHospitals.value.add(document.toObject(Hospital::class.java))
+            firestore.clearPersistence()
+            listHospitals.value.clear()
+            viewModelScope.launch {
+                firestore.collection("Hospitals")
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            listHospitals.value.add(document.toObject(Hospital::class.java))
+                        }
                     }
-                }
-                .addOnCompleteListener {
-                    onSuccess()
-                }
-                .addOnFailureListener { exception ->
-                    message.value = "Error al recuperar los hospitales"
-                }
+                    .addOnCompleteListener {
+                        onSuccess()
+                    }
+                    .addOnFailureListener { exception ->
+                        message.value = "Error al recuperar los hospitales"
+                    }
+            }
         }
     }
 
@@ -189,7 +193,11 @@ class KrankenwagenViewModel : ViewModel() {
         message.value = text
     }
 
-    fun clearCache(){
-        firestore.clearPersistence()
+    /**
+     * función que modifica el valor de provinciaFiltrar
+     */
+    fun setProv(text: String) {
+        provinciaFiltrar.value = text
     }
+
 }

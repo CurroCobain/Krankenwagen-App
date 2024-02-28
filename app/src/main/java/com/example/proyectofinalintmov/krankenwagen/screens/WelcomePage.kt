@@ -116,6 +116,7 @@ fun ContenidoWelcome(
             BarraLateral(
                 onWelcTapped = {
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.setProv("")
                         navController.navigate(Routes.PantallaWelcome.route)
                     } else {
                         Toast.makeText(
@@ -171,43 +172,51 @@ fun ContenidoWelcome(
                     .padding(top = 100.dp),
                 // Filtrar por Almería
                 onAlmerATapped = {
-                    viewModel.getHosp("Almeria")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Almeria"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 },
                 // Filtrar por Cádiz
                 onCDizTapped = {
-                    viewModel.getHosp("Cadiz")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Cadiz"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 },
                 // Filtrar por Córdoba
                 onCRdobaTapped = {
-                    viewModel.getHosp("Cordoba")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Cordoba"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 },
                 // Filtrar por Granada
                 onGranadaTapped = {
-                    viewModel.getHosp("Granada")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Granada"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 },
                 // Filtrar por Huelva
                 onHuelvaTapped = {
-                    viewModel.getHosp("Huelva")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Huelva"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 },
                 // Filtrar por Jaen
                 onJaenTapped = {
-                    viewModel.getHosp("Jaen")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Jaen"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 },
                 // Filtrar por Málaga
                 onMLagaTapped = {
-                    viewModel.getHosp("Malaga")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Malaga"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 },
                 // Filtrar por Sevilla
                 onSevillaTapped = {
-                    viewModel.getHosp("Sevilla")
-                    navController.navigate(Routes.PantallaHospitals.route)
+                    viewModel.getHosp("Sevilla"){
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    }
                 }
             )
         }

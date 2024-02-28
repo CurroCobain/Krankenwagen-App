@@ -50,6 +50,7 @@ fun CreateAmbulance(
     val hosp by ambulancesViewModel.hosp.collectAsState()
     var expanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
+    val message by ambulancesViewModel.ambulanceMessage.collectAsState()
 
     Dialog(
         onDismissRequest = { viewModel.acCreateAmb() }
@@ -146,12 +147,7 @@ fun CreateAmbulance(
                 ) {
                     Button(onClick = {
                         // crea la ambulancia con los datos recibidos
-                        ambulancesViewModel.saveAmbulance()
-                        Toast.makeText(
-                            context,
-                            ambulancesViewModel.setMessage(),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        ambulancesViewModel.saveAmbulance() {}
                     }) {
                         Text("Crear")
                     }
@@ -175,6 +171,9 @@ fun CreateAmbulance(
                         Text("Cerrar")
                     }
                 }
+                Row(horizontalArrangement = Arrangement.Center) {
+                    Text(text = message)
+                }
             }
         }
     }
@@ -191,6 +190,7 @@ fun CreateHospital(
     val city by hospitalViewModel.city.collectAsState()
     val address by hospitalViewModel.address.collectAsState()
     val context = LocalContext.current
+    val message by hospitalViewModel.hospMessage.collectAsState()
 
     Dialog(
         onDismissRequest = { viewModel.acCreateHosp() }
@@ -229,13 +229,13 @@ fun CreateHospital(
                     modifier = Modifier.padding(8.dp)
                 )
 
-                // Campo de edición para el condado
+                // Campo de edición para la provincia
                 TextField(
                     value = county,
                     onValueChange = { newValue ->
                         hospitalViewModel.setCounty(newValue)
                     },
-                    label = { Text("Condado") },
+                    label = { Text("Provincia") },
                     modifier = Modifier.padding(8.dp)
                 )
 
@@ -266,13 +266,7 @@ fun CreateHospital(
                 ) {
                     Button(onClick = {
                         // Guarda el hospital con los datos ingresados
-                        hospitalViewModel.saveHospital()
-                        val message = hospitalViewModel.setHospMessage()
-                        Toast.makeText(
-                            context,
-                            message,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        hospitalViewModel.saveHospital() {}
                     }) {
                         Text("Guardar")
                     }
@@ -296,6 +290,9 @@ fun CreateHospital(
                     }) {
                         Text("Cerrar")
                     }
+                }
+                Row (horizontalArrangement = Arrangement.Center){
+                    Text(text = message)
                 }
             }
         }

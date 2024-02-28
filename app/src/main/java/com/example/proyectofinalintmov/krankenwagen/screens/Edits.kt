@@ -60,7 +60,9 @@ fun EditarHosp(
     val address by hospitalViewModel.address.collectAsState()
     val listAmbs by viewModel.listAmbulancias.collectAsState()
     val context = LocalContext.current
-    var muestrAmbs = remember { mutableStateOf( false) }
+    val muestrAmbs = remember { mutableStateOf(false) }
+    val message by hospitalViewModel.hospMessage.collectAsState()
+
     Dialog(
         onDismissRequest = {
             viewModel.activaEditHosp()
@@ -137,7 +139,7 @@ fun EditarHosp(
                                 hospitalViewModel.updateHosp() {
                                     Toast.makeText(
                                         context,
-                                        hospitalViewModel.setHospMessage(),
+                                        message,
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -155,7 +157,7 @@ fun EditarHosp(
                                 hospitalViewModel.deleteHosp(idHosp) {
                                     Toast.makeText(
                                         context,
-                                        hospitalViewModel.setHospMessage(),
+                                        message,
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -273,7 +275,7 @@ fun EditarAmb(
     Dialog(
         onDismissRequest = {
             viewModel.activaEditAmb()
-            ambulancesViewModel.setMessage()
+            ambulancesViewModel.resetFields()
         },
     ) {
         Card(
@@ -376,7 +378,7 @@ fun EditarAmb(
                             ambulancesViewModel.updateAmbulance() {
                                 Toast.makeText(
                                     context,
-                                    ambulancesViewModel.setMessage(),
+                                    message,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -394,7 +396,7 @@ fun EditarAmb(
                             ambulancesViewModel.deleteAmbulance() {
                                 Toast.makeText(
                                     context,
-                                    ambulancesViewModel.setMessage(),
+                                    message,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }

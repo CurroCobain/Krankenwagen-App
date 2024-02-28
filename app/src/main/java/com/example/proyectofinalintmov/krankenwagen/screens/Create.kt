@@ -110,6 +110,7 @@ fun ContenidoCreate(
             BarraLateral(
                 onWelcTapped = {
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.setProv("")
                         navController.navigate(Routes.PantallaWelcome.route)
                     } else {
                         Toast.makeText(

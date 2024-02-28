@@ -3,28 +3,40 @@ package com.example.proyectofinalintmov.krankenwagen.screens
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -34,6 +46,7 @@ import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
+import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
@@ -109,6 +122,9 @@ fun ContenidoHospitals(
     editAmb: Boolean
 ) {
     val context = LocalContext.current
+    var expanded by remember { mutableStateOf(false) }
+    val provincias = listOf("Almeria", "Cadiz", "Cordoba", "Granada", "Huelva", "Jaen", "Malaga", "Sevilla")
+    val selectedProvincia = remember { mutableStateOf("Selecciona una provincia") }
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -124,6 +140,7 @@ fun ContenidoHospitals(
             BarraLateral(
                 onWelcTapped = {
                     if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
+                        viewModel.setProv("")
                         navController.navigate(Routes.PantallaWelcome.route)
                     } else {
                         Toast.makeText(
@@ -176,6 +193,50 @@ fun ContenidoHospitals(
                 modifier = Modifier.fillMaxSize()
             )
             {
+                Row(modifier = Modifier.padding(start = 20.dp)) {
+                    Box(
+                        modifier = Modifier
+                            .border(width = 2.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
+                    ){
+                        Text(
+                            " Filtrar por provincia ->   ",
+                            fontSize = 30.sp,
+                            modifier = Modifier.background(color = Color.LightGray)
+                        )
+                    }
+
+                    Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
+                            Text(
+                                text = selectedProvincia.value,
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .background(Color.White, RoundedCornerShape(2.dp)),
+                                fontSize = 30.sp
+                            )
+
+
+                        Spacer(modifier = Modifier.padding(start = 8.dp, bottom =  8.dp))
+                        DropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier.width(IntrinsicSize.Max)
+                        ) {
+                            provincias.forEach { provincia ->
+                                DropdownMenuItem(onClick = {
+                                    selectedProvincia.value = provincia
+                                    viewModel.setProv(selectedProvincia.value)
+                                    viewModel.getHosp(selectedProvincia.value){
+                                        expanded = false
+                                    }
+                                }) {
+                                    Text(
+                                        text = provincia,
+                                        fontSize = 30.sp)
+                                }
+                            }
+                        }
+                    }
+                }
                 // LazyRow con la lista de hospitales
                 LazyHospital(
                     viewModel = viewModel,
