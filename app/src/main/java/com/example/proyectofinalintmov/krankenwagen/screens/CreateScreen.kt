@@ -172,7 +172,7 @@ fun CreateAmbulance(
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
-                        Text("Borrar Todo")
+                        Text("Limpiar datos")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -311,7 +311,7 @@ fun CreateHospital(
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
-                        Text("Limpiar")
+                        Text("Limpiar datos")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
