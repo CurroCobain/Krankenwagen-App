@@ -391,7 +391,6 @@ string default_error_message
 string default_popup_window_title
 string dialog
 string dropdown_menu
-string elija_el_idioma_de_la_app
 string expanded
 string fallback_menu_item_copy_link
 string fallback_menu_item_open_in_browser

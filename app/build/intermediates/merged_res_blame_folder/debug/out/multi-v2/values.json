@@ -6,6 +6,287 @@
                 {
                     "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\580a81bcb39557c623dea4b80ecefa99\\transformed\\lifecycle-runtime-2.7.0\\res\\values\\values.xml",
                     "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "115",
+                        "startColumns": "4",
+                        "startOffsets": "7099",
+                        "endColumns": "42",
+                        "endOffsets": "7137"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "6,23,24,25,26,27,28",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "431,1656,1703,1750,1797,1842,1887",
+                        "endColumns": "41,46,46,46,44,44,41",
+                        "endOffsets": "468,1698,1745,1792,1837,1882,1924"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\4b9f6b18975a68ba499214f7563059d5\\transformed\\core-1.12.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,11,12,21,22,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,94,95,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,121,130,131,132,133,134,135,136,222,252,253,257,258,262,264,265",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "211,271,343,722,787,1524,1593,2072,2142,2210,2282,2352,2413,2487,2560,2621,2682,2744,2808,2870,2931,2999,3099,3159,3225,3298,3367,3424,3476,3538,3610,3686,6008,6043,6240,6295,6358,6413,6471,6529,6590,6653,6710,6761,6811,6872,6929,6995,7029,7064,7427,8087,8154,8226,8295,8364,8438,8510,15547,17209,17326,17527,17637,17838,18063,18135",
+                        "endLines": "3,4,5,11,12,21,22,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,94,95,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,121,130,131,132,133,134,135,136,222,252,256,257,261,262,264,265",
+                        "endColumns": "59,71,87,64,65,68,62,69,67,71,69,60,73,72,60,60,61,63,61,60,67,99,59,65,72,68,56,51,61,71,75,64,34,34,54,62,54,57,57,60,62,56,50,49,60,56,65,33,34,34,69,66,71,68,68,73,71,87,70,116,12,109,12,128,71,66",
+                        "endOffsets": "266,338,426,782,848,1588,1651,2137,2205,2277,2347,2408,2482,2555,2616,2677,2739,2803,2865,2926,2994,3094,3154,3220,3293,3362,3419,3471,3533,3605,3681,3746,6038,6073,6290,6353,6408,6466,6524,6585,6648,6705,6756,6806,6867,6924,6990,7024,7059,7094,7492,8149,8221,8290,8359,8433,8505,8593,15613,17321,17522,17632,17833,17962,18130,18197"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\c60ca2176c730f91f8a6ebdb8b41a395\\transformed\\play-services-base-18.0.1\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "13,14,15,16,17,18,19,20,140,141,142,143,144,145,146,147,149,150,151,152,153,154,155,156,157",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "853,943,1023,1113,1203,1283,1364,1444,8765,8870,9051,9176,9283,9463,9586,9702,9972,10160,10265,10446,10571,10746,10894,10957,11019",
+                        "endColumns": "89,79,89,89,79,80,79,79,104,180,124,106,179,122,115,102,187,104,180,124,174,147,62,61,78",
+                        "endOffsets": "938,1018,1108,1198,1278,1359,1439,1519,8865,9046,9171,9278,9458,9581,9697,9800,10155,10260,10441,10566,10741,10889,10952,11014,11093"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\43815726fd5576b8fe3a2caaff266936\\transformed\\savedstate-1.2.1\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "117",
+                        "startColumns": "4",
+                        "startOffsets": "7202",
+                        "endColumns": "53",
+                        "endOffsets": "7251"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\a68bc2acb6aa053c829e86a16d99f710\\transformed\\activity-1.8.2\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "98,116",
+                        "startColumns": "4,4",
+                        "startOffsets": "6198,7142",
+                        "endColumns": "41,59",
+                        "endOffsets": "6235,7197"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\src\\main\\res\\values\\strings.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,5,-1,-1",
+                        "startColumns": "-1,-1,-1,4,-1,-1",
+                        "startOffsets": "-1,-1,-1,258,-1,-1",
+                        "endColumns": "-1,-1,-1,47,-1,-1",
+                        "endOffsets": "-1,-1,-1,301,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "123,124,125,158,210,241",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "7580,7637,7696,11098,14904,16738",
+                        "endColumns": "56,58,67,47,57,52",
+                        "endOffsets": "7632,7691,7759,11141,14957,16786"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\066b1c71097111cb8b257e707c52c650\\transformed\\lifecycle-viewmodel-2.7.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "118",
+                        "startColumns": "4",
+                        "startOffsets": "7256",
+                        "endColumns": "49",
+                        "endOffsets": "7301"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\e013f55abb5b51875475dc54a0ddbd8e\\transformed\\coordinatorlayout-1.0.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "2,266",
+                        "startColumns": "4,4",
+                        "startOffsets": "150,18202",
+                        "endLines": "2,268",
+                        "endColumns": "60,12",
+                        "endOffsets": "206,18342"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\2be812661e4567511697a28fc3239ef9\\transformed\\ui-release\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,119,137,138,195,196,198,208,209,212,213,214,215,217,218,220,224,225,226,242,245,248",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "3751,3810,3869,3929,3989,4049,4109,4169,4229,4289,4349,4409,4469,4528,4588,4648,4708,4768,4828,4888,4948,5008,5068,5128,5187,5247,5307,5366,5425,5484,5543,5602,5661,5735,5793,5848,5899,7306,8598,8663,13750,13816,13961,14792,14844,15031,15093,15147,15183,15291,15341,15448,15686,15733,15769,16791,16903,17014",
+                        "endLines": "56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,119,137,138,195,196,198,208,209,212,213,214,215,217,218,220,224,225,226,244,247,251",
+                        "endColumns": "58,58,59,59,59,59,59,59,59,59,59,59,58,59,59,59,59,59,59,59,59,59,59,58,59,59,58,58,58,58,58,58,73,57,54,50,54,52,64,53,65,100,57,51,59,61,53,35,33,49,53,45,46,35,89,12,12,12",
+                        "endOffsets": "3805,3864,3924,3984,4044,4104,4164,4224,4284,4344,4404,4464,4523,4583,4643,4703,4763,4823,4883,4943,5003,5063,5123,5182,5242,5302,5361,5420,5479,5538,5597,5656,5730,5788,5843,5894,5949,7354,8658,8712,13811,13912,14014,14839,14899,15088,15142,15178,15212,15336,15390,15489,15728,15764,15854,16898,17009,17204"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\e55e6e9d27eacb6ac916b87796571401\\transformed\\material3-1.1.1\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "126,127,128,129,139,160,161,162,163,164,167,168,169,170,171,172,173,174,175,176,177,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,197,199,211,219,221,223,227,228,229,230,231,232,233,234,235,236,237,238,239,240",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "7764,7848,7930,8007,8717,11214,11275,11354,11456,11538,11654,11704,11769,11826,11891,11976,12067,12137,12230,12319,12413,12558,12645,12729,12821,12915,12975,13039,13122,13212,13275,13343,13411,13508,13613,13685,13917,14019,14962,15395,15494,15618,15859,15905,15955,16022,16089,16155,16220,16274,16346,16413,16483,16565,16611,16677",
+                        "endLines": "126,127,128,129,139,160,161,162,163,166,167,168,169,170,171,172,173,174,175,176,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,197,199,211,219,221,223,227,228,229,230,231,232,233,234,235,236,237,238,239,240",
+                        "endColumns": "83,81,76,79,47,60,78,101,81,13,49,64,56,64,84,90,69,92,88,93,13,86,83,91,93,59,63,82,89,62,67,67,96,104,71,64,43,45,68,52,52,67,45,49,66,66,65,64,53,71,66,69,81,45,65,60",
+                        "endOffsets": "7843,7925,8002,8082,8760,11270,11349,11451,11533,11649,11699,11764,11821,11886,11971,12062,12132,12225,12314,12408,12553,12640,12724,12816,12910,12970,13034,13117,13207,13270,13338,13406,13503,13608,13680,13745,13956,14060,15026,15443,15542,15681,15900,15950,16017,16084,16150,16215,16269,16341,16408,16478,16560,16606,16672,16733"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\39e28938a43d0a23696047ff42d546d7\\transformed\\startup-runtime-1.1.1\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "122",
+                        "startColumns": "4",
+                        "startOffsets": "7497",
+                        "endColumns": "82",
+                        "endOffsets": "7575"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\src\\main\\res\\values\\themes.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "263",
+                        "startColumns": "4",
+                        "startOffsets": "17967",
+                        "endColumns": "95",
+                        "endOffsets": "18058"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\1d7cbd64780aba0edbb48d18a8dad64a\\transformed\\browser-1.4.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "7,8,9,10,29,30,159,200,201,202",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "473,531,597,660,1929,2000,11146,14065,14132,14211",
+                        "endColumns": "57,65,62,61,70,71,67,66,78,68",
+                        "endOffsets": "526,592,655,717,1995,2067,11209,14127,14206,14275"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\01905a18432984e6cc233fc1813c58fe\\transformed\\navigation-runtime-2.7.5\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1",
+                        "startColumns": "-1",
+                        "startOffsets": "-1"
+                    },
+                    "to": {
+                        "startLines": "96",
+                        "startColumns": "4",
+                        "startOffsets": "6078",
+                        "endColumns": "52",
+                        "endOffsets": "6126"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\18fcf00587ba28faf3cdabbdfea84c4b\\transformed\\play-services-basement-18.1.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "120,148",
+                        "startColumns": "4,4",
+                        "startOffsets": "7359,9805",
+                        "endColumns": "67,166",
+                        "endOffsets": "7422,9967"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\generated\\res\\processDebugGoogleServices\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1,-1,-1,-1,-1",
+                        "startColumns": "-1,-1,-1,-1,-1,-1",
+                        "startOffsets": "-1,-1,-1,-1,-1,-1"
+                    },
+                    "to": {
+                        "startLines": "203,204,205,206,207,216",
+                        "startColumns": "4,4,4,4,4,4",
+                        "startOffsets": "14280,14362,14466,14575,14695,15217",
+                        "endColumns": "81,103,108,119,96,73",
+                        "endOffsets": "14357,14461,14570,14690,14787,15286"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\a9c6170f35e5b8cccc3d2c61ab8eea6c\\transformed\\customview-poolingcontainer-1.0.0\\res\\values\\values.xml",
+                    "from": {
+                        "startLines": "-1,-1",
+                        "startColumns": "-1,-1",
+                        "startOffsets": "-1,-1"
+                    },
+                    "to": {
+                        "startLines": "93,97",
+                        "startColumns": "4,4",
+                        "startOffsets": "5954,6131",
+                        "endColumns": "53,66",
+                        "endOffsets": "6003,6193"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-mergeDebugResources-4:\\values\\values.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\Cobain\\Documents\\Programacion\\Segundo\\Interfaces\\ProyectoFigmaChandra\\.gradle\\caches\\transforms-3\\580a81bcb39557c623dea4b80ecefa99\\transformed\\lifecycle-runtime-2.7.0\\res\\values\\values.xml",
+                    "from": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",

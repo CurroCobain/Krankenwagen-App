@@ -51,7 +51,6 @@ string app_name
 string bienvenido
 string bienvenido_dr_house
 string confirmar
-string elija_el_idioma_de_la_app
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
