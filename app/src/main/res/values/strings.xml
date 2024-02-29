@@ -3,8 +3,7 @@
     <string name="bienvenido">Bienvenido Dr House</string>
     <string name="welcome">Welcome Dr House</string>
     <string name="bienvenido_dr_house">Bienvenido Dr House</string>
-    <string name="confirmar">confirmar</string>
+    <string name="confirmar">Confirmar</string>
     <string name="iniciar_sesi_n">Iniciar sesión</string>
-    <string name="elija_el_idioma_de_la_app">Elija el idioma de la app</string>
 
 </resources>

@@ -54,39 +54,46 @@ class HospitalViewModel : ViewModel() {
      * Función para guardar un hospital en la base de datos
      */
     fun saveHospital(onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            // Creamos un objeto de tipo Hospital con los valores actuales
-            val myHosp = Hospital(
-                idHosp.value,
-                name.value,
-                county.value,
-                city.value,
-                address.value
-            )
-            // Verificamos si ya existe un hospital con el mismo nombre
-            firestore.collection("Hospitals")
-                .whereEqualTo("id", myHosp.id) // Buscamos documentos con el mismo nombre
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (!querySnapshot.isEmpty) {
-                        // Si existe un hospital con el mismo nombre, mostramos un mensaje de error
-                        hospMessage.value = "Ya existe un hospital con este nombre en la base de datos"
-                    } else {
-                        firestore.collection("Hospitals")
-                            // Guardamos el objeto en la base de datos
-                            .add(myHosp)
-                            .addOnSuccessListener {
-                                // Si se completa correctamente modificamos el mensaje del sistema
-                                hospMessage.value = "Se guardó el hospital en la base de datos"
-                                onSuccess()
-                            }
-                            // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
-                            .addOnFailureListener {
-                                hospMessage.value = "No se pudo guardar el hospital, revise los datos"
-                            }
+        if (idHosp.value.isEmpty() || name.value.isEmpty() || county.value.isEmpty() || city.value.isEmpty() || address.value.isEmpty()) {
+            hospMessage.value = "Debe rellenar todos los campos"
+        } else {
+            viewModelScope.launch {
+                // Creamos un objeto de tipo Hospital con los valores actuales
+                val myHosp = Hospital(
+                    idHosp.value,
+                    name.value,
+                    county.value,
+                    city.value,
+                    address.value
+                )
+                // Verificamos si ya existe un hospital con el mismo nombre
+                firestore.collection("Hospitals")
+                    .whereEqualTo("id", myHosp.id) // Buscamos documentos con el mismo nombre
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        if (!querySnapshot.isEmpty) {
+                            // Si existe un hospital con el mismo nombre, mostramos un mensaje de error
+                            hospMessage.value =
+                                "Ya existe un hospital con este nombre en la base de datos"
+                        } else {
+                            firestore.collection("Hospitals")
+                                // Guardamos el objeto en la base de datos
+                                .add(myHosp)
+                                .addOnSuccessListener {
+                                    // Si se completa correctamente modificamos el mensaje del sistema
+                                    hospMessage.value = "Se guardó el hospital en la base de datos"
+                                    onSuccess()
+                                }
+                                // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
+                                .addOnFailureListener {
+                                    hospMessage.value =
+                                        "No se pudo guardar el hospital, revise los datos"
+                                }
+                        }
                     }
-                }
+            }
         }
+
     }
 
     /**
@@ -122,7 +129,8 @@ class HospitalViewModel : ViewModel() {
                                 }
                                 .addOnFailureListener { e ->
                                     // Ocurrió un error durante la actualización
-                                    hospMessage.value = "No se puedo actualizar el hospital, revise los datos"
+                                    hospMessage.value =
+                                        "No se puedo actualizar el hospital, revise los datos"
                                 }
                         }
                     }
@@ -138,14 +146,48 @@ class HospitalViewModel : ViewModel() {
     }
 
     /**
+     * Función para dar coherencia a la base de datos de ambulancias después de borrar un hospital
+     */
+    fun ambulanceCoherence(idHosp: String) {
+        viewModelScope.launch {
+            // Referencia a la colección de ambulancias que pertenecen al hospital borrado
+            val ambulancesRef = firestore.collection("Ambulances").whereEqualTo("hospital", idHosp)
+            ambulancesRef.get().addOnSuccessListener { querySnapshot ->
+                // Si hay ambulancias asociadas al hospital borrado
+                if (!querySnapshot.isEmpty) {
+                    // Iteramos sobre cada documento de ambulancia
+                    querySnapshot.documents.forEach { doc ->
+                        // Actualizamos el campo "hosp" de cada ambulancia al valor por defecto "hosp0"
+                        doc.reference.update("hospital", "hosp0")
+                            .addOnSuccessListener {
+                                // Se actualizó correctamente el campo "hosp" de la ambulancia
+                                hospMessage.value = "Se actualizó la coherencia de las ambulancias en la base de datos"
+                            }
+                            .addOnFailureListener { e ->
+                                // Hubo un error al actualizar el campo "hosp" de la ambulancia
+                                hospMessage.value = "Error al actualizar la coherencia de las ambulancias en la base de datos"
+                            }
+                    }
+                } else {
+                    // No hay ambulancias asociadas al hospital borrado
+                    hospMessage.value = "No hay ambulancias asociadas al hospital borrado"
+                }
+            }.addOnFailureListener { e ->
+                // Error al acceder a la base de datos para obtener las ambulancias asociadas al hospital borrado
+                hospMessage.value = "Error al acceder a la base de datos para obtener las ambulancias asociadas al hospital borrado"
+            }
+        }
+    }
+
+    /**
      * Función para borrar un hospital en la base de datos
      */
     fun deleteHosp(id: String, onSuccess: () -> Unit) {
         // Buscamos en la base de datos un hospital con el id recibido
-        val hospRef = firestore.collection("Hospitals").whereEqualTo("id", idHosp.value)
+        val hospRef = firestore.collection("Hospitals").whereEqualTo("id", id)
         hospRef.get().addOnSuccessListener { querySnapshot ->
             // Si la consulta devuelve una respuesta positiva
-            if (querySnapshot.isEmpty) {
+            if (!querySnapshot.isEmpty) {
                 val document = querySnapshot.documents.firstOrNull()
                 document?.let { doc ->
                     // Borramos el hospital de la base de datos

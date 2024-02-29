@@ -52,82 +52,95 @@ class AmbulancesViewModel : ViewModel() {
      * Función para guardar una ambulancia en la base de datos
      */
     fun saveAmbulance(onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            // Creamos un objeto de tipo Ambulance con los valores actuales
-            val myAmbulance = Ambulance(
-                idAmb.value,
-                plate.value,
-                isFree.value,
-                type.value,
-                hosp.value
-            )
-            // Verificamos si ya existe un hospital con el mismo ID que hosp.value
-            firestore.collection("Hospitals")
-                .whereEqualTo(
-                    "id",
-                    myAmbulance.hospital
-                ) // Buscamos el documento con el mismo ID que hosp.value
-                .get()
-                .addOnSuccessListener { querySnapshot ->
-                    if (!querySnapshot.isEmpty()) {
-                        // Si existe un hospital con el mismo ID, continuamos verificando la ambulancia
-                        firestore.collection("Ambulances")
-                            .whereEqualTo(
-                                "id",
-                                myAmbulance.id
-                            ) // Buscamos documentos con el mismo ID
-                            .get()
-                            .addOnSuccessListener { querySnapshot ->
-                                if (!querySnapshot.isEmpty) {
-                                    // Si existe una ambulancia con el mismo ID, mostramos un mensaje de error
-                                    ambulanceMessage.value = "Ya existe una ambulancia con este ID en la base de datos"
-                                } else {
-                                    // Si no existe, verificamos si ya existe una ambulancia con la misma matrícula
-                                    firestore.collection("Ambulances")
-                                        .whereEqualTo(
-                                            "plate",
-                                            myAmbulance.plate
-                                        ) // Buscamos documentos con la misma matrícula
-                                        .get()
-                                        .addOnSuccessListener { querySnapshot ->
-                                            if (!querySnapshot.isEmpty) {
-                                                // Si existe una ambulancia con la misma matrícula, mostramos un mensaje de error
-                                                ambulanceMessage.value = "Ya existe una ambulancia con este ID en la base de datos"
-                                            } else {
-                                                // Si no existe, agregamos la nueva ambulancia a la base de datos
-                                                firestore.collection("Ambulances")
-                                                    .add(myAmbulance)
-                                                    .addOnSuccessListener {
-                                                        // Si se completa correctamente, modificamos el mensaje del sistema
-                                                        ambulanceMessage.value = "Se actualizó la ambulancia en la base de datos"
-                                                        onSuccess()
-                                                    }
-                                                    // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
-                                                    .addOnFailureListener {
-                                                        ambulanceMessage.value = "No se pudo guardar la ambulancia, revise los datos"
-                                                    }
+        if (idAmb.value.isEmpty() || plate.value.isEmpty() || hosp.value.isEmpty()) {
+            ambulanceMessage.value = "Debe rellenar todos los campos"
+        } else {
+            viewModelScope.launch {
+                // Creamos un objeto de tipo Ambulance con los valores actuales
+                val myAmbulance = Ambulance(
+                    idAmb.value,
+                    plate.value,
+                    isFree.value,
+                    type.value,
+                    hosp.value
+                )
+                // Verificamos si ya existe un hospital con el mismo ID que hosp.value
+                firestore.collection("Hospitals")
+                    .whereEqualTo(
+                        "id",
+                        myAmbulance.hospital
+                    ) // Buscamos el documento con el mismo ID que hosp.value
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        if (!querySnapshot.isEmpty()) {
+                            // Si existe un hospital con el mismo ID, continuamos verificando la ambulancia
+                            firestore.collection("Ambulances")
+                                .whereEqualTo(
+                                    "id",
+                                    myAmbulance.id
+                                ) // Buscamos documentos con el mismo ID
+                                .get()
+                                .addOnSuccessListener { querySnapshot ->
+                                    if (!querySnapshot.isEmpty) {
+                                        // Si existe una ambulancia con el mismo ID, mostramos un mensaje de error
+                                        ambulanceMessage.value =
+                                            "Ya existe una ambulancia con este ID en la base de datos"
+                                    } else {
+                                        // Si no existe, verificamos si ya existe una ambulancia con la misma matrícula
+                                        firestore.collection("Ambulances")
+                                            .whereEqualTo(
+                                                "plate",
+                                                myAmbulance.plate
+                                            ) // Buscamos documentos con la misma matrícula
+                                            .get()
+                                            .addOnSuccessListener { querySnapshot ->
+                                                if (!querySnapshot.isEmpty) {
+                                                    // Si existe una ambulancia con la misma matrícula, mostramos un mensaje de error
+                                                    ambulanceMessage.value =
+                                                        "Ya existe una ambulancia con este ID en la base de datos"
+                                                } else {
+                                                    // Si no existe, agregamos la nueva ambulancia a la base de datos
+                                                    firestore.collection("Ambulances")
+                                                        .add(myAmbulance)
+                                                        .addOnSuccessListener {
+                                                            // Si se completa correctamente, modificamos el mensaje del sistema
+                                                            ambulanceMessage.value =
+                                                                "Se actualizó la ambulancia en la base de datos"
+                                                            onSuccess()
+                                                        }
+                                                        // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
+                                                        .addOnFailureListener {
+                                                            ambulanceMessage.value =
+                                                                "No se pudo guardar la ambulancia, revise los datos"
+                                                        }
+                                                }
                                             }
-                                        }
-                                        .addOnFailureListener {
-                                            // Manejar errores de lectura
-                                            ambulanceMessage.value = "Error al verificar la existencia de la ambulancia en la base de datos"
-                                        }
+                                            .addOnFailureListener {
+                                                // Manejar errores de lectura
+                                                ambulanceMessage.value =
+                                                    "Error al verificar la existencia de la ambulancia en la base de datos"
+                                            }
+                                    }
                                 }
-                            }
-                            .addOnFailureListener {
-                                // Manejar errores de lectura
-                                ambulanceMessage.value = "Error al verificar la existencia de la ambulancia en la base de datos"
-                            }
-                    } else {
-                        // Si no existe un hospital con el mismo ID, mostramos un mensaje de error
-                        ambulanceMessage.value = "No existe un hospital con este ID en la base de datos"
+                                .addOnFailureListener {
+                                    // Manejar errores de lectura
+                                    ambulanceMessage.value =
+                                        "Error al verificar la existencia de la ambulancia en la base de datos"
+                                }
+                        } else {
+                            // Si no existe un hospital con el mismo ID, mostramos un mensaje de error
+                            ambulanceMessage.value =
+                                "No existe un hospital con este ID en la base de datos"
+                        }
                     }
-                }
-                .addOnFailureListener {
-                    // Manejar errores de lectura
-                    ambulanceMessage.value = "Error al verificar la existencia de la ambulancia en la base de datos"
-                }
+                    .addOnFailureListener {
+                        // Manejar errores de lectura
+                        ambulanceMessage.value =
+                            "Error al verificar la existencia de la ambulancia en la base de datos"
+                    }
+            }
         }
+
     }
 
     /**
@@ -158,18 +171,21 @@ class AmbulancesViewModel : ViewModel() {
                             doc.reference.set(updatedAmbulance)
                                 .addOnSuccessListener {
                                     // La actualización fue exitosa
-                                    ambulanceMessage.value = "Se actualizó la ambulancia en la base de datos"
+                                    ambulanceMessage.value =
+                                        "Se actualizó la ambulancia en la base de datos"
                                     onSuccess()
                                 }
                                 .addOnFailureListener { e ->
                                     // Ocurrió un error durante la actualización
-                                    ambulanceMessage.value = "No se pudo guardar la ambulancia, revise los datos"
+                                    ambulanceMessage.value =
+                                        "No se pudo guardar la ambulancia, revise los datos"
                                 }
                         }
                     }
                 } else {
                     // No se encontró ninguna ambulancia con el campo "id" igual a idAmb.value
-                    ambulanceMessage.value = "La ambulancia con el ID indicado no existe en la base de datos"
+                    ambulanceMessage.value =
+                        "La ambulancia con el ID indicado no existe en la base de datos"
                 }
             }
             .addOnFailureListener { e ->
@@ -197,11 +213,13 @@ class AmbulancesViewModel : ViewModel() {
                             onSuccess()
                         }
                         .addOnFailureListener {
-                            ambulanceMessage.value = "No se pudo eliminar la ambulancia, intente nuevamente"
+                            ambulanceMessage.value =
+                                "No se pudo eliminar la ambulancia, intente nuevamente"
                         }
                 }
             } else {
-                ambulanceMessage.value = "La ambulancia con el ID indicado no existe en la base de datos"
+                ambulanceMessage.value =
+                    "La ambulancia con el ID indicado no existe en la base de datos"
             }
         }.addOnFailureListener {
             ambulanceMessage.value = "Error al acceder a la base de datos"

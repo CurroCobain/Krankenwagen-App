@@ -123,23 +123,27 @@ class SesionViewModel : ViewModel() {
      * Registra un usuario nuevo
      */
     fun createUser(onSuccess: () -> Unit) {
-        viewModelScope.launch {
-            try {
-                // Utiliza el servicio de autenticación de Firebase para registrar al usuario
-                // por email y contraseña
-                auth.createUserWithEmailAndPassword(nuevoMail.value, nuevoPass.value)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            // Si se realiza con éxito, almacenamos el usuario en la colección "Users"
-                            saveUser(nombreDoc.value)
-                            onSuccess()
-                        } else {
-                            Log.d("ERROR EN FIREBASE", "Error al crear usuario")
-                            // showAlert = true
+        if(nuevoMail.value.isEmpty() || nuevoPass.value.isEmpty() || nombreDoc.value.isEmpty()){
+            sesionMessage.value = "Debe rellenar todos los campos"
+        } else {
+            viewModelScope.launch {
+                try {
+                    // Utiliza el servicio de autenticación de Firebase para registrar al usuario
+                    // por email y contraseña
+                    auth.createUserWithEmailAndPassword(nuevoMail.value, nuevoPass.value)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Si se realiza con éxito, almacenamos el usuario en la colección "Users"
+                                saveUser(nombreDoc.value)
+                                onSuccess()
+                            } else {
+                                Log.d("ERROR EN FIREBASE", "Error al crear usuario")
+                                // showAlert = true
+                            }
                         }
-                    }
-            } catch (e: Exception) {
-                Log.d("ERROR CREAR USUARIO", "ERROR: ${e.localizedMessage}")
+                } catch (e: Exception) {
+                    Log.d("ERROR CREAR USUARIO", "ERROR: ${e.localizedMessage}")
+                }
             }
         }
     }

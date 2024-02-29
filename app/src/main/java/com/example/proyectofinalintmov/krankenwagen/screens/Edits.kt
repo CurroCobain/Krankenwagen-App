@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -55,6 +57,7 @@ fun EditarHosp(
     hospitalViewModel: HospitalViewModel,
     ambulancesViewModel: AmbulancesViewModel
 ) {
+    val context = LocalContext.current
     // Variables para la edición de hospitales
     val idHosp by hospitalViewModel.idHosp.collectAsState() // Id del hospital
     val name by hospitalViewModel.name.collectAsState() // Nombre del hospital
@@ -148,7 +151,16 @@ fun EditarHosp(
                         // Botón para actualizar el hospital
                         Button(
                             onClick = {
-                                hospitalViewModel.updateHosp() {}
+                                try {
+                                    hospitalViewModel.updateHosp() {}
+                                } catch (e: Exception) {
+                                    Toast.makeText(
+                                        context,
+                                        "Hubo un fallo en la operación",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         ) {
@@ -161,7 +173,17 @@ fun EditarHosp(
                         // Botón para borrar el hospital actual
                         Button(
                             onClick = {
-                                hospitalViewModel.deleteHosp(idHosp) {}
+                                try {
+                                    hospitalViewModel.deleteHosp(idHosp) {
+                                        hospitalViewModel.ambulanceCoherence(idHosp)
+                                    }
+                                } catch (e: Exception) {
+                                    Toast.makeText(
+                                        context,
+                                        "Hubo un fallo en la operación",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         ) {
@@ -179,8 +201,16 @@ fun EditarHosp(
                         // Botón para mostrar la lista de ambulancias asociadas
                         Button(
                             onClick = {
-                                viewModel.getAmb(idHosp) {
-                                    muestrAmbs.value = true
+                                try {
+                                    viewModel.getAmb(idHosp) {
+                                        muestrAmbs.value = true
+                                    }
+                                } catch (e: Exception) {
+                                    Toast.makeText(
+                                        context,
+                                        "Hubo un fallo en la operación",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -193,14 +223,31 @@ fun EditarHosp(
                         // Botón para volver a la pantalla anterior
                         Button(
                             onClick = {
-                                // Recarga la lista de ambulancias y luego la de hospitales, resetea los campos de edición
-                                viewModel.getAllAmb {
-                                    viewModel.getHosp(prov) {
-                                        hospitalViewModel.resetFields()
+                                try {
+                                    if (viewModel.provinciaFiltrar.value.isEmpty()) {
+                                        // Si el campo provincia está vacío se recuperan todos los hospitales
+                                        viewModel.getAllAmb {
+                                            viewModel.getAllHosp {
+                                                hospitalViewModel.resetFields()
+                                            }
+                                        }
+                                        viewModel.activaEditHosp()
+                                    } else {
+                                        // Recarga la lista de ambulancias y luego la de hospitales, resetea los campos de edición
+                                        viewModel.getAllAmb {
+                                            viewModel.getHosp(prov) {
+                                                hospitalViewModel.resetFields()
+                                            }
+                                        }
+                                        viewModel.activaEditHosp()
                                     }
+                                } catch (e: Exception) {
+                                    Toast.makeText(
+                                        context,
+                                        "Hubo un fallo en la operación",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
-                                viewModel.activaEditHosp()
-
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         ) {
@@ -245,9 +292,17 @@ fun EditarHosp(
                                 items(listAmbs) { ambulance ->
                                     Button(
                                         onClick = {
-                                            ambulancesViewModel.asignAmbFields(ambulance)
-                                            viewModel.activaEditAmb()
-                                            viewModel.activaEditHosp()
+                                            try {
+                                                ambulancesViewModel.asignAmbFields(ambulance)
+                                                viewModel.activaEditAmb()
+                                                viewModel.activaEditHosp()
+                                            } catch (e: Exception) {
+                                                Toast.makeText(
+                                                    context,
+                                                    "Hubo un fallo en la operación",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
                                         },
                                         modifier = Modifier.wrapContentSize(),
                                         colors = ButtonDefaults.buttonColors(
@@ -281,6 +336,7 @@ fun EditarAmb(
     viewModel: KrankenwagenViewModel,
     ambulancesViewModel: AmbulancesViewModel
 ) {
+    val context = LocalContext.current
     // Variables para la edición de ambulancias
     val plate by ambulancesViewModel.plate.collectAsState() // Matrícula de la ambulancia
     val isFree by ambulancesViewModel.isFree.collectAsState() // Estado de la ambulancia
@@ -400,8 +456,16 @@ fun EditarAmb(
                     // Botón guardar ambulancia
                     Button(
                         onClick = {
-                            // Se guarda la ambulancia actual
-                            ambulancesViewModel.updateAmbulance() {}
+                            try {
+                                // Se guarda la ambulancia actual
+                                ambulancesViewModel.updateAmbulance() {}
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    context,
+                                    "Hubo un fallo en la operación",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
@@ -415,9 +479,17 @@ fun EditarAmb(
                     // Botón borrar ambulancia
                     Button(
                         onClick = {
-                            // Se borra la ambulancia actual
-                            ambulancesViewModel.deleteAmbulance() {}
-                            viewModel.activaEditAmb()
+                            try {
+                                // Se borra la ambulancia actual
+                                ambulancesViewModel.deleteAmbulance() {}
+                                viewModel.activaEditAmb()
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    context,
+                                    "Hubo un fallo en la operación",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                     ) {
@@ -434,12 +506,18 @@ fun EditarAmb(
                     // Botón volver
                     Button(
                         onClick = {
-                            // Se recarga la lista de ambulancias y se resetean los valores editables
-                            viewModel.getAllAmb {
-                                ambulancesViewModel.resetFields()
-                                viewModel.activaEditAmb()
-                                viewModel.activaEditHosp()
-
+                            try {
+                                // Se recarga la lista de ambulancias y se resetean los valores editables
+                                viewModel.getAllAmb {
+                                    ambulancesViewModel.resetFields()
+                                    viewModel.activaEditAmb()
+                                }
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    context,
+                                    "Hubo un fallo en la operación",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
