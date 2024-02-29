@@ -46,56 +46,52 @@ fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewMode
                 .fillMaxHeight(0.3f),
             shape = RoundedCornerShape(10.dp)
         ) {
-            Row(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.2f)
-                    .padding(top = 10.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.Center
-            )
-            {
-                // Texto menú
-                Text(text = "Menú")
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.3f)
-                    .padding(top = 10.dp),
-                horizontalArrangement = Arrangement.Center
-            )
-            {
-                // Botón salir de la aplicación
-                Button(
-                    onClick = { viewModel.closeApp() },
-                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
-                ) {
-                    Text(text = "Salir")
+                    .background(color = Color(225, 241, 222))
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.3f)
+                        .padding(top = 10.dp),
+                    horizontalArrangement = Arrangement.Center
+                )
+                {
+                    // Botón salir de la aplicación
+                    Button(
+                        onClick = { viewModel.closeApp() },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
+                        Text(text = "Salir")
+                    }
+                }
+                Spacer(modifier = Modifier.padding(10.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                )
+                {
+                    // Botón cerrar sesión
+                    Button(
+                        onClick = {
+                            // Cierra la sesión del usuario actual y abre el diálogo de registro
+                            viewModel.openCloseMenu()
+                            sesionViewModel.cambiaNombre("")
+                            sesionViewModel.cerrarSesion()
+                            viewModel.openCloseSesion()
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
+                        Text(text = "Cerrar sesión")
+                    }
                 }
             }
-            Spacer(modifier = Modifier.padding(10.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.3f),
-                horizontalArrangement = Arrangement.Center
-            )
-            {
-                // Botón cerrar sesión
-                Button(
-                    onClick = {
-                        // Cierra la sesión del usuario actual y abre el diálogo de registro
-                        viewModel.openCloseMenu()
-                        sesionViewModel.cambiaNombre("")
-                        sesionViewModel.cerrarSesion()
-                        viewModel.openCloseSesion()
-                    },
-                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
-                ) {
-                    Text(text = "Cerrar sesión")
-                }
-            }
+
         }
     }
 }
@@ -183,7 +179,11 @@ fun DialogSesion(
                             onClick = {
                                 // Lanzamos createUSer para crear el usuario, si finaliza correctamente se indica mediante un Toast
                                 sesionViewModel.createUser {
-                                    Toast.makeText(context, "Usuario registrado correctamente", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Usuario registrado correctamente",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                     sesionViewModel.cambiaInit()
                                     sesionViewModel.setMessage("")
                                     viewModel.openCloseSesion()
