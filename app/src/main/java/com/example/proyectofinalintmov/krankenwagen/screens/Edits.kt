@@ -197,9 +197,10 @@ fun EditarHosp(
                                 viewModel.getAllAmb {
                                     viewModel.getHosp(prov) {
                                         hospitalViewModel.resetFields()
-                                        viewModel.activaEditHosp()
                                     }
                                 }
+                                viewModel.activaEditHosp()
+
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
                         ) {
