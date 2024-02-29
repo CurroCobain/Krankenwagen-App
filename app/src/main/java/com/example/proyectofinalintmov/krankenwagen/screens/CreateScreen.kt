@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Switch
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Text
@@ -151,31 +152,40 @@ fun CreateAmbulance(
                     modifier = Modifier.padding(vertical = 16.dp)
                 ) {
                     // Botón crear ambulancia
-                    Button(onClick = {
-                        // crea la ambulancia con los datos recibidos
-                        ambulancesViewModel.saveAmbulance() {}
-                    }) {
+                    Button(
+                        onClick = {
+                            // crea la ambulancia con los datos recibidos
+                            ambulancesViewModel.saveAmbulance() {}
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
                         Text("Crear")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
                     // Botón borrar todos los campos
-                    Button(onClick = {
-                        // Borra todos los campos
-                        ambulancesViewModel.resetFields()
-                    }) {
+                    Button(
+                        onClick = {
+                            // Borra todos los campos
+                            ambulancesViewModel.resetFields()
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
                         Text("Borrar Todo")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
                     // Botón cerrar el diálogo
-                    Button(onClick = {
-                        // Cierra el diálogo
-                        ambulancesViewModel.resetFields()
-                        viewModel.acCreateAmb()
-                    }) {
+                    Button(
+                        onClick = {
+                            // Cierra el diálogo
+                            ambulancesViewModel.resetFields()
+                            viewModel.acCreateAmb()
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
                         Text("Cerrar")
                     }
                 }
@@ -280,37 +290,46 @@ fun CreateHospital(
                     modifier = Modifier.padding(vertical = 16.dp)
                 ) {
                     // Botón crear hospital
-                    Button(onClick = {
-                        // Guarda el hospital con los datos ingresados
-                        hospitalViewModel.saveHospital() {}
-                    }) {
+                    Button(
+                        onClick = {
+                            // Guarda el hospital con los datos ingresados
+                            hospitalViewModel.saveHospital() {}
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
                         Text("Crear")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
                     // Botón borrar campos
-                    Button(onClick = {
-                        // Borra todos los campos
-                        hospitalViewModel.resetFields()
+                    Button(
+                        onClick = {
+                            // Borra todos los campos
+                            hospitalViewModel.resetFields()
 
-                    }) {
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
                         Text("Limpiar")
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
                     // Botón volver
-                    Button(onClick = {
-                        // Cierra el diálogo
-                        viewModel.acCreateHosp()
-                        hospitalViewModel.resetFields()
-                    }) {
+                    Button(
+                        onClick = {
+                            // Cierra el diálogo
+                            viewModel.acCreateHosp()
+                            hospitalViewModel.resetFields()
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                    ) {
                         Text("Cerrar")
                     }
                 }
                 // Mensaje de respuesta del sistema
-                Row (horizontalArrangement = Arrangement.Center){
+                Row(horizontalArrangement = Arrangement.Center) {
                     Text(text = message)
                 }
             }
