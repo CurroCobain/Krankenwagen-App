@@ -12,6 +12,7 @@ import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 /**
  * ViewModel para la gestión del inicio de sesión y el registro de usuarios
@@ -123,27 +124,26 @@ class SesionViewModel : ViewModel() {
      * Registra un usuario nuevo
      */
     fun createUser(onSuccess: () -> Unit) {
-        if(nuevoMail.value.isEmpty() || nuevoPass.value.isEmpty() || nombreDoc.value.isEmpty()){
+        if (nuevoMail.value.isEmpty() || nuevoPass.value.isEmpty() || nombreDoc.value.isEmpty()) {
             sesionMessage.value = "Debe rellenar todos los campos"
         } else {
-            viewModelScope.launch {
-                try {
-                    // Utiliza el servicio de autenticación de Firebase para registrar al usuario
-                    // por email y contraseña
-                    auth.createUserWithEmailAndPassword(nuevoMail.value, nuevoPass.value)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                // Si se realiza con éxito, almacenamos el usuario en la colección "Users"
-                                saveUser(nombreDoc.value)
-                                onSuccess()
-                            } else {
-                                Log.d("ERROR EN FIREBASE", "Error al crear usuario")
-                                // showAlert = true
-                            }
+            try {
+                // Utiliza el servicio de autenticación de Firebase para registrar al usuario
+                // por email y contraseña
+                auth.createUserWithEmailAndPassword(nuevoMail.value, nuevoPass.value)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Si se registra correctamente, guardamos el usuario en Firestore
+                            saveUser(nombreDoc.value)
+                            onSuccess()
+                        } else {
+                            Log.d("ERROR EN FIREBASE", "Error al registrar usuario: ${task.exception?.message}")
+                            sesionMessage.value = "Error al registrar usuario: ${task.exception?.message}"
                         }
-                } catch (e: Exception) {
-                    Log.d("ERROR CREAR USUARIO", "ERROR: ${e.localizedMessage}")
-                }
+                    }
+            } catch (e: Exception) {
+                Log.d("ERROR CREAR USUARIO", "ERROR: ${e.localizedMessage}")
+                sesionMessage.value = "Error al registrar usuario: ${e.localizedMessage}"
             }
         }
     }

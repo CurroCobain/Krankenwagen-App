@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenuItem
@@ -30,7 +31,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
@@ -81,23 +85,30 @@ fun CreateAmbulance(
                         onValueChange = { newValue ->
                             ambulancesViewModel.setIdAmb(newValue)
                         },
-                        label = { Text("Identificador") },
-                        modifier = Modifier.padding(8.dp)
+                        textStyle = TextStyle(fontSize = 25.sp),
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .sizeIn(minWidth = 300.dp, minHeight = 50.dp),
+                        placeholder = { Text("Identificador", fontSize = 25.sp) }
                     )
                 }
-                // Campo de edición para la matrícula
-                TextField(
-                    value = plate,
-                    onValueChange = { newValue ->
-                        ambulancesViewModel.setPlate(newValue)
-                    },
-                    label = { Text("Matrícula") },
-                    modifier = Modifier.padding(8.dp)
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Campo de edición para la matrícula
+                    TextField(
+                        value = plate,
+                        onValueChange = { newValue ->
+                            ambulancesViewModel.setPlate(newValue)
+                        },
+                        textStyle = TextStyle(fontSize = 25.sp),
+                        placeholder = { Text("Matrícula", fontSize = 25.sp) },
+                        modifier = Modifier.padding(8.dp)
+                            .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
+                    )
+                }
 
                 // Campo de edición para la disponibilidad
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Disponible")
+                    Text("Disponible",fontSize = 25.sp)
                     Spacer(modifier = Modifier.width(8.dp))
                     Switch(
                         checked = isFree,
@@ -110,13 +121,14 @@ fun CreateAmbulance(
 
                 // Campo de edición para el tipo de ambulancia
                 Row {
-                    Text("Tipo de Ambulancia   ")
+                    Text("Tipo de Ambulancia   ", fontSize = 25.sp)
                     Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
                         Text(
                             text = type.name, // Mostrar el tipo de ambulancia actual
                             modifier = Modifier
                                 .padding(8.dp)
-                                .align(Alignment.CenterHorizontally)
+                                .align(Alignment.CenterHorizontally),
+                            fontSize = 25.sp
                         )
                         Spacer(modifier = Modifier.padding(start = 8.dp))
                         DropdownMenu(
@@ -129,7 +141,7 @@ fun CreateAmbulance(
                                     ambulancesViewModel.setType(type)
                                     expanded = false
                                 }) {
-                                    Text(text = type.name)
+                                    Text(text = type.name, fontSize = 25.sp)
                                 }
                             }
                         }
@@ -142,8 +154,10 @@ fun CreateAmbulance(
                     onValueChange = { newValue ->
                         ambulancesViewModel.setHosp(newValue)
                     },
-                    label = { Text("Hospital de referencia") },
+                    textStyle = TextStyle(fontSize = 25.sp),
+                    placeholder = { Text("Hospital de referencia", fontSize = 25.sp) },
                     modifier = Modifier.padding(8.dp)
+                        .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
                 // Botones
@@ -157,9 +171,10 @@ fun CreateAmbulance(
                             // crea la ambulancia con los datos recibidos
                             ambulancesViewModel.saveAmbulance() {}
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 40.dp)
                     ) {
-                        Text("Crear")
+                        Text("Crear", fontSize = 20.sp)
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -170,9 +185,10 @@ fun CreateAmbulance(
                             // Borra todos los campos
                             ambulancesViewModel.resetFields()
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 40.dp)
                     ) {
-                        Text("Limpiar datos")
+                        Text("Limpiar datos",fontSize = 20.sp)
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -184,9 +200,10 @@ fun CreateAmbulance(
                             ambulancesViewModel.resetFields()
                             viewModel.acCreateAmb()
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 40.dp)
                     ) {
-                        Text("Cerrar")
+                        Text("Cerrar",fontSize = 20.sp)
                     }
                 }
                 // Mensaje del sistema
@@ -234,14 +251,16 @@ fun CreateHospital(
                 verticalArrangement = Arrangement.Center
             ) {
                 // Campo de edición para el id
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
                     TextField(
                         value = id,
                         onValueChange = { newValue ->
                             hospitalViewModel.setIdHosp(newValue)
                         },
-                        label = { Text("Identificador") },
+                        textStyle = TextStyle(fontSize = 25.sp),
+                        placeholder = { Text("Identificador", fontSize = 25.sp) },
                         modifier = Modifier.padding(8.dp)
+                            .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                     )
                 }
                 // Campo de edición para el nombre
@@ -250,8 +269,10 @@ fun CreateHospital(
                     onValueChange = { newValue ->
                         hospitalViewModel.setName(newValue)
                     },
-                    label = { Text("Nombre") },
+                    textStyle = TextStyle(fontSize = 25.sp),
+                    placeholder = { Text("Nombre", fontSize = 25.sp) },
                     modifier = Modifier.padding(8.dp)
+                        .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
                 // Campo de edición para la provincia
@@ -260,8 +281,10 @@ fun CreateHospital(
                     onValueChange = { newValue ->
                         hospitalViewModel.setCounty(newValue)
                     },
-                    label = { Text("Provincia") },
+                    textStyle = TextStyle(fontSize = 25.sp),
+                    placeholder = { Text("Provincia", fontSize = 25.sp) },
                     modifier = Modifier.padding(8.dp)
+                        .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
                 // Campo de edición para la ciudad
@@ -270,8 +293,10 @@ fun CreateHospital(
                     onValueChange = { newValue ->
                         hospitalViewModel.setCity(newValue)
                     },
-                    label = { Text("Ciudad") },
+                    textStyle = TextStyle(fontSize = 25.sp),
+                    placeholder = { Text("Ciudad", fontSize = 25.sp) },
                     modifier = Modifier.padding(8.dp)
+                        .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
                 // Campo de edición para la dirección
@@ -280,8 +305,10 @@ fun CreateHospital(
                     onValueChange = { newValue ->
                         hospitalViewModel.setAddress(newValue)
                     },
-                    label = { Text("Dirección") },
+                    textStyle = TextStyle(fontSize = 25.sp),
+                    placeholder = { Text("Dirección", fontSize = 25.sp) },
                     modifier = Modifier.padding(8.dp)
+                        .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
                 // Botones
@@ -295,9 +322,10 @@ fun CreateHospital(
                             // Guarda el hospital con los datos ingresados
                             hospitalViewModel.saveHospital() {}
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Crear")
+                        Text("Crear", fontSize = 20.sp)
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -309,9 +337,10 @@ fun CreateHospital(
                             hospitalViewModel.resetFields()
 
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Limpiar datos")
+                        Text("Limpiar datos", fontSize = 20.sp)
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -323,9 +352,10 @@ fun CreateHospital(
                             viewModel.acCreateHosp()
                             hospitalViewModel.resetFields()
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Cerrar")
+                        Text("Cerrar", fontSize = 20.sp)
                     }
                 }
                 // Mensaje de respuesta del sistema

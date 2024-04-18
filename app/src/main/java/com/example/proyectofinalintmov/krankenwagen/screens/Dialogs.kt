@@ -184,8 +184,6 @@ fun DialogSesion(
                                         "Usuario registrado correctamente",
                                         Toast.LENGTH_LONG
                                     ).show()
-                                    sesionViewModel.cambiaInit()
-                                    sesionViewModel.setMessage("")
                                     viewModel.openCloseSesion()
                                 }
                             },
