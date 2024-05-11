@@ -25,9 +25,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Card
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,6 +47,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
@@ -60,13 +66,48 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 fun Hospitals(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
-    showMenu: Boolean,
-    userRegisterd: Boolean,
+    userRegistered: Boolean,
     sesionViewModel: SesionViewModel,
     hospitalViewModel: HospitalViewModel,
     ambulancesViewModel: AmbulancesViewModel,
     editHosp: Boolean,
     editAmb: Boolean
+) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
+                NavigationMenu(navController)
+            }
+        }
+    ) {
+        PrevContHosp(
+            navController,
+            userRegistered,
+            viewModel,
+            sesionViewModel,
+            hospitalViewModel,
+            ambulancesViewModel,
+            editHosp,
+            editAmb,
+            drawerState
+        )
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun PrevContHosp(
+    navController: NavHostController,
+    userRegistered: Boolean,
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel,
+    hospitalViewModel: HospitalViewModel,
+    ambulancesViewModel: AmbulancesViewModel,
+    editHosp: Boolean,
+    editAmb: Boolean,
+    drawerState: DrawerState
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
@@ -85,8 +126,7 @@ fun Hospitals(
         // Contenido del Scaffold
         ContenidoHospitals(
             navController = navController,
-            menuDesplegado = showMenu,
-            userDesplegado = userRegisterd,
+            userDesplegado = userRegistered,
             viewModel = viewModel,
             sesionViewModel = sesionViewModel,
             hospitalViewModel = hospitalViewModel,
@@ -96,9 +136,8 @@ fun Hospitals(
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel)
+        BarraMenu(viewModel = viewModel, drawerState = drawerState)
     })
-
 }
 
 /**
@@ -107,20 +146,20 @@ fun Hospitals(
 @Composable
 fun ContenidoHospitals(
     navController: NavHostController,
-    menuDesplegado: Boolean,
     userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
     hospitalViewModel: HospitalViewModel,
     ambulancesViewModel: AmbulancesViewModel,
     editHosp: Boolean,
-    editAmb: Boolean
+    editAmb: Boolean,
 ) {
     val context = LocalContext.current
     // Variable que se usa para gestionar el estado del dropDownMenu de selección de provincia
     var expanded by remember { mutableStateOf(false) }
     // Lista que almacena los nombres de las provincias para mostrarlos en el dropDownMenu, sólo se usa aquí
-    val provincias = listOf("Almeria", "Cadiz", "Cordoba", "Granada", "Huelva", "Jaen", "Malaga", "Sevilla")
+    val provincias =
+        listOf("Almeria", "Cadiz", "Cordoba", "Granada", "Huelva", "Jaen", "Malaga", "Sevilla")
     // Variable que almacena la provincia seleccionada en el dropDownMenu
     val selectedProvincia = remember { mutableStateOf("Selecciona una provincia") }
     Box(
@@ -133,120 +172,63 @@ fun ContenidoHospitals(
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()
         )
-        Row(modifier = Modifier.fillMaxSize()) {
-            // Barra de navegación lateral
-            BarraLateral(
-                onWelcTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.setProv("")
-                        navController.navigate(Routes.PantallaWelcome.route)
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                onAmbTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.getAllAmb {
-                            navController.navigate(Routes.PantallaAmbulances.route)
-                        }
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                onHospTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.getAllHosp {
-                            navController.navigate(Routes.PantallaHospitals.route)
-                        }
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                onAddTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        navController.navigate(Routes.PantallaCreate.route)
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+        Column(
+            verticalArrangement = Arrangement.Top,
+            modifier = Modifier.fillMaxSize()
+        )
+        {
+            Row(modifier = Modifier.padding(start = 60.dp, top = 100.dp)) {
+                Box(
+                    modifier = Modifier
+                        .border(width = 2.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
+                ) {
+                    Text(
+                        " Filtrar por provincia ->   ",
+                        fontSize = 30.sp,
+                        modifier = Modifier.background(color = Color.LightGray)
+                    )
                 }
-            )
-            Column(
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxSize()
-            )
-            {
-                Row(modifier = Modifier.padding(start = 20.dp)) {
-                    Box(
+
+                // Columna que muestra la provincia actual seleccionada y el dropDownMenu
+                Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
+                    Text(
+                        text = selectedProvincia.value,
                         modifier = Modifier
-                            .border(width = 2.dp, color = Color.Black, shape = RoundedCornerShape(8.dp))
-                    ){
-                        Text(
-                            " Filtrar por provincia ->   ",
-                            fontSize = 30.sp,
-                            modifier = Modifier.background(color = Color.LightGray)
-                        )
-                    }
+                            .padding(8.dp)
+                            .background(Color.White, RoundedCornerShape(2.dp)),
+                        fontSize = 30.sp
+                    )
 
-                    // Columna que muestra la provincia actual seleccionada y el dropDownMenu
-                    Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
-                            Text(
-                                text = selectedProvincia.value,
-                                modifier = Modifier
-                                    .padding(8.dp)
-                                    .background(Color.White, RoundedCornerShape(2.dp)),
-                                fontSize = 30.sp
-                            )
+                    Spacer(modifier = Modifier.padding(start = 8.dp, bottom = 8.dp))
 
-                        Spacer(modifier = Modifier.padding(start = 8.dp, bottom =  8.dp))
-
-                        //DropDownMenu que muestra las provincias para filtrar hospitales
-                        DropdownMenu(
-                            expanded = expanded,
-                            onDismissRequest = { expanded = false },
-                            modifier = Modifier.width(IntrinsicSize.Max)
-                        ) {
-                            provincias.forEach { provincia ->
-                                DropdownMenuItem(onClick = {
-                                    selectedProvincia.value = provincia
-                                    // Se asigna el valor de SelectedProvincia a la variable que la gestiona en el HospitalViewModel
-                                    viewModel.setProv(selectedProvincia.value)
-                                    // Se filtran los hospitales
-                                    viewModel.getHosp(selectedProvincia.value){
-                                        expanded = false
-                                    }
-                                }) {
-                                    Text(
-                                        text = provincia,
-                                        fontSize = 30.sp)
+                    //DropDownMenu que muestra las provincias para filtrar hospitales
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                        modifier = Modifier.width(IntrinsicSize.Max)
+                    ) {
+                        provincias.forEach { provincia ->
+                            DropdownMenuItem(onClick = {
+                                selectedProvincia.value = provincia
+                                // Se asigna el valor de SelectedProvincia a la variable que la gestiona en el HospitalViewModel
+                                viewModel.setProv(selectedProvincia.value)
+                                // Se filtran los hospitales
+                                viewModel.getHosp(selectedProvincia.value) {
+                                    expanded = false
                                 }
+                            }) {
+                                Text(
+                                    text = provincia,
+                                    fontSize = 30.sp
+                                )
                             }
                         }
                     }
                 }
+            }
+            Spacer(modifier = Modifier.padding(30.dp))
+            Row (modifier = Modifier.fillMaxWidth()
+                .padding(start = 70.dp)) {
                 // LazyRow con la lista de hospitales
                 LazyHospital(
                     viewModel = viewModel,
@@ -256,13 +238,13 @@ fun ContenidoHospitals(
                     editHosp = editHosp
                 )
             }
-            // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
-            when {
-                menuDesplegado -> DialogMenu(viewModel, sesionViewModel)
-                userDesplegado -> DialogSesion(viewModel, sesionViewModel)
-                editHosp -> EditarHosp(viewModel, hospitalViewModel, ambulancesViewModel)
-                editAmb -> EditarAmb(viewModel, ambulancesViewModel)
-            }
+
+        }
+        // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
+        when {
+            userDesplegado -> DialogSesion(viewModel, sesionViewModel)
+            editHosp -> EditarHosp(viewModel, hospitalViewModel, ambulancesViewModel)
+            editAmb -> EditarAmb(viewModel, ambulancesViewModel)
         }
     }
 }
@@ -296,14 +278,18 @@ fun LazyHospital(
                     }
                 })
             {
-                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier.fillMaxSize()) {
+                    modifier = Modifier.fillMaxSize()
+                ) {
                     Spacer(modifier = Modifier.padding(8.dp))
-                    Row (modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .fillMaxHeight(0.7f),
-                        horizontalArrangement = Arrangement.Center){
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(0.7f)
+                            .fillMaxHeight(0.7f),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
                         // Imagen del hospital
                         Image(
                             painter = painterResource(id = R.drawable.hospital),
@@ -312,7 +298,7 @@ fun LazyHospital(
                             modifier = Modifier.fillMaxSize()
                         )
                     }
-                    Row{
+                    Row {
                         // Nombre del hospital
                         Text(
                             text = hospital.name,

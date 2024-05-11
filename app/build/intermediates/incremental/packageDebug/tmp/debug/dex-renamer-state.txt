@@ -1,4 +1,4 @@
-#Thu Apr 18 18:53:56 CEST 2024
+#Sat May 11 19:05:19 CEST 2024
 base.0=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.10=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex

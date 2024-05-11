@@ -7,14 +7,16 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,14 +28,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
-import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
-import com.example.proyectofinalintmov.iconmenu.IconMenu
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
-import com.example.proyectofinalintmov.scrollprovincias.ScrollProvincias
-import com.example.proyectofinalintmov.sesion.Sesion
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
+import com.example.proyectofinalintmov.scrollprovincias.ScrollProvincias
+
 
 /**
  * Scaffold que alberga la página de bienvenida
@@ -46,10 +46,37 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 fun WelcomePage(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
-    showMenu: Boolean,
     userRegistered: Boolean,
     sesionViewModel: SesionViewModel
 ) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet( modifier = Modifier.fillMaxWidth(0.3f)) {
+                NavigationMenu(navController)
+            }
+        }
+    ) {
+        PrevContWelc(
+            navController,
+            userRegistered,
+            viewModel,
+            sesionViewModel,
+            drawerState
+        )
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun PrevContWelc(
+    navController : NavHostController,
+    userDesplegado : Boolean,
+    viewModel : KrankenwagenViewModel,
+    sesionViewModel : SesionViewModel,
+    drawerState: DrawerState
+){
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
 
@@ -67,18 +94,15 @@ fun WelcomePage(
         // Contenido del Scaffold
         ContenidoWelcome(
             navController = navController,
-            menuDesplegado = showMenu,
-            userDesplegado = userRegistered,
+            userDesplegado = userDesplegado,
             viewModel = viewModel,
             sesionViewModel = sesionViewModel
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel)
+        BarraMenu(viewModel = viewModel, drawerState = drawerState)
     })
-
 }
-
 
 /**
  * Composable que muestra el contenido de la pantalla de bienvenida.
@@ -87,7 +111,6 @@ fun WelcomePage(
 @Composable
 fun ContenidoWelcome(
     navController: NavHostController,
-    menuDesplegado: Boolean,
     userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel
@@ -104,67 +127,8 @@ fun ContenidoWelcome(
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()
         )
-        Row(modifier = Modifier.fillMaxSize()) {
-            // Barra lateral de navegación
-            BarraLateral(
-                onWelcTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.setProv("")
-                        navController.navigate(Routes.PantallaWelcome.route)
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                onAmbTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.getAllAmb {
-                            navController.navigate(Routes.PantallaAmbulances.route)
-                        }
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                onHospTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.getAllHosp {
-                            navController.navigate(Routes.PantallaHospitals.route)
-                        }
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                onAddTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        navController.navigate(Routes.PantallaCreate.route)
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
-            )
+        Row(modifier = Modifier.fillMaxSize())
+        {
             // Scroll con las imágenes de las provincias para poder filtrar los datos
             ScrollProvincias(
                 modifier = Modifier
@@ -295,48 +259,14 @@ fun ContenidoWelcome(
             )
         }
         // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
-        when {
-            // Si se pulsa menú se abre el diálogo correspondiente
-            menuDesplegado -> DialogMenu(viewModel, sesionViewModel)
+        if (userDesplegado){
             // Si se pulsa sobre usuario se abre el diálogo correspondiente
-            userDesplegado -> DialogSesion(viewModel, sesionViewModel)
+             DialogSesion(viewModel, sesionViewModel)
         }
     }
 }
 
 
-/**
- * Composable que muestra la barra de menú.
- */
-@Composable
-fun BarraMenu(viewModel: KrankenwagenViewModel) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 10.dp)
-    ) {
-        Spacer(modifier = Modifier.padding(start = 160.dp))
-        // Icono de menú
-        IconMenu(
-            modifier = Modifier
-                .width(80.dp)
-                .height(80.dp),
-            onMenuTapped = { viewModel.openCloseMenu() }
-        )
-        Spacer(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .align(Alignment.CenterVertically)
-        )
-        // Icono registrarse/iniciar sesión
-        Sesion(
-            modifier = Modifier
-                .width(80.dp)
-                .height(80.dp)
-                .padding(end = 10.dp),
-            onSesionTapped = { viewModel.openCloseSesion() }
-        )
-    }
-}
+
 
 

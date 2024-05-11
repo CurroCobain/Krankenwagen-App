@@ -39,11 +39,11 @@ fun NavManager(
     ) {
         // Definición de las diferentes pantallas y sus rutas
         composable(Routes.PantallaWelcome.route) {
-            WelcomePage(navController, viewModel, showMenu,userRegistered, sesionViewModel) }
+            WelcomePage(navController, viewModel,userRegistered, sesionViewModel) }
         composable(Routes.PantallaAmbulances.route) {
             Ambulances(navController, viewModel, showMenu, userRegistered, sesionViewModel, ambulancesViewModel) }
         composable(Routes.PantallaHospitals.route) {
-            Hospitals(navController, viewModel, showMenu,userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
+            Hospitals(navController, viewModel, userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
         composable(Routes.PantallaCreate.route) {
             Create(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel) }
     }

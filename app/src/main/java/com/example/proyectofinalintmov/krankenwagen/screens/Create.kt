@@ -78,7 +78,7 @@ fun Create(
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel)
+        //BarraMenu(viewModel = viewModel)
     })
 
 }
