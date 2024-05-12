@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.iconmenu.IconMenu
@@ -39,16 +40,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun NavigationMenu(navController: NavController){
+fun NavigationMenu(
+    navController: NavController,
+    viewModel: KrankenwagenViewModel){
     var row1Color by remember { mutableStateOf(Color.Transparent) }
     var row2Color by remember { mutableStateOf(Color.Transparent) }
     var row3Color by remember { mutableStateOf(Color.Transparent) }
     var row4Color by remember { mutableStateOf(Color.Transparent) }
 
     Column(
-        Modifier.fillMaxWidth()
+        Modifier
+            .fillMaxWidth()
             .fillMaxHeight()
-            .background(color = Color(74,121,66))
+            .background(color = Color(74, 121, 66))
     ) {
         Spacer(modifier = Modifier.padding(50.dp))
 
@@ -68,7 +72,8 @@ fun NavigationMenu(navController: NavController){
         {
             Spacer(modifier = Modifier.padding(start = 40.dp))
             Image(
-                modifier = Modifier.width(60.dp)
+                modifier = Modifier
+                    .width(60.dp)
                     .height(60.dp),
                 painter = painterResource(id = R.drawable.barra_lateral_welc),
                 contentDescription = "Inicio")
@@ -96,7 +101,8 @@ fun NavigationMenu(navController: NavController){
         {
             Spacer(modifier = Modifier.padding(start = 40.dp))
             Image(
-                modifier = Modifier.width(60.dp)
+                modifier = Modifier
+                    .width(60.dp)
                     .height(60.dp),
                 painter = painterResource(id = R.drawable.barra_lateral_hosp),
                 contentDescription = "Hospitales")
@@ -119,12 +125,15 @@ fun NavigationMenu(navController: NavController){
                 .background(color = row3Color)
                 .clickable {
                     row3Color = Color.LightGray
-                    navController.navigate(Routes.PantallaAmbulances.route)
+                    viewModel.getAllAmb {
+                        navController.navigate(Routes.PantallaAmbulances.route)
+                    }
                 })
         {
             Spacer(modifier = Modifier.padding(start = 40.dp))
             Image(
-                modifier = Modifier.width(60.dp)
+                modifier = Modifier
+                    .width(60.dp)
                     .height(60.dp),
                 painter = painterResource(id = R.drawable.barra_lateral_amb),
                 contentDescription = "Ambulancias")
@@ -152,7 +161,8 @@ fun NavigationMenu(navController: NavController){
         {
             Spacer(modifier = Modifier.padding(start = 40.dp))
             Image(
-                modifier = Modifier.width(60.dp)
+                modifier = Modifier
+                    .width(60.dp)
                     .height(60.dp)
                     .padding(top = 5.dp),
                 painter = painterResource(id = R.drawable.barra_lateral_vector),

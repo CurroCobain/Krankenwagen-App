@@ -20,8 +20,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -37,6 +42,7 @@ import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
+import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
@@ -51,11 +57,42 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 fun Ambulances(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
-    showMenu: Boolean,
-    userRegisterd: Boolean,
+    userRegistered: Boolean,
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel
 
+) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
+                NavigationMenu(navController, viewModel)
+            }
+        }
+    ) {
+        PrevContAmb(
+            navController,
+            userRegistered,
+            viewModel,
+            sesionViewModel,
+            ambulancesViewModel,
+            drawerState,
+            //miListaAmb
+        )
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun PrevContAmb(
+    navController: NavHostController,
+    userRegisterd: Boolean,
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel,
+    ambulancesViewModel: AmbulancesViewModel,
+    drawerState: DrawerState,
+    //miListaAmb: MutableList<Ambulance>
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
@@ -73,18 +110,17 @@ fun Ambulances(
     }, content = {
         // Contenido del Scaffold
         ContenidoAmbulances(
-            navController = navController,
-            menuDesplegado = showMenu,
             userDesplegado = userRegisterd,
             viewModel = viewModel,
             sesionViewModel = sesionViewModel,
-            ambulancesViewModel = ambulancesViewModel
+            ambulancesViewModel = ambulancesViewModel,
+            //miListaAmb = miListaAmb
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        //BarraMenu(viewModel = viewModel)
-    })
-
+        BarraMenu(viewModel = viewModel, drawerState = drawerState)
+    }
+    )
 }
 
 /**
@@ -92,13 +128,13 @@ fun Ambulances(
  */
 @Composable
 fun ContenidoAmbulances(
-    navController: NavHostController,
-    menuDesplegado: Boolean,
     userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
     ambulancesViewModel: AmbulancesViewModel,
-    sesionViewModel: SesionViewModel
+    sesionViewModel: SesionViewModel,
+    //miListaAmb: MutableList<Ambulance>
 ) {
+
     val context = LocalContext.current
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
@@ -110,88 +146,23 @@ fun ContenidoAmbulances(
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()
         )
-        Row(modifier = Modifier.fillMaxSize()) {
-            // Barra de navegación lateral
-            BarraLateral(
-                // Icono de inicio
-                onWelcTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.setProv("")
-                        navController.navigate(Routes.PantallaWelcome.route)
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                // Icono de Ambulancias
-                onAmbTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.getAllAmb {
-                            navController.navigate(Routes.PantallaAmbulances.route)
-                        }
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                // Icono de Hospitales
-                onHospTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        viewModel.getAllHosp {
-                            navController.navigate(Routes.PantallaHospitals.route)
-                        }
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                },
-                // Icono de Creación
-                onAddTapped = {
-                    // Si el nombre del Dr no está vacío se entiende que la sesión ha sido iniciada y se permite la navegación
-                    if (sesionViewModel.nombreDoc.value.isNotEmpty()) {
-                        navController.navigate(Routes.PantallaCreate.route)
-                    } else {
-                        // Si no se ha iniciado sesión se manda mensaje de error
-                        Toast.makeText(
-                            context,
-                            "Debe iniciar sesión para poder acceder a la base de datos",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
+        Column(
+            verticalArrangement = Arrangement.Top,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // LazyVerticalGrid con la lista de ambulancias
+            LazyAmbulance(
+                viewModel = viewModel,
+                ambulancesViewModel = ambulancesViewModel,
+                arrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize(),
+                //miListaAmb
             )
-            Column(
-                verticalArrangement = Arrangement.Top,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // LazyVerticalGrid con la lista de ambulancias
-                LazyAmbulance(
-                    viewModel = viewModel,
-                    ambulancesViewModel = ambulancesViewModel,
-                    arrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
         }
+
         // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
-        when {
-            menuDesplegado -> DialogMenu(viewModel, sesionViewModel)
-            userDesplegado -> DialogSesion(viewModel, sesionViewModel)
+        if (userDesplegado) {
+            DialogSesion(viewModel, sesionViewModel)
         }
     }
 }
@@ -206,11 +177,11 @@ fun LazyAmbulance(
     viewModel: KrankenwagenViewModel,
     ambulancesViewModel: AmbulancesViewModel,
     arrangement: Arrangement.HorizontalOrVertical,
-    modifier: Modifier
+    modifier: Modifier,
+    //miListaAmb: MutableList<Ambulance>
 ) {
     // variable que se usa para desplegar el mnú de edición de las ambulancias
     val editar by viewModel.editAmb.collectAsState()
-    // lista de ambulancias que se envía al lazyVerticalGrid
     val miListaAmb by viewModel.listAmbulancias.collectAsState()
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -232,7 +203,8 @@ fun LazyAmbulance(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
                         // Si la ambulancia está ocupada cambiamos el fondo a color rojo
                         .background(
                             color = if (!ambulance.isFree)

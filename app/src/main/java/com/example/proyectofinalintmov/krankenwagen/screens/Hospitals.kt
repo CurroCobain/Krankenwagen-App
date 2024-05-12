@@ -78,7 +78,7 @@ fun Hospitals(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
-                NavigationMenu(navController)
+                NavigationMenu(navController, viewModel)
             }
         }
     ) {
