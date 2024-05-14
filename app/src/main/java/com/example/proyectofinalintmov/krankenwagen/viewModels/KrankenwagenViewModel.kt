@@ -1,13 +1,21 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.proyectofinalintmov.krankenwagen.apis.GeocodingService
 import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.Hospital
+import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
 import kotlin.system.exitProcess
 
 
@@ -26,7 +34,8 @@ import kotlin.system.exitProcess
  */
 class KrankenwagenViewModel : ViewModel() {
     private val firestore = Firebase.firestore
-    private var message = MutableStateFlow("")
+    val message = MutableStateFlow("")
+
 
     // variable que se usa para desplegar el menú de opciones
     var showMenu = MutableStateFlow(false)
@@ -34,6 +43,9 @@ class KrankenwagenViewModel : ViewModel() {
 
     // variable que permite activar la creación de una ambulancia
     var createAmb = MutableStateFlow(false)
+
+    // variable que permite activar la creación de una urgencia
+    var createUrg = MutableStateFlow(false)
 
     // variable que permite activar la creación de un hospital
     var createHosp = MutableStateFlow(false)
@@ -56,6 +68,9 @@ class KrankenwagenViewModel : ViewModel() {
 
     //variable que se uso para determinar si se filtra por provincia o no
     val provinciaFiltrar = MutableStateFlow("")
+
+
+
 
     /**
      * Obtiene la lista de hospitales para una provincia específica desde Firestore.
@@ -189,12 +204,6 @@ class KrankenwagenViewModel : ViewModel() {
     }
 
 
-    /**
-     * Muestra o cierra el menu de opciones
-     */
-    fun openCloseMenu() {
-        showMenu.value = !showMenu.value
-    }
 
     /**
      * Muestra el registro de usuario
@@ -202,8 +211,6 @@ class KrankenwagenViewModel : ViewModel() {
     fun openCloseSesion() {
         userRegistererd.value = !userRegistererd.value
     }
-
-
     /**
      * Cierra la aplicación
      */
@@ -237,6 +244,13 @@ class KrankenwagenViewModel : ViewModel() {
      */
     fun acCreateHosp() {
         createHosp.value = !createHosp.value
+    }
+
+    /**
+     * Activa o desactiva la creación de urgencias
+     */
+    fun acCreateUrg(){
+        createUrg.value = !createUrg.value
     }
 
     /**

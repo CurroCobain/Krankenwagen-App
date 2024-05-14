@@ -34,6 +34,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,7 +45,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -73,26 +76,48 @@ fun Hospitals(
     editHosp: Boolean,
     editAmb: Boolean
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = drawerState1,
         drawerContent = {
-            ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
+            ModalDrawerSheet( modifier = Modifier.fillMaxWidth(0.3f)) {
                 NavigationMenu(navController, viewModel)
             }
         }
     ) {
-        PrevContHosp(
-            navController,
-            userRegistered,
-            viewModel,
-            sesionViewModel,
-            hospitalViewModel,
-            ambulancesViewModel,
-            editHosp,
-            editAmb,
-            drawerState
-        )
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ){
+            ModalNavigationDrawer(
+                drawerState = drawerState2,
+                drawerContent = {
+                    ModalDrawerSheet(
+                        modifier = Modifier
+                            .fillMaxWidth(0.3f)
+                            .fillMaxHeight()
+                    ) {
+                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ){
+                            DialogSesion(viewModel = viewModel, sesionViewModel = sesionViewModel)
+                        }
+                    }
+                }
+            ) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+                    PrevContHosp(
+                        navController,
+                        userRegistered,
+                        viewModel,
+                        sesionViewModel,
+                        hospitalViewModel,
+                        ambulancesViewModel,
+                        editHosp,
+                        editAmb,
+                        drawerState1,
+                        drawerState2
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -107,7 +132,9 @@ fun PrevContHosp(
     ambulancesViewModel: AmbulancesViewModel,
     editHosp: Boolean,
     editAmb: Boolean,
-    drawerState: DrawerState
+    drawerState1: DrawerState,
+    drawerState2: DrawerState
+
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
@@ -136,7 +163,7 @@ fun PrevContHosp(
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel, drawerState = drawerState)
+        BarraMenu(viewModel = viewModel, drawerState1 = drawerState1, drawerState2 = drawerState2)
     })
 }
 

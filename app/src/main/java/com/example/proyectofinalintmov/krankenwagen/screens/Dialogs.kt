@@ -32,71 +32,6 @@ import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
-
-/**
- * Composable que muestra un diálogo de menú.
- */
-@Composable
-fun DialogMenu(viewModel: KrankenwagenViewModel, sesionViewModel: SesionViewModel) {
-    Dialog(
-        onDismissRequest = { viewModel.openCloseMenu() }) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .fillMaxHeight(0.3f),
-            shape = RoundedCornerShape(10.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .background(color = Color(225, 241, 222))
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.3f)
-                        .padding(top = 10.dp),
-                    horizontalArrangement = Arrangement.Center
-                )
-                {
-                    // Botón salir de la aplicación
-                    Button(
-                        onClick = { viewModel.closeApp() },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
-                    ) {
-                        Text(text = "Salir")
-                    }
-                }
-                Spacer(modifier = Modifier.padding(10.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                )
-                {
-                    // Botón cerrar sesión
-                    Button(
-                        onClick = {
-                            // Cierra la sesión del usuario actual y abre el diálogo de registro
-                            viewModel.openCloseMenu()
-                            sesionViewModel.cambiaNombre("")
-                            sesionViewModel.cerrarSesion()
-                            viewModel.openCloseSesion()
-                        },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
-                    ) {
-                        Text(text = "Cerrar sesión")
-                    }
-                }
-            }
-
-        }
-    }
-}
-
-
 /**
  * Composable que muestra un diálogo de sesión de usuario.
  */
@@ -116,21 +51,21 @@ fun DialogSesion(
 
     // Variable que almacena la respuesta del sistema
     val message by sesionViewModel.sesionMessage.collectAsState()
-    Dialog(
-        onDismissRequest = { viewModel.openCloseSesion() })
+    Column(Modifier.fillMaxWidth().fillMaxHeight())
     {   // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.6f),
+                .fillMaxHeight(),
             shape = RoundedCornerShape(10.dp),
         ) {
             // si la sesión no se ha iniciado aparece la opción de registrarse
             if (!initOrReg) {
                 Column(
                     modifier = Modifier
-                        .background(color = Color(225, 241, 222))
                         .fillMaxSize()
+                        .background(color = Color(74, 121, 66)),
+                    verticalArrangement = Arrangement.Center
                 )
                 {
                     Spacer(modifier = Modifier.padding(8.dp))
@@ -184,7 +119,6 @@ fun DialogSesion(
                                         "Usuario registrado correctamente",
                                         Toast.LENGTH_LONG
                                     ).show()
-                                    viewModel.openCloseSesion()
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
@@ -197,7 +131,6 @@ fun DialogSesion(
                         Button(
                             onClick = {
                                 // Cierra el diálogo y resetea el valor del mensaje del sistema
-                                viewModel.openCloseSesion()
                                 sesionViewModel.setMessage("")
                             },
                             colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
@@ -238,8 +171,8 @@ fun DialogSesion(
             } else { // Si el usuario ya está registrado puede acceder a inicio de sesión
                 Column(
                     modifier = Modifier
-                        .background(color = Color(225, 241, 222))
                         .fillMaxSize()
+                        .background(color = Color(74, 121, 66))
                 )
                 {
                     Spacer(modifier = Modifier.padding(40.dp))
@@ -277,7 +210,6 @@ fun DialogSesion(
                                 // Se lanza sesionÍnit y si finaliza correctamente se indica mediante un Toast
                                 sesionViewModel.sesionInit {
                                     sesionViewModel.getUser()
-                                    viewModel.openCloseSesion()
                                     Toast.makeText(
                                         context,
                                         "Sesión iniciada correctamente",

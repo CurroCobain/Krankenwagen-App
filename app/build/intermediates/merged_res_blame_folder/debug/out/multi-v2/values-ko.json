@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-63:/values-ko/values-ko.xml",
+            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-65:/values-ko/values-ko.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Cobain\\.gradle\\caches\\transforms-3\\70bf331b5977513286102635e2f5146e\\transformed\\core-1.13.1\\res\\values-ko\\values-ko.xml",

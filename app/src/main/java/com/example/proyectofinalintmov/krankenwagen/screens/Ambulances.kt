@@ -28,6 +28,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -35,7 +36,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -62,26 +65,48 @@ fun Ambulances(
     ambulancesViewModel: AmbulancesViewModel
 
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = drawerState1,
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
                 NavigationMenu(navController, viewModel)
             }
         }
     ) {
-        PrevContAmb(
-            navController,
-            userRegistered,
-            viewModel,
-            sesionViewModel,
-            ambulancesViewModel,
-            drawerState,
-            //miListaAmb
-        )
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+            ModalNavigationDrawer(
+                drawerState = drawerState2,
+                drawerContent = {
+                    ModalDrawerSheet(
+                        modifier = Modifier
+                            .fillMaxWidth(0.3f)
+                            .fillMaxHeight()
+                    ) {
+                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                            DialogSesion(viewModel = viewModel, sesionViewModel = sesionViewModel)
+                        }
+                    }
+                }
+            ) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                    PrevContAmb(
+                        navController,
+                        userRegistered,
+                        viewModel,
+                        sesionViewModel,
+                        ambulancesViewModel,
+                        drawerState1,
+                        drawerState2
+                    )
+                }
+            }
+        }
     }
 }
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -91,7 +116,8 @@ fun PrevContAmb(
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel,
-    drawerState: DrawerState,
+    drawerState1: DrawerState,
+    drawerState2: DrawerState
     //miListaAmb: MutableList<Ambulance>
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
@@ -118,9 +144,8 @@ fun PrevContAmb(
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel, drawerState = drawerState)
-    }
-    )
+        BarraMenu(viewModel = viewModel, drawerState1 = drawerState1, drawerState2 = drawerState2)
+    })
 }
 
 /**
@@ -159,7 +184,6 @@ fun ContenidoAmbulances(
                 //miListaAmb
             )
         }
-
         // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
         if (userDesplegado) {
             DialogSesion(viewModel, sesionViewModel)

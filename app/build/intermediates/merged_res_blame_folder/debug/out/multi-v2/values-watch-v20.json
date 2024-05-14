@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-63:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-65:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Cobain\\.gradle\\caches\\transforms-3\\ecf11b5bf2f30147d375e6e18d88c7d6\\transformed\\play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",

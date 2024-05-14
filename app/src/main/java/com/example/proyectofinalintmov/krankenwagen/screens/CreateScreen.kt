@@ -1,5 +1,9 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
+import android.content.Context
+import android.os.Build
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,11 +14,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DropdownMenuItem
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Switch
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -31,15 +38,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
+import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewModel
+import com.google.android.gms.maps.model.LatLng
 
 
 /**
@@ -101,7 +110,8 @@ fun CreateAmbulance(
                         },
                         textStyle = TextStyle(fontSize = 25.sp),
                         placeholder = { Text("Matrícula", fontSize = 25.sp) },
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier
+                            .padding(8.dp)
                             .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                     )
                 }
@@ -156,7 +166,8 @@ fun CreateAmbulance(
                     },
                     textStyle = TextStyle(fontSize = 25.sp),
                     placeholder = { Text("Hospital de referencia", fontSize = 25.sp) },
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier
+                        .padding(8.dp)
                         .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
@@ -259,7 +270,8 @@ fun CreateHospital(
                         },
                         textStyle = TextStyle(fontSize = 25.sp),
                         placeholder = { Text("Identificador", fontSize = 25.sp) },
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier
+                            .padding(8.dp)
                             .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                     )
                 }
@@ -271,7 +283,8 @@ fun CreateHospital(
                     },
                     textStyle = TextStyle(fontSize = 25.sp),
                     placeholder = { Text("Nombre", fontSize = 25.sp) },
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier
+                        .padding(8.dp)
                         .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
@@ -283,7 +296,8 @@ fun CreateHospital(
                     },
                     textStyle = TextStyle(fontSize = 25.sp),
                     placeholder = { Text("Provincia", fontSize = 25.sp) },
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier
+                        .padding(8.dp)
                         .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
@@ -295,7 +309,8 @@ fun CreateHospital(
                     },
                     textStyle = TextStyle(fontSize = 25.sp),
                     placeholder = { Text("Ciudad", fontSize = 25.sp) },
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier
+                        .padding(8.dp)
                         .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
@@ -307,7 +322,8 @@ fun CreateHospital(
                     },
                     textStyle = TextStyle(fontSize = 25.sp),
                     placeholder = { Text("Dirección", fontSize = 25.sp) },
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier
+                        .padding(8.dp)
                         .sizeIn(minWidth = 300.dp, minHeight = 50.dp)
                 )
 
@@ -367,3 +383,88 @@ fun CreateHospital(
     }
 }
 
+/**
+ * Composable para la creación de urgencias
+ */
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun CreateUrg(
+    context: Context,
+    viewModel: KrankenwagenViewModel,
+    urgenciesViewModel: UrgenciesViewModel
+) {
+    val message by urgenciesViewModel.message.collectAsState()
+    val name by urgenciesViewModel.name.collectAsState()
+    val doc by urgenciesViewModel.doc.collectAsState()
+    val age by urgenciesViewModel.age.collectAsState()
+    val priority by urgenciesViewModel.priority.collectAsState()
+    val address by urgenciesViewModel.address.collectAsState()
+    val issues by urgenciesViewModel.issues.collectAsState()
+    Dialog(
+        onDismissRequest = { viewModel.acCreateUrg() }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color(225, 241, 222)),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            TextField(
+                value = name,
+                onValueChange = { urgenciesViewModel.setName(it) },
+                label = { Text("Nombre") }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = doc,
+                onValueChange = { urgenciesViewModel.setDoc(it) },
+                label = { Text("Documento") }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = age.toString(),
+                onValueChange = { urgenciesViewModel.setAge(it) },
+                label = { Text("Edad") }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = priority.toString(),
+                onValueChange = { urgenciesViewModel.setPriority(it) },
+                label = { Text("Priority") }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = address,
+                onValueChange = { urgenciesViewModel.setAddress(it) },
+                label = { Text("Location") }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = issues,
+                onValueChange = { urgenciesViewModel.setIssues(it) },
+                label = { Text("Issues") }
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            Row {
+                Button(onClick = {
+                    urgenciesViewModel.createUrg {
+                        Toast.makeText(
+                            context,
+                            message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }) {
+                    Text("Create")
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                Button(onClick = {
+                    urgenciesViewModel.deleteMiUrgencia()
+                }) {
+                    Text("Borrar todo")
+                }
+            }
+        }
+    }
+}

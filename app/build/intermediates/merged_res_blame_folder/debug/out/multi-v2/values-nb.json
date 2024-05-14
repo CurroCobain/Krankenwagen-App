@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-63:/values-nb/values-nb.xml",
+            "outputFile": "com.example.proyectofinalintmov.app-mergeDebugResources-65:/values-nb/values-nb.xml",
             "map": [
                 {
                     "source": "C:\\Users\\Cobain\\.gradle\\caches\\transforms-3\\c60ca2176c730f91f8a6ebdb8b41a395\\transformed\\play-services-base-18.0.1\\res\\values-nb\\values.xml",

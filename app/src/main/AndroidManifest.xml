@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoFinalIntMov"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDPyoQIrr78e7sUzqWcUUFsC0GBLlSNzBc"/>
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -1,5 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,16 +17,19 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewMod
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewModel
 
 /**
  * Gestiona la navegación dentro de la aplicación.
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavManager(
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel,
-    hospitalViewModel: HospitalViewModel)
+    hospitalViewModel: HospitalViewModel,
+    urgenciesViewModel: UrgenciesViewModel)
 {
     val navController = rememberNavController()
     val showMenu by viewModel.showMenu.collectAsState()
@@ -45,6 +50,6 @@ fun NavManager(
         composable(Routes.PantallaHospitals.route) {
             Hospitals(navController, viewModel, userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
         composable(Routes.PantallaCreate.route) {
-            Create(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel) }
+            Create(navController, viewModel, showMenu,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel, urgenciesViewModel) }
     }
 }

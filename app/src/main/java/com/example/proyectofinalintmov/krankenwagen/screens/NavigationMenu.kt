@@ -195,7 +195,8 @@ fun RowColorEffect(color: Color, onColorChange: (Color) -> Unit) {
 @Composable
 fun BarraMenu(
     viewModel: KrankenwagenViewModel,
-    drawerState: DrawerState
+    drawerState1: DrawerState,
+    drawerState2: DrawerState
 ) {
     val scope = rememberCoroutineScope()
     Row(
@@ -211,10 +212,11 @@ fun BarraMenu(
                 .height(80.dp),
             onMenuTapped = {
                 scope.launch {
-                    drawerState.apply {
+                    drawerState1.apply {
                         if (isClosed) open() else close()
                     }
-                } }
+                }
+            }
         )
         Spacer(
             modifier = Modifier
@@ -227,7 +229,13 @@ fun BarraMenu(
                 .width(80.dp)
                 .height(80.dp)
                 .padding(end = 10.dp),
-            onSesionTapped = { viewModel.openCloseSesion() }
+            onSesionTapped = {
+                scope.launch {
+                    drawerState2.apply {
+                        if (isClosed) open() else close()
+                    }
+                }
+            }
         )
     }
 }

@@ -7,8 +7,10 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DrawerState
@@ -18,21 +20,27 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 import com.example.proyectofinalintmov.scrollprovincias.ScrollProvincias
+
 
 
 /**
@@ -49,24 +57,49 @@ fun WelcomePage(
     userRegistered: Boolean,
     sesionViewModel: SesionViewModel
 ) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+
     ModalNavigationDrawer(
-        drawerState = drawerState,
+        drawerState = drawerState1,
         drawerContent = {
             ModalDrawerSheet( modifier = Modifier.fillMaxWidth(0.3f)) {
                 NavigationMenu(navController, viewModel)
             }
         }
     ) {
-        PrevContWelc(
-            navController,
-            userRegistered,
-            viewModel,
-            sesionViewModel,
-            drawerState
-        )
+        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ){
+            ModalNavigationDrawer(
+                drawerState = drawerState2,
+                drawerContent = {
+                    ModalDrawerSheet(
+                        modifier = Modifier
+                            .fillMaxWidth(0.3f)
+                            .fillMaxHeight()
+                    ) {
+                        CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ){
+                            DialogSesion(viewModel = viewModel, sesionViewModel = sesionViewModel)
+                        }
+                    }
+                }
+            ) {
+                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
+                    PrevContWelc(
+                        navController,
+                        userRegistered,
+                        viewModel,
+                        sesionViewModel,
+                        drawerState1,
+                        drawerState2
+                    )
+                }
+            }
+        }
     }
 }
+
+
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -75,7 +108,9 @@ fun PrevContWelc(
     userDesplegado : Boolean,
     viewModel : KrankenwagenViewModel,
     sesionViewModel : SesionViewModel,
-    drawerState: DrawerState
+    drawerState1: DrawerState,
+    drawerState2: DrawerState
+
 ){
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
@@ -100,7 +135,7 @@ fun PrevContWelc(
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel, drawerState = drawerState)
+        BarraMenu(viewModel, drawerState1, drawerState2)
     })
 }
 
@@ -267,6 +302,13 @@ fun ContenidoWelcome(
 }
 
 
-
+@Preview
+@Composable
+fun WelcomePagePreview() {
+    val navController = rememberNavController()
+    val viewModel = KrankenwagenViewModel()
+    val sesionViewModel = SesionViewModel()
+    WelcomePage(navController, viewModel, false, sesionViewModel)
+}
 
 
