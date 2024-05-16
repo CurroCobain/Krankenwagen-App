@@ -1,210 +1,218 @@
 [
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_user_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/user_vector.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable_fondo.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\fondo.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_extrabold.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_extrabold.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_semibold.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_semibold.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable_hospital.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\hospital.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_8.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_8.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_user_sesion_vector.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\user_sesion_vector.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_botoncito_rectangle_1.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/botoncito_rectangle_1.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_2.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_2.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_barra_lateral_amb.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/barra_lateral_amb.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_barra_lateral_vector.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\barra_lateral_vector.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_barra_menu_usuario_rayas.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/barra_menu_usuario_rayas.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/xml_backup_rules.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/xml/backup_rules.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable_bannersup.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\bannersup.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_menu_a.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\menu_a.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_1.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_1.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_bold.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_bold.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable_fondo.png.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/drawable/fondo.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_extralight.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_extralight.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_extralight.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_extralight.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_regular.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_regular.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_bold.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_bold.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_arrow_back_vector.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\arrow_back_vector.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_9.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_9.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_icon_menu_a.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/icon_menu_a.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_black.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_black.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/xml/data_extraction_rules.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_10.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_10.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable_hospital.png.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/drawable/hospital.png"
+        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable_urgencia.png.flat",
+        "source": "com.example.proyectofinalintmov.app-main-69:/drawable/urgencia.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_barra_lateral_hosp.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\barra_lateral_hosp.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_medium.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_medium.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_6.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_6.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_icon_menu_b.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\icon_menu_b.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable_ambulancia.png.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/drawable/ambulancia.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_thin.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_thin.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_menu_b.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\menu_b.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_10.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_10.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_medium.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_medium.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_7.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_7.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_8.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_8.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_user_sesion_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/user_sesion_vector.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_barra_menu_usuario_rayas.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\barra_menu_usuario_rayas.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable_ambulancia.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\ambulancia.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_6.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_6.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_barra_lateral_doc.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\barra_lateral_doc.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_barra_lateral_welc.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/barra_lateral_welc.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_user_vector.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\user_vector.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_barra_lateral_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/barra_lateral_vector.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_semibold.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_semibold.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_botoncito_rectangle_1.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\botoncito_rectangle_1.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_barra_lateral_hosp.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/barra_lateral_hosp.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_thin.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_thin.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_light.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_light.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_barra_lateral_doc.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/barra_lateral_doc.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_7.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_7.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_menu_b.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/menu_b.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_sesion_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/sesion_vector.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_extrabold.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_extrabold.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_barra_menu_usuario_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/barra_menu_usuario_vector.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_5.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_5.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_5.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_5.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_barra_lateral_amb.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\barra_lateral_amb.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_9.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_9.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_barra_menu_usuario_vector.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\barra_menu_usuario_vector.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_arrow_back_vector.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/arrow_back_vector.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_regular.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_regular.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/font_relay_inter_black.ttf.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/font/relay_inter_black.ttf"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\font_relay_inter_light.ttf.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\font\\relay_inter_light.ttf"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_sesion_vector.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\sesion_vector.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_scroll_provincias_image_2.png.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/scroll_provincias_image_2.png"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_icon_menu_a.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\icon_menu_a.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_icon_menu_b.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/icon_menu_b.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_1.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_1.png"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable-nodpi_menu_a.xml.flat",
-        "source": "com.example.proyectofinalintmov.app-relay-63:/drawable-nodpi/menu_a.xml"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_barra_lateral_welc.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\barra_lateral_welc.xml"
     },
     {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\mipmap-mdpi\\ic_launcher.webp"
     }
 ]

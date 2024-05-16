@@ -307,7 +307,7 @@ fun EditarHosp(
                                         modifier = Modifier.wrapContentSize(),
                                         colors = ButtonDefaults.buttonColors(
                                             // Si la ambulancia está ocupada se muestra en rojo
-                                            if (!ambulance.isFree)
+                                            if (!ambulance.free)
                                                 Color.Red
                                             else
                                                 Color(74, 121, 66)

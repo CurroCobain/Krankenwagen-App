@@ -7,6 +7,7 @@ import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
+
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -62,7 +63,8 @@ class AmbulancesViewModel : ViewModel() {
                     plate.value,
                     isFree.value,
                     type.value,
-                    hosp.value
+                    hosp.value,
+                    mutableMapOf("latitude" to 0.0, "longitude" to 0.0)
                 )
                 // Verificamos si ya existe un hospital con el mismo ID que hosp.value
                 firestore.collection("Hospitals")
@@ -165,7 +167,8 @@ class AmbulancesViewModel : ViewModel() {
                                 plate.value,
                                 isFree.value,
                                 type.value,
-                                hosp.value
+                                hosp.value,
+                                mutableMapOf("latitude" to 0.0, "longitude" to 0.0)
                             )
                             // Guardamos los nuevos valores en el documento
                             doc.reference.set(updatedAmbulance)
@@ -280,8 +283,10 @@ class AmbulancesViewModel : ViewModel() {
     fun asignAmbFields(ambulance: Ambulance) {
         idAmb.value = ambulance.id
         plate.value = ambulance.plate
-        isFree.value = ambulance.isFree
+        isFree.value = ambulance.free
         type.value = ambulance.types
         hosp.value = ambulance.hospital
     }
+
+
 }

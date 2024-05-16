@@ -9,6 +9,7 @@ color teal_700
 color white
 drawable ambulancia
 drawable arrow_back_vector
+drawable bannersup
 drawable barra_lateral_amb
 drawable barra_lateral_doc
 drawable barra_lateral_hosp
@@ -34,6 +35,7 @@ drawable scroll_provincias_image_7
 drawable scroll_provincias_image_8
 drawable scroll_provincias_image_9
 drawable sesion_vector
+drawable urgencia
 drawable user_sesion_vector
 drawable user_vector
 font relay_inter_black

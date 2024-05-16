@@ -122,7 +122,7 @@ class KrankenwagenViewModel : ViewModel() {
                     // Cuando se obtienen los documentos exitosamente
                     for (document in documents) {
                         // Se añade cada ambulancia a la lista
-                        listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                        listAmbulancias.value.add(Ambulance.deserializeAmbulance(document))
                     }
                 }
                 .addOnCompleteListener {
@@ -156,7 +156,7 @@ class KrankenwagenViewModel : ViewModel() {
                 // Cuando se obtienen los documentos exitosamente
                 for (document in documents) {
                     // Se añade cada ambulancia filtrada por hospital a la lista
-                    listAmbulancias.value.add(document.toObject(Ambulance::class.java))
+                    listAmbulancias.value.add(Ambulance.deserializeAmbulance(document))
                     // Se ejecuta la acción onSuccess para manejar el éxito de la operación
                     onSuccess()
                 }

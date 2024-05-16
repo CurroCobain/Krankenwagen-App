@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -118,7 +119,7 @@ fun CreateAmbulance(
 
                 // Campo de edición para la disponibilidad
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Disponible",fontSize = 25.sp)
+                    Text("Disponible", fontSize = 25.sp)
                     Spacer(modifier = Modifier.width(8.dp))
                     Switch(
                         checked = isFree,
@@ -199,7 +200,7 @@ fun CreateAmbulance(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 40.dp)
                     ) {
-                        Text("Limpiar datos",fontSize = 20.sp)
+                        Text("Limpiar datos", fontSize = 20.sp)
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -214,7 +215,7 @@ fun CreateAmbulance(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 40.dp)
                     ) {
-                        Text("Cerrar",fontSize = 20.sp)
+                        Text("Cerrar", fontSize = 20.sp)
                     }
                 }
                 // Mensaje del sistema
@@ -262,7 +263,10 @@ fun CreateHospital(
                 verticalArrangement = Arrangement.Center
             ) {
                 // Campo de edición para el id
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
                     TextField(
                         value = id,
                         onValueChange = { newValue ->
@@ -341,7 +345,9 @@ fun CreateHospital(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Crear", fontSize = 20.sp)
+                        Text("Crear", fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
+                            )
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -356,7 +362,8 @@ fun CreateHospital(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Limpiar datos", fontSize = 20.sp)
+                        Text("Limpiar datos", fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold )
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -371,7 +378,8 @@ fun CreateHospital(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Cerrar", fontSize = 20.sp)
+                        Text("Cerrar", fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold)
                     }
                 }
                 // Mensaje de respuesta del sistema
@@ -393,6 +401,7 @@ fun CreateUrg(
     viewModel: KrankenwagenViewModel,
     urgenciesViewModel: UrgenciesViewModel
 ) {
+    val id by urgenciesViewModel.id.collectAsState()
     val message by urgenciesViewModel.message.collectAsState()
     val name by urgenciesViewModel.name.collectAsState()
     val doc by urgenciesViewModel.doc.collectAsState()
@@ -410,6 +419,12 @@ fun CreateUrg(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            TextField(
+                value = id,
+                onValueChange = { urgenciesViewModel.setId(it) },
+                label = { Text("Identificador") }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             TextField(
                 value = name,
                 onValueChange = { urgenciesViewModel.setName(it) },
@@ -447,22 +462,36 @@ fun CreateUrg(
             )
             Spacer(modifier = Modifier.height(32.dp))
             Row {
-                Button(onClick = {
-                    urgenciesViewModel.createUrg {
-                        Toast.makeText(
-                            context,
-                            message,
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }) {
-                    Text("Create")
+                Button(
+                    onClick = {
+                        urgenciesViewModel.createUrg {
+                            Toast.makeText(
+                                context,
+                                message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                    modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                ) {
+                    Text("Crear",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.ExtraBold
+                        )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
-                Button(onClick = {
-                    urgenciesViewModel.deleteMiUrgencia()
-                }) {
-                    Text("Borrar todo")
+                Button(
+                    onClick = {
+                        urgenciesViewModel.deleteMiUrgencia()
+                    },
+                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                    modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                ) {
+                    Text("Borrar todo",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.ExtraBold
+                        )
                 }
             }
         }

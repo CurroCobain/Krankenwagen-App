@@ -3,10 +3,12 @@ package com.example.proyectofinalintmov.krankenwagen.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,136 +44,154 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavigationMenu(
     navController: NavController,
-    viewModel: KrankenwagenViewModel){
+    viewModel: KrankenwagenViewModel
+) {
     var row1Color by remember { mutableStateOf(Color.Transparent) }
     var row2Color by remember { mutableStateOf(Color.Transparent) }
     var row3Color by remember { mutableStateOf(Color.Transparent) }
     var row4Color by remember { mutableStateOf(Color.Transparent) }
+    Box(modifier = Modifier.fillMaxSize())
+    {
+        Image(
+            painter = painterResource(id = R.drawable.bannersup),
+            contentDescription = "banner",
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+        )
+        Column(
+            Modifier
+                .padding(top = 40.dp)
+                .fillMaxSize()
+                .background(color = Color(74, 121, 66))
+        ) {
+            Spacer(modifier = Modifier.padding(50.dp))
 
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(color = Color(74, 121, 66))
-    ) {
-        Spacer(modifier = Modifier.padding(50.dp))
-
-        // ---------------------------- Efecto de la linea Inicio -------------------------------
-        RowColorEffect(row1Color) { newColor ->
-            row1Color = newColor
-        }
-        //  ------------------------------------------- Inicio -------------------------------
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .background(color = row1Color)
-                .clickable {
-                    row1Color = Color.LightGray
-                    navController.navigate(Routes.PantallaWelcome.route)
-                })
-        {
-            Spacer(modifier = Modifier.padding(start = 40.dp))
-            Image(
-                modifier = Modifier
-                    .width(60.dp)
-                    .height(60.dp),
-                painter = painterResource(id = R.drawable.barra_lateral_welc),
-                contentDescription = "Inicio")
-            Spacer(modifier = Modifier.padding(start = 20.dp))
-            Text(text = "Inicio",
-                fontSize = 40.sp,
-                color = Color.White,
-                modifier = Modifier.padding(top = 5.dp)
-            )
-        }
-        Spacer(modifier = Modifier.padding(20.dp))
-        // ---------------------------- Efecto de la linea Hospitales -------------------------------
-        RowColorEffect(row2Color) { newColor ->
-            row2Color = newColor
-        }
-        //  ------------------------------------------- Hospitales -------------------------------
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .background(color = row2Color)
-                .clickable {
-                    row2Color = Color.LightGray
-                    navController.navigate(Routes.PantallaHospitals.route)
-                })
-        {
-            Spacer(modifier = Modifier.padding(start = 40.dp))
-            Image(
-                modifier = Modifier
-                    .width(60.dp)
-                    .height(60.dp),
-                painter = painterResource(id = R.drawable.barra_lateral_hosp),
-                contentDescription = "Hospitales")
-            Spacer(modifier = Modifier.padding(start = 20.dp))
-            Text(text = "Hospitales",
-                fontSize = 40.sp,
-                color = Color.White,
-                modifier = Modifier.padding(top = 5.dp)
-            )
-        }
-        Spacer(modifier = Modifier.padding(20.dp))
-        // ---------------------------- Efecto de la linea Ambulancias -------------------------------
-        RowColorEffect(row3Color) { newColor ->
-            row3Color = newColor
-        }
-        //  ------------------------------------------- Ambulancias -------------------------------
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .background(color = row3Color)
-                .clickable {
-                    row3Color = Color.LightGray
-                    viewModel.getAllAmb {
-                        navController.navigate(Routes.PantallaAmbulances.route)
-                    }
-                })
-        {
-            Spacer(modifier = Modifier.padding(start = 40.dp))
-            Image(
-                modifier = Modifier
-                    .width(60.dp)
-                    .height(60.dp),
-                painter = painterResource(id = R.drawable.barra_lateral_amb),
-                contentDescription = "Ambulancias")
-            Spacer(modifier = Modifier.padding(start = 20.dp))
-            Text(text = "Ambulancias",
-                fontSize = 40.sp,
-                color = Color.White,
-                modifier = Modifier.padding(top = 5.dp)
-            )
-        }
-        Spacer(modifier = Modifier.padding(20.dp))
-        // ---------------------------- Efecto de la linea Creación -------------------------------
-        RowColorEffect(row4Color) { newColor ->
-            row4Color = newColor
-        }
-        //  ------------------------------------------- Creación -------------------------------
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .background(color = row4Color)
-                .clickable {
-                    row4Color = Color.LightGray
-                    navController.navigate(Routes.PantallaCreate.route)
-                })
-        {
-            Spacer(modifier = Modifier.padding(start = 40.dp))
-            Image(
-                modifier = Modifier
-                    .width(60.dp)
-                    .height(60.dp)
-                    .padding(top = 5.dp),
-                painter = painterResource(id = R.drawable.barra_lateral_vector),
-                contentDescription = "Creación")
-            Spacer(modifier = Modifier.padding(start = 20.dp))
-            Text(text = "Creación \n \n de recursos",
-                fontSize = 40.sp,
-                color = Color.White
-            )
+            // ---------------------------- Efecto de la linea Inicio -------------------------------
+            RowColorEffect(row1Color) { newColor ->
+                row1Color = newColor
+            }
+            //  ------------------------------------------- Inicio -------------------------------
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(color = row1Color)
+                    .clickable {
+                        row1Color = Color.LightGray
+                        navController.navigate(Routes.PantallaWelcome.route)
+                    })
+            {
+                Spacer(modifier = Modifier.padding(start = 40.dp))
+                Image(
+                    modifier = Modifier
+                        .width(60.dp)
+                        .height(60.dp),
+                    painter = painterResource(id = R.drawable.barra_lateral_welc),
+                    contentDescription = "Inicio"
+                )
+                Spacer(modifier = Modifier.padding(start = 20.dp))
+                Text(
+                    text = "Inicio",
+                    fontSize = 40.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 5.dp)
+                )
+            }
+            Spacer(modifier = Modifier.padding(20.dp))
+            // ---------------------------- Efecto de la linea Hospitales -------------------------------
+            RowColorEffect(row2Color) { newColor ->
+                row2Color = newColor
+            }
+            //  ------------------------------------------- Hospitales -------------------------------
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(color = row2Color)
+                    .clickable {
+                        row2Color = Color.LightGray
+                        navController.navigate(Routes.PantallaHospitals.route)
+                    })
+            {
+                Spacer(modifier = Modifier.padding(start = 40.dp))
+                Image(
+                    modifier = Modifier
+                        .width(60.dp)
+                        .height(60.dp),
+                    painter = painterResource(id = R.drawable.barra_lateral_hosp),
+                    contentDescription = "Hospitales"
+                )
+                Spacer(modifier = Modifier.padding(start = 20.dp))
+                Text(
+                    text = "Hospitales",
+                    fontSize = 40.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 5.dp)
+                )
+            }
+            Spacer(modifier = Modifier.padding(20.dp))
+            // ---------------------------- Efecto de la linea Ambulancias -------------------------------
+            RowColorEffect(row3Color) { newColor ->
+                row3Color = newColor
+            }
+            //  ------------------------------------------- Ambulancias -------------------------------
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(color = row3Color)
+                    .clickable {
+                        row3Color = Color.LightGray
+                        viewModel.getAllAmb {
+                            navController.navigate(Routes.PantallaAmbulances.route)
+                        }
+                    })
+            {
+                Spacer(modifier = Modifier.padding(start = 40.dp))
+                Image(
+                    modifier = Modifier
+                        .width(60.dp)
+                        .height(60.dp),
+                    painter = painterResource(id = R.drawable.barra_lateral_amb),
+                    contentDescription = "Ambulancias"
+                )
+                Spacer(modifier = Modifier.padding(start = 20.dp))
+                Text(
+                    text = "Ambulancias",
+                    fontSize = 40.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 5.dp)
+                )
+            }
+            Spacer(modifier = Modifier.padding(20.dp))
+            // ---------------------------- Efecto de la linea Creación -------------------------------
+            RowColorEffect(row4Color) { newColor ->
+                row4Color = newColor
+            }
+            //  ------------------------------------------- Creación -------------------------------
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .background(color = row4Color)
+                    .clickable {
+                        row4Color = Color.LightGray
+                        navController.navigate(Routes.PantallaCreate.route)
+                    })
+            {
+                Spacer(modifier = Modifier.padding(start = 40.dp))
+                Image(
+                    modifier = Modifier
+                        .width(60.dp)
+                        .height(60.dp)
+                        .padding(top = 5.dp),
+                    painter = painterResource(id = R.drawable.barra_lateral_vector),
+                    contentDescription = "Creación"
+                )
+                Spacer(modifier = Modifier.padding(start = 20.dp))
+                Text(
+                    text = "Creación \n \n de recursos",
+                    fontSize = 40.sp,
+                    color = Color.White
+                )
+            }
         }
     }
 }

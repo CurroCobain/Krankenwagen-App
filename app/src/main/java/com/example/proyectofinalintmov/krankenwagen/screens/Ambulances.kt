@@ -2,7 +2,6 @@ package com.example.proyectofinalintmov.krankenwagen.screens
 
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,10 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
-import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
-import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
-import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
@@ -231,7 +227,7 @@ fun LazyAmbulance(
                         .fillMaxSize()
                         // Si la ambulancia está ocupada cambiamos el fondo a color rojo
                         .background(
-                            color = if (!ambulance.isFree)
+                            color = if (!ambulance.free)
                                 Color.Red
                             else
                                 Color.Transparent

@@ -1,20 +1,15 @@
 package com.example.proyectofinalintmov.krankenwagen.apis
 
 
+import com.example.proyectofinalintmov.krankenwagen.data.GeocodingResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+
 interface GeocodingService {
     @GET("search")
-    suspend fun getAddress(
-        @Query("format") format: String = "json",
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double
-    ): List<NominatimResponse>
-
-    @GET("search")
     suspend fun getCoordinates(
-        @Query("format") format: String = "json",
+        @Query("format") format: String,
         @Query("q") address: String
-    ): List<NominatimResponse>
+    ): List<GeocodingResponse>
 }

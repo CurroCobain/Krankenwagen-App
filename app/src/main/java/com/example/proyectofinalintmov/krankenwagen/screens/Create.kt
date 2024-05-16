@@ -263,12 +263,12 @@ fun ContenidoCreate(
                     ) {
                         // Imagen de hospital
                         Image(
-                            painter = painterResource(id = R.drawable.hospital),
-                            contentDescription = "Crear Hospital",
+                            painter = painterResource(id = R.drawable.urgencia),
+                            contentDescription = "Crear urgencia",
                             modifier = Modifier.size(120.dp)
                         )
                         Text(
-                            text = "Crear Hospital",
+                            text = "Crear urgencia",
                             fontSize = 30.sp,
                             style = MaterialTheme.typography.titleSmall,
                             modifier = Modifier.padding(top = 8.dp)

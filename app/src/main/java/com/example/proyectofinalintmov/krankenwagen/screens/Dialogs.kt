@@ -2,15 +2,18 @@ package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -25,8 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
@@ -51,18 +57,24 @@ fun DialogSesion(
 
     // Variable que almacena la respuesta del sistema
     val message by sesionViewModel.sesionMessage.collectAsState()
-    Column(Modifier.fillMaxWidth().fillMaxHeight())
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    )
     {   // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-            shape = RoundedCornerShape(10.dp),
-        ) {
-            // si la sesión no se ha iniciado aparece la opción de registrarse
-            if (!initOrReg) {
+        // si la sesión no se ha iniciado aparece la opción de registrarse
+        if (!initOrReg) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.bannersup),
+                    contentDescription = "banner",
+                    modifier = Modifier.fillMaxWidth()
+                        .height(40.dp)
+                )
                 Column(
                     modifier = Modifier
+                        .padding(top = 40.dp)
                         .fillMaxSize()
                         .background(color = Color(74, 121, 66)),
                     verticalArrangement = Arrangement.Center
@@ -77,7 +89,7 @@ fun DialogSesion(
                             onValueChange = { newValue ->
                                 sesionViewModel.cambiaNombre(newValue)
                             },
-                            label = { Text(text = "Nombre") },
+                            label = { Text(text = "Nombre", fontSize = 18.sp) },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
                         )
                     }
@@ -90,7 +102,7 @@ fun DialogSesion(
                             onValueChange = { newValue ->
                                 sesionViewModel.cambiaMail(newValue)
                             },
-                            label = { Text(text = "Mail") },
+                            label = { Text(text = "Mail", fontSize = 18.sp) },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
                         )
                     }
@@ -103,11 +115,11 @@ fun DialogSesion(
                             onValueChange = { newValue ->
                                 sesionViewModel.cambiaPass(newValue)
                             },
-                            label = { Text(text = "Password") },
+                            label = { Text(text = "Password", fontSize = 18.sp) },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
                         )
                     }
-                    Spacer(modifier = Modifier.padding(10.dp))
+                    Spacer(modifier = Modifier.padding(20.dp))
                     // --------------------------- Botón confirmar ---------------------------------
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
                         Button(
@@ -121,10 +133,15 @@ fun DialogSesion(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                            colors = ButtonDefaults.buttonColors(Color.LightGray)
                         )
                         {
-                            Text(text = stringResource(R.string.confirmar))
+                            Text(
+                                text = stringResource(R.string.confirmar),
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                fontWeight = FontWeight.ExtraBold
+                            )
                         }
                         Spacer(modifier = Modifier.padding(10.dp))
                         // -------------------------- Botón volver ---------------------------------
@@ -133,18 +150,29 @@ fun DialogSesion(
                                 // Cierra el diálogo y resetea el valor del mensaje del sistema
                                 sesionViewModel.setMessage("")
                             },
-                            colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
+                            colors = ButtonDefaults.buttonColors(Color.LightGray)
                         )
                         {
-                            Text(text = "Volver")
+                            Text(
+                                text = "Borrar datos",
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                fontWeight = FontWeight.ExtraBold
+                            )
                         }
                     }
-                    Spacer(modifier = Modifier.padding(10.dp))
+                    Spacer(modifier = Modifier.padding(20.dp))
                     // -------------------------------- Ir a inicio de sesión ----------------------
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
-                        Text(text = "Ya está registrado?")
+                        Text(
+                            text = "Ya está registrado?",
+                            fontSize = 18.sp,
+                            color = Color.White,
+                            fontWeight = FontWeight.ExtraBold
+                        )
                     }
+                    Spacer(modifier = Modifier.padding(10.dp))
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {// ---------------------- Botón iniciar sesion ------------------------------
                         Button(
@@ -153,26 +181,43 @@ fun DialogSesion(
                                 sesionViewModel.cambiaInit()
                                 sesionViewModel.setMessage("")
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                            colors = ButtonDefaults.buttonColors(Color.LightGray)
                         )
                         {
-                            Text(text = "Iniciar sesión")
+                            Text(
+                                text = "Iniciar sesión",
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                fontWeight = FontWeight.ExtraBold
+                            )
                         }
                     }
                     Row(modifier = Modifier.align(Alignment.CenterHorizontally))
                     {
                         Text(
                             // Mensaje del sistema
-                            text = message,
-                            color = Color.Red
+                            text = message, fontSize = 18.sp,
+                            color = Color.LightGray,
+                            fontWeight = FontWeight.ExtraBold
                         )
                     }
                 }
-            } else { // Si el usuario ya está registrado puede acceder a inicio de sesión
+            }
+        } else { // Si el usuario ya está registrado puede acceder a inicio de sesión
+            Box(modifier = Modifier.fillMaxSize())
+            {
+                Image(
+                    painter = painterResource(id = R.drawable.bannersup),
+                    contentDescription = "banner",
+                    modifier = Modifier.fillMaxWidth()
+                        .height(40.dp)
+                )
                 Column(
                     modifier = Modifier
+                        .padding(top = 40.dp)
                         .fillMaxSize()
-                        .background(color = Color(74, 121, 66))
+                        .background(color = Color(74, 121, 66)),
+                    verticalArrangement = Arrangement.Center
                 )
                 {
                     Spacer(modifier = Modifier.padding(40.dp))
@@ -184,7 +229,7 @@ fun DialogSesion(
                             onValueChange = { newValue ->
                                 sesionViewModel.cambiaMail(newValue)
                             },
-                            label = { Text(text = "Mail") },
+                            label = { Text(text = "Mail", fontSize = 18.sp) },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
                         )
                     }
@@ -197,7 +242,7 @@ fun DialogSesion(
                             onValueChange = { newValue ->
                                 sesionViewModel.cambiaPass(newValue)
                             },
-                            label = { Text(text = "Password") },
+                            label = { Text(text = "Password", fontSize = 18.sp) },
                             modifier = Modifier.border(width = 2.dp, color = Color.Black)
                         )
                     }
@@ -218,10 +263,15 @@ fun DialogSesion(
                                     sesionViewModel.setMessage("")
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                            colors = ButtonDefaults.buttonColors(Color.LightGray)
                         )
                         {
-                            Text(text = stringResource(R.string.confirmar))
+                            Text(
+                                text = stringResource(R.string.confirmar),
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                fontWeight = FontWeight.ExtraBold
+                            )
                         }
                         Spacer(modifier = Modifier.padding(20.dp))
                         // ------------------------ Botón volver a registro ------------------------
@@ -231,10 +281,15 @@ fun DialogSesion(
                                 sesionViewModel.cambiaInit()
                                 sesionViewModel.setMessage("")
                             },
-                            colors = ButtonDefaults.buttonColors(Color(233, 85, 85))
+                            colors = ButtonDefaults.buttonColors(Color.LightGray)
                         )
                         {
-                            Text(text = "Volver a registro")
+                            Text(
+                                text = "Volver a registro",
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                fontWeight = FontWeight.ExtraBold
+                            )
                         }
                     }
                     Spacer(modifier = Modifier.padding(10.dp))
@@ -244,7 +299,9 @@ fun DialogSesion(
                         Text(
                             // Mensaje del sistema
                             text = message,
-                            color = Color.Red
+                            fontSize = 18.sp,
+                            color = Color.Red,
+                            fontWeight = FontWeight.ExtraBold
                         )
                     }
                 }
