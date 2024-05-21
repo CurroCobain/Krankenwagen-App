@@ -12,6 +12,10 @@
         "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\hospital.png"
     },
     {
+        "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable_urgencia.png.flat",
+        "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-main-69:\\drawable\\urgencia.png"
+    },
+    {
         "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_user_sesion_vector.xml.flat",
         "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\user_sesion_vector.xml"
     },
@@ -74,10 +78,6 @@
     {
         "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\drawable-nodpi_scroll_provincias_image_10.png.flat",
         "source": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-relay-63:\\drawable-nodpi\\scroll_provincias_image_10.png"
-    },
-    {
-        "merged": "com.example.proyectofinalintmov.app-merged_res-67:/drawable_urgencia.png.flat",
-        "source": "com.example.proyectofinalintmov.app-main-69:/drawable/urgencia.png"
     },
     {
         "merged": "C:\\Users\\Cobain\\.gradle\\daemon\\8.2\\com.example.proyectofinalintmov.app-merged_res-67:\\xml_data_extraction_rules.xml.flat",

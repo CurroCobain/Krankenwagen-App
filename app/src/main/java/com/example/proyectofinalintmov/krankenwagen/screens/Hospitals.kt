@@ -24,6 +24,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -47,6 +49,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -78,6 +81,7 @@ fun Hospitals(
 ) {
     val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val createHosp by viewModel.createHosp.collectAsState()
 
     ModalNavigationDrawer(
         drawerState = drawerState1,
@@ -113,7 +117,8 @@ fun Hospitals(
                         editHosp,
                         editAmb,
                         drawerState1,
-                        drawerState2
+                        drawerState2,
+                        createHosp
                     )
                 }
             }
@@ -133,7 +138,8 @@ fun PrevContHosp(
     editHosp: Boolean,
     editAmb: Boolean,
     drawerState1: DrawerState,
-    drawerState2: DrawerState
+    drawerState2: DrawerState,
+    createHosp: Boolean
 
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
@@ -161,9 +167,32 @@ fun PrevContHosp(
             ambulancesViewModel = ambulancesViewModel,
             editAmb = editAmb
         )
+        if(createHosp){
+            CreateHospital(hospitalViewModel, viewModel)
+        }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(viewModel = viewModel, drawerState1 = drawerState1, drawerState2 = drawerState2)
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp)
+        ){
+            Button(onClick = { viewModel.acCreateHosp() },
+                colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                shape = RoundedCornerShape(
+                    topStart = 8.dp,
+                    topEnd = 8.dp,
+                    bottomStart = 8.dp,
+                    bottomEnd = 8.dp
+                )
+            ) {
+                Text(text = "Crear hospital",
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 30.sp
+                )
+            }
+        }
     })
 }
 
@@ -254,7 +283,8 @@ fun ContenidoHospitals(
                 }
             }
             Spacer(modifier = Modifier.padding(30.dp))
-            Row (modifier = Modifier.fillMaxWidth()
+            Row (modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 70.dp)) {
                 // LazyRow con la lista de hospitales
                 LazyHospital(

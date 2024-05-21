@@ -18,6 +18,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -37,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,6 +67,7 @@ fun Ambulances(
 ) {
     val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val createAmb by viewModel.createAmb.collectAsState()
 
     ModalNavigationDrawer(
         drawerState = drawerState1,
@@ -95,7 +100,8 @@ fun Ambulances(
                         sesionViewModel,
                         ambulancesViewModel,
                         drawerState1,
-                        drawerState2
+                        drawerState2,
+                        createAmb
                     )
                 }
             }
@@ -113,7 +119,8 @@ fun PrevContAmb(
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel,
     drawerState1: DrawerState,
-    drawerState2: DrawerState
+    drawerState2: DrawerState,
+    createAmb: Boolean
     //miListaAmb: MutableList<Ambulance>
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
@@ -138,9 +145,32 @@ fun PrevContAmb(
             ambulancesViewModel = ambulancesViewModel,
             //miListaAmb = miListaAmb
         )
+        if(createAmb){
+            CreateAmbulance(ambulancesViewModel, viewModel)
+        }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(viewModel = viewModel, drawerState1 = drawerState1, drawerState2 = drawerState2)
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp)
+            ){
+            Button(onClick = { viewModel.acCreateAmb() },
+                colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                shape = RoundedCornerShape(
+                    topStart = 8.dp,
+                    topEnd = 8.dp,
+                    bottomStart = 8.dp,
+                    bottomEnd = 8.dp
+                )
+                ) {
+                Text(text = "Crear ambulancia",
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 30.sp
+                    )
+            }
+        }
     })
 }
 
@@ -169,7 +199,7 @@ fun ContenidoAmbulances(
         )
         Column(
             verticalArrangement = Arrangement.Top,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(0.8f)
         ) {
             // LazyVerticalGrid con la lista de ambulancias
             LazyAmbulance(
@@ -179,10 +209,6 @@ fun ContenidoAmbulances(
                 modifier = Modifier.fillMaxSize(),
                 //miListaAmb
             )
-        }
-        // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
-        if (userDesplegado) {
-            DialogSesion(viewModel, sesionViewModel)
         }
     }
 }

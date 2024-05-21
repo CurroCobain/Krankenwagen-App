@@ -5,8 +5,10 @@ import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -27,6 +29,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -391,15 +394,13 @@ fun CreateHospital(
     }
 }
 
-/**
- * Composable para la creación de urgencias
- */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CreateUrg(
     context: Context,
     viewModel: KrankenwagenViewModel,
-    urgenciesViewModel: UrgenciesViewModel
+    urgenciesViewModel: UrgenciesViewModel,
+    modifier: Modifier
 ) {
     val id by urgenciesViewModel.id.collectAsState()
     val message by urgenciesViewModel.message.collectAsState()
@@ -409,89 +410,118 @@ fun CreateUrg(
     val priority by urgenciesViewModel.priority.collectAsState()
     val address by urgenciesViewModel.address.collectAsState()
     val issues by urgenciesViewModel.issues.collectAsState()
+
     Dialog(
         onDismissRequest = { viewModel.acCreateUrg() }
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color(225, 241, 222)),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .padding(16.dp)
+                .background(Color(225, 241, 222))
+                .border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium),
+            contentAlignment = Alignment.Center
         ) {
-            TextField(
-                value = id,
-                onValueChange = { urgenciesViewModel.setId(it) },
-                label = { Text("Identificador") }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = name,
-                onValueChange = { urgenciesViewModel.setName(it) },
-                label = { Text("Nombre") }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = doc,
-                onValueChange = { urgenciesViewModel.setDoc(it) },
-                label = { Text("Documento") }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = age.toString(),
-                onValueChange = { urgenciesViewModel.setAge(it) },
-                label = { Text("Edad") }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = priority.toString(),
-                onValueChange = { urgenciesViewModel.setPriority(it) },
-                label = { Text("Priority") }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = address,
-                onValueChange = { urgenciesViewModel.setAddress(it) },
-                label = { Text("Location") }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            TextField(
-                value = issues,
-                onValueChange = { urgenciesViewModel.setIssues(it) },
-                label = { Text("Issues") }
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            Row {
-                Button(
-                    onClick = {
-                        urgenciesViewModel.createUrg {
-                            Toast.makeText(
-                                context,
-                                message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    },
-                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
-                    modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Crear",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.ExtraBold
-                        )
+                    TextField(
+                        value = id,
+                        onValueChange = { urgenciesViewModel.setId(it) },
+                        label = { Text("Identificador") },
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = name,
+                        onValueChange = { urgenciesViewModel.setName(it) },
+                        label = { Text("Nombre") },
+                        modifier = Modifier.weight(1f)
+                    )
                 }
-                Spacer(modifier = Modifier.width(16.dp))
-                Button(
-                    onClick = {
-                        urgenciesViewModel.deleteMiUrgencia()
-                    },
-                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
-                    modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("Borrar todo",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.ExtraBold
+                    TextField(
+                        value = doc,
+                        onValueChange = { urgenciesViewModel.setDoc(it) },
+                        label = { Text("Documento") },
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = age.toString(),
+                        onValueChange = { urgenciesViewModel.setAge(it) },
+                        label = { Text("Edad") },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextField(
+                        value = priority.toString(),
+                        onValueChange = { urgenciesViewModel.setPriority(it) },
+                        label = { Text("Prioridad") },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                TextField(
+                    value = address,
+                    onValueChange = { urgenciesViewModel.setAddress(it) },
+                    label = { Text("Dirección") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                TextField(
+                    value = issues,
+                    onValueChange = { urgenciesViewModel.setIssues(it) },
+                    label = { Text("Problemas") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = {
+                            urgenciesViewModel.createUrg {
+                                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                    ) {
+                        Text("Crear",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
                         )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Button(
+                        onClick = { urgenciesViewModel.deleteMiUrgencia() },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                    ) {
+                        Text("Borrar todo",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    }
                 }
             }
         }

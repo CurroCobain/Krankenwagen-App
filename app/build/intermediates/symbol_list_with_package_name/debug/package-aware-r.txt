@@ -128,7 +128,6 @@ drawable ambulancia
 drawable arrow_back_vector
 drawable bannersup
 drawable barra_lateral_amb
-drawable barra_lateral_doc
 drawable barra_lateral_hosp
 drawable barra_lateral_vector
 drawable barra_lateral_welc

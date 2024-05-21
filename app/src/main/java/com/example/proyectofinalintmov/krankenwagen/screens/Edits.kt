@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,6 +48,7 @@ import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import kotlin.math.min
 
 /**
  * Composable para la edición de hospitales
@@ -99,18 +101,24 @@ fun EditarHosp(
                         text = "Id: $idHosp",
                         fontSize = 30.sp,
                         modifier = Modifier.background(color = Color.LightGray)
+                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
+                        textAlign = TextAlign.Center
                     )
                     // Texto provincia del hospital, no editable
                     Text(
                         text = "Provincia: $county",
                         fontSize = 30.sp,
                         modifier = Modifier.background(color = Color.LightGray)
+                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
+                        textAlign = TextAlign.Center
                     )
                     // Texto ciudad del hospital, no editable
                     Text(
                         text = "Ciudad: $city",
                         fontSize = 30.sp,
                         modifier = Modifier.background(color = Color.LightGray)
+                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
+                        textAlign = TextAlign.Center
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -162,10 +170,16 @@ fun EditarHosp(
                                 }
 
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         ) {
                             Text(
-                                text = "Guardar",
+                                text = " Guardar ",
                                 fontSize = 20.sp
                             )
                         }
@@ -185,10 +199,16 @@ fun EditarHosp(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         ) {
                             Text(
-                                text = "Borrar hospital",
+                                text = " Borrar ",
                                 fontSize = 20.sp
                             )
                         }
@@ -213,7 +233,13 @@ fun EditarHosp(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         ) {
                             Text(
                                 text = "Ver ambulancias",
@@ -249,7 +275,13 @@ fun EditarHosp(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         ) {
                             Text(
                                 text = "Volver",
@@ -311,6 +343,12 @@ fun EditarHosp(
                                                 Color.Red
                                             else
                                                 Color(74, 121, 66)
+                                        ),
+                                        shape = RoundedCornerShape(
+                                            topStart = 8.dp,
+                                            topEnd = 8.dp,
+                                            bottomStart = 8.dp,
+                                            bottomEnd = 8.dp
                                         )
                                     ) {
                                         Text(text = ambulance.plate)
@@ -372,6 +410,8 @@ fun EditarAmb(
                     text = "Matrícula: $plate",
                     fontSize = 30.sp,
                     modifier = Modifier.background(color = Color.LightGray)
+                        .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
+                    textAlign = TextAlign.Center
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -400,6 +440,8 @@ fun EditarAmb(
                         "Disponible",
                         fontSize = 30.sp,
                         modifier = Modifier.background(color = Color.LightGray)
+                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
+                        textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Switch(
@@ -418,6 +460,8 @@ fun EditarAmb(
                         "Tipo de Ambulancia   ",
                         fontSize = 30.sp,
                         modifier = Modifier.background(color = Color.LightGray)
+                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
+                        textAlign = TextAlign.Center
                     )
                     Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
                         Text(
@@ -467,7 +511,13 @@ fun EditarAmb(
                                 ).show()
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
                     ) {
                         Text(
                             text = "Guardar",
@@ -491,7 +541,13 @@ fun EditarAmb(
                                 ).show()
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
                     ) {
                         Text(
                             text = "Borrar ambulancia",
@@ -520,7 +576,13 @@ fun EditarAmb(
                                 ).show()
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66))
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
                     ) {
                         Text(
                             text = "Volver",

@@ -125,9 +125,8 @@ int dimen notification_top_pad 0x7f030016
 int dimen notification_top_pad_large_text 0x7f030017
 int drawable ambulancia 0x7f040001
 int drawable arrow_back_vector 0x7f040002
-int drawable bannersup 0x7f040049
-int drawable barra_lateral_amb 0x7f040003
-int drawable barra_lateral_doc 0x7f040004
+int drawable bannersup 0x7f040003
+int drawable barra_lateral_amb 0x7f040004
 int drawable barra_lateral_hosp 0x7f040005
 int drawable barra_lateral_vector 0x7f040006
 int drawable barra_lateral_welc 0x7f040007
@@ -194,9 +193,9 @@ int drawable scroll_provincias_image_7 0x7f040043
 int drawable scroll_provincias_image_8 0x7f040044
 int drawable scroll_provincias_image_9 0x7f040045
 int drawable sesion_vector 0x7f040046
-int drawable urgencia 0x7f04004a
-int drawable user_sesion_vector 0x7f040047
-int drawable user_vector 0x7f040048
+int drawable urgencia 0x7f040047
+int drawable user_sesion_vector 0x7f040048
+int drawable user_vector 0x7f040049
 int font relay_inter_black 0x7f050000
 int font relay_inter_bold 0x7f050001
 int font relay_inter_extrabold 0x7f050002

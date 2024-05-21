@@ -296,7 +296,7 @@ fun ContenidoWelcome(
         // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
         if (userDesplegado){
             // Si se pulsa sobre usuario se abre el diálogo correspondiente
-             DialogSesion(viewModel, sesionViewModel)
+            DialogSesion(viewModel, sesionViewModel)
         }
     }
 }
@@ -310,5 +310,3 @@ fun WelcomePagePreview() {
     val sesionViewModel = SesionViewModel()
     WelcomePage(navController, viewModel, false, sesionViewModel)
 }
-
-

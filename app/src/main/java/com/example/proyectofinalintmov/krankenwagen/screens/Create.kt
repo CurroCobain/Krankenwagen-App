@@ -5,6 +5,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -281,8 +283,9 @@ fun ContenidoCreate(
         when {
             createAmb -> CreateAmbulance(ambulancesViewModel, viewModel)
             createHosp -> CreateHospital(hospitalViewModel, viewModel)
-            createUrg -> CreateUrg(context, viewModel, urgenciesViewModel )
-
+            createUrg -> CreateUrg(context, viewModel, urgenciesViewModel,
+                modifier = Modifier.border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium),
+            )
         }
     }
 }
