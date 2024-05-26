@@ -47,12 +47,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
-import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewModel
-import com.google.android.gms.maps.model.LatLng
 
 
 /**
@@ -396,7 +394,7 @@ fun CreateHospital(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CreateUrg(
+fun CreateUrgScreen(
     context: Context,
     viewModel: KrankenwagenViewModel,
     urgenciesViewModel: UrgenciesViewModel,

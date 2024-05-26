@@ -69,6 +69,9 @@ class KrankenwagenViewModel : ViewModel() {
     //variable que se uso para determinar si se filtra por provincia o no
     val provinciaFiltrar = MutableStateFlow("")
 
+    // lista de urgencias
+    val listUrgencies = MutableStateFlow(mutableListOf<Urgencia>())
+
 
 
 
@@ -203,7 +206,28 @@ class KrankenwagenViewModel : ViewModel() {
         }
     }
 
-
+    /**
+     * Función para obtener la lista de urgencias de la base de datos
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getUrgencies(onSuccess: () -> Unit) {
+        listUrgencies.value.clear()
+        viewModelScope.launch {
+            firestore.collection(("Urgencias"))
+                .whereEqualTo("complete", false)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        listUrgencies.value.add(Urgencia.fromDocumentSnapshot(document))
+                        message.value = "Listado actualizado"
+                        onSuccess()
+                    }
+                }
+                .addOnFailureListener {
+                    message.value = "Error al recuperar las urgencias"
+                }
+        }
+    }
 
     /**
      * Muestra el registro de usuario

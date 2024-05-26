@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -19,6 +20,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -39,6 +43,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +51,7 @@ import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
+import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
@@ -62,7 +68,6 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewMode
 fun Create(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
-    showMenu: Boolean,
     userRegistered: Boolean,
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel,
@@ -71,6 +76,9 @@ fun Create(
 ) {
     val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val createUrg by viewModel.createUrg.collectAsState()
+    val context = LocalContext.current
+    val miListaUrg by viewModel.listUrgencies.collectAsState()
 
     ModalNavigationDrawer(
         drawerState = drawerState1,
@@ -105,7 +113,10 @@ fun Create(
                         hospitalViewModel,
                         drawerState1,
                         drawerState2,
-                        urgenciesViewModel
+                        urgenciesViewModel,
+                        createUrg,
+                        miListaUrg,
+                        context
                     )
                 }
             }
@@ -125,7 +136,10 @@ fun PrevContCreate(
     hospitalViewModel: HospitalViewModel,
     drawerState1: DrawerState,
     drawerState2: DrawerState,
-    urgenciesViewModel: UrgenciesViewModel
+    urgenciesViewModel: UrgenciesViewModel,
+    createUrg: Boolean,
+    miListaUrg: MutableList<Urgencia>,
+    context: Context
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
@@ -142,17 +156,46 @@ fun PrevContCreate(
     }, content = {
         // Contenido del Scaffold
         ContenidoCreate(
-            navController = navController,
-            userDesplegado = userRegistered,
-            viewModel = viewModel,
-            sesionViewModel = sesionViewModel,
-            ambulancesViewModel = ambulancesViewModel,
-            hospitalViewModel = hospitalViewModel,
-            urgenciesViewModel = urgenciesViewModel
+            navController,
+            userRegistered,
+           viewModel,
+            sesionViewModel,
+            ambulancesViewModel,
+            hospitalViewModel,
+            urgenciesViewModel,
+            miListaUrg
         )
+        if(createUrg){
+            CreateUrgScreen(context,
+                viewModel,
+                urgenciesViewModel,
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .fillMaxHeight(0.8f))
+        }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(viewModel = viewModel, drawerState1, drawerState2)
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp)
+        ){
+            Button(onClick = { viewModel.acCreateUrg() },
+                colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                shape = RoundedCornerShape(
+                    topStart = 8.dp,
+                    topEnd = 8.dp,
+                    bottomStart = 8.dp,
+                    bottomEnd = 8.dp
+                )
+            ) {
+                Text(text = "Crear urgencia",
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 30.sp
+                )
+            }
+        }
     })
 
 }
@@ -169,15 +212,10 @@ fun ContenidoCreate(
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel,
     hospitalViewModel: HospitalViewModel,
-    urgenciesViewModel: UrgenciesViewModel
+    urgenciesViewModel: UrgenciesViewModel,
+    miListaUrg: MutableList<Urgencia>
 ) {
-    // Se almacena el estado de createAmb para desplegar el diálogo de creación en función de dicho valor
-    val createAmb by viewModel.createAmb.collectAsState()
-    // Se almacena el estado de createHosp para desplegar el diálogo de creación en función de dicho valor
-    val createHosp by viewModel.createHosp.collectAsState()
-    // Se almacena el estado de createUrg para desplegar el diálogo de creación en función de dicho valor
-    val createUrg by viewModel.createUrg.collectAsState()
-    val context = LocalContext.current
+
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -192,100 +230,7 @@ fun ContenidoCreate(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxSize()
         ) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                // Card "Crear Hospital"
-                Card(
-                    modifier = Modifier
-                        .height(400.dp)
-                        .width(300.dp)
-                        .clickable { viewModel.acCreateHosp() }
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        // Imagen de hospital
-                        Image(
-                            painter = painterResource(id = R.drawable.hospital),
-                            contentDescription = "Crear Hospital",
-                            modifier = Modifier.size(120.dp)
-                        )
-                        Text(
-                            text = "Crear Hospital",
-                            fontSize = 30.sp,
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.padding(20.dp))
-                // Card "Crear Ambulancia"
-                Card(
-                    modifier = Modifier
-                        .height(400.dp)
-                        .width(300.dp)
-                        .clickable { viewModel.acCreateAmb() }
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        // Imagen de ambulancia
-                        Image(
-                            painter = painterResource(id = R.drawable.ambulancia),
-                            contentDescription = "Crear Ambulancia",
-                            modifier = Modifier.size(120.dp)
-                        )
-                        Text(
-                            text = "Crear Ambulancia",
-                            fontSize = 30.sp,
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.padding(20.dp))
-                // Card "Crear Urgencia"
-                Card(
-                    modifier = Modifier
-                        .height(400.dp)
-                        .width(300.dp)
-                        .clickable { viewModel.acCreateUrg() }
-                ) {
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        // Imagen de hospital
-                        Image(
-                            painter = painterResource(id = R.drawable.urgencia),
-                            contentDescription = "Crear urgencia",
-                            modifier = Modifier.size(120.dp)
-                        )
-                        Text(
-                            text = "Crear urgencia",
-                            fontSize = 30.sp,
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
-                    }
-                }
-            }
-        }
-        // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
-        when {
-            createAmb -> CreateAmbulance(ambulancesViewModel, viewModel)
-            createHosp -> CreateHospital(hospitalViewModel, viewModel)
-            createUrg -> CreateUrg(context, viewModel, urgenciesViewModel,
-                modifier = Modifier.border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium),
-            )
+
         }
     }
 }
