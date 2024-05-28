@@ -31,7 +31,7 @@ class UrgenciesViewModel : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
     var date = MutableStateFlow<LocalDateTime?>(null)
     var issues = MutableStateFlow("")
-    var ambulance = MutableStateFlow(Ambulance())
+    var ambulance = MutableStateFlow("No definida")
     var complete = MutableStateFlow(false)
     val message = MutableStateFlow("")
     private val firestore = Firebase.firestore
@@ -156,7 +156,7 @@ class UrgenciesViewModel : ViewModel() {
         address.value = ""
         location.value = mutableMapOf()
         issues.value = ""
-        ambulance.value = Ambulance()
+        ambulance.value = "No definida"
         complete.value = false
     }
 

@@ -11,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -20,6 +21,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -231,6 +235,30 @@ fun ContenidoCreate(
             modifier = Modifier.fillMaxSize()
         ) {
 
+        }
+    }
+}
+
+@Composable
+fun LazyUrgency(
+    viewModel: KrankenwagenViewModel,
+    miListaUrg: MutableList<Urgencia>
+){
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(1),
+        contentPadding = PaddingValues(horizontal = 5.dp, vertical = 5.dp)
+    ) {
+        // Item urgencia
+        items(miListaUrg) { urgency ->
+            Row(modifier = Modifier
+                .padding(50.dp)
+                .size(250.dp)
+                .clickable {
+                    viewModel.activaEditAmb()
+                })
+            {
+                Text(urgency.id + " --> Prioridad: " + urgency.priority + "  ")
+            }
         }
     }
 }
