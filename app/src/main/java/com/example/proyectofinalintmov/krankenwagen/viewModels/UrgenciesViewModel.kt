@@ -34,6 +34,12 @@ class UrgenciesViewModel : ViewModel() {
     var ambulance = MutableStateFlow("No definida")
     var complete = MutableStateFlow(false)
     val message = MutableStateFlow("")
+    val typeOfStreet = MutableStateFlow("")
+    val streetName = MutableStateFlow("")
+    val streetNumber = MutableStateFlow("")
+    val city = MutableStateFlow("")
+    val province = MutableStateFlow("")
+    val postalCode = MutableStateFlow("")
     private val firestore = Firebase.firestore
 
     // URL base del servicio de geocodificación
@@ -116,6 +122,8 @@ class UrgenciesViewModel : ViewModel() {
         }
     }
 
+
+
     fun setId(value: String){
         id.value = value
     }
@@ -134,9 +142,16 @@ class UrgenciesViewModel : ViewModel() {
     fun setPriority(data: String) {
         priority.value = data
     }
+    fun setTypeOfStreet(value: String) { typeOfStreet.value = value }
+    fun setStreetName(value: String) { streetName.value = value }
+    fun setStreetNumber(value: String) { streetNumber.value = value }
+    fun setCity(value: String) { city.value = value }
+    fun setProvince(value: String) { province.value = value }
+    fun setPostalCode(value: String) { postalCode.value = value }
 
-    fun setAddress(data: String) {
-        address.value = data
+    fun setAddress() {
+        address.value =
+            "${typeOfStreet.value} ${streetName.value}, ${streetNumber.value}, ${city.value}, ${province.value}, ${postalCode.value}"
     }
 
     fun setIssues(data: String) {

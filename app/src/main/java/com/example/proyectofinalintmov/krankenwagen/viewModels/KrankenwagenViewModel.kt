@@ -214,7 +214,6 @@ class KrankenwagenViewModel : ViewModel() {
         listUrgencies.value.clear()
         viewModelScope.launch {
             firestore.collection(("Urgencias"))
-                .whereEqualTo("complete", false)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {

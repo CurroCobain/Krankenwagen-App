@@ -70,8 +70,12 @@ data class Urgencia(
         "",
         mutableMapOf("latitude" to 0.0, "longitude" to 0.0),
         Timestamp(System.currentTimeMillis()),
-        "Parada cardio respiratoria",
+        "Sin definir",
         "No definida",
         false
     )
+
+    override fun toString(): String {
+        return "${this.id} // Prioridad--> ${this.priority} Nombre--> ${this.name} Edad--> ${this.age} \n \n Dirección--> ${this.address}"
+    }
 }

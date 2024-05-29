@@ -1,5 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,6 +43,7 @@ import com.example.proyectofinalintmov.sesion.Sesion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationMenu(
     navController: NavController,
@@ -162,18 +165,20 @@ fun NavigationMenu(
                 )
             }
             Spacer(modifier = Modifier.padding(20.dp))
-            // ---------------------------- Efecto de la linea Creación -------------------------------
+            // ---------------------------- Efecto de la linea Urgencias -------------------------------
             RowColorEffect(row4Color) { newColor ->
                 row4Color = newColor
             }
-            //  ------------------------------------------- Creación -------------------------------
+            //  ------------------------------------------- Urgencias -------------------------------
             Row(
                 Modifier
                     .fillMaxWidth()
                     .background(color = row4Color)
                     .clickable {
                         row4Color = Color.LightGray
-                        navController.navigate(Routes.PantallaCreate.route)
+                        viewModel.getUrgencies {
+                            navController.navigate(Routes.PantallaCreate.route)
+                        }
                     })
             {
                 Spacer(modifier = Modifier.padding(start = 40.dp))

@@ -3,34 +3,28 @@ package com.example.proyectofinalintmov.krankenwagen.screens
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -53,10 +47,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
-import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
-import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
@@ -64,12 +56,12 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewModel
 
 /**
- * Composable que alberga las opciones de crear ambulancia y crear hospital
+ * Composable que alberga la pantalla de las urgencias
  */
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
-fun Create(
+fun UrgencyScreen(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
     userRegistered: Boolean,
@@ -172,10 +164,8 @@ fun PrevContCreate(
         if(createUrg){
             CreateUrgScreen(context,
                 viewModel,
-                urgenciesViewModel,
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .fillMaxHeight(0.8f))
+                urgenciesViewModel
+            )
         }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
@@ -232,9 +222,62 @@ fun ContenidoCreate(
         )
         Column(
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.76f)
+                .padding(top = 4.dp)
         ) {
-
+            Row(
+                modifier = Modifier
+                    .padding(start = 30.dp, end = 28.dp)
+                    .background(Color.Gray, RoundedCornerShape(6.dp))
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "ID",
+                    modifier = Modifier
+                        .weight(0.3f)
+                        .padding(8.dp),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = "Prioridad",
+                    modifier = Modifier
+                        .weight(0.4f)
+                        .padding(8.dp),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = "Nombre",
+                    modifier = Modifier
+                        .weight(0.8f)
+                        .padding(8.dp),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = "Edad",
+                    modifier = Modifier
+                        .weight(0.2f)
+                        .padding(8.dp),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = "Dirección",
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+            }
+            LazyUrgency(
+                viewModel,
+                miListaUrg
+            )
         }
     }
 }
@@ -250,14 +293,53 @@ fun LazyUrgency(
     ) {
         // Item urgencia
         items(miListaUrg) { urgency ->
-            Row(modifier = Modifier
-                .padding(50.dp)
-                .size(250.dp)
-                .clickable {
-                    viewModel.activaEditAmb()
-                })
-            {
-                Text(urgency.id + " --> Prioridad: " + urgency.priority + "  ")
+            Row(
+                modifier = Modifier
+                    .padding(start = 30.dp, top = 10.dp, end = 28.dp)
+                    .background(
+                        color = if (!urgency.complete) Color.White else Color.Red,
+                        shape = RoundedCornerShape(6.dp)
+                    )
+                    .fillMaxWidth()
+                    .clickable {
+                        viewModel.activaEditAmb()
+                    }
+            ) {
+                Text(
+                    text = urgency.id,
+                    modifier = Modifier
+                        .weight(0.3f)
+                        .padding(8.dp),
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = urgency.priority.toString(),
+                    modifier = Modifier
+                        .weight(0.4f)
+                        .padding(8.dp),
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = urgency.name,
+                    modifier = Modifier
+                        .weight(0.8f)
+                        .padding(8.dp),
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = urgency.age.toString(),
+                    modifier = Modifier
+                        .weight(0.2f)
+                        .padding(8.dp),
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = urgency.address,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(8.dp),
+                    fontSize = 20.sp
+                )
             }
         }
     }

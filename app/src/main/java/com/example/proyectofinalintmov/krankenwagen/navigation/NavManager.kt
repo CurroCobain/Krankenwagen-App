@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.screens.Ambulances
-import com.example.proyectofinalintmov.krankenwagen.screens.Create
+import com.example.proyectofinalintmov.krankenwagen.screens.UrgencyScreen
 import com.example.proyectofinalintmov.krankenwagen.screens.Hospitals
 import com.example.proyectofinalintmov.krankenwagen.screens.WelcomePage
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
@@ -50,6 +50,6 @@ fun NavManager(
         composable(Routes.PantallaHospitals.route) {
             Hospitals(navController, viewModel, userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
         composable(Routes.PantallaCreate.route) {
-            Create(navController, viewModel,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel, urgenciesViewModel) }
+            UrgencyScreen(navController, viewModel,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel, urgenciesViewModel) }
     }
 }
