@@ -349,9 +349,10 @@ fun CreateHospital(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Crear", fontSize = 20.sp,
+                        Text(
+                            "Crear", fontSize = 20.sp,
                             fontWeight = FontWeight.ExtraBold
-                            )
+                        )
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -366,8 +367,10 @@ fun CreateHospital(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Limpiar datos", fontSize = 20.sp,
-                            fontWeight = FontWeight.ExtraBold )
+                        Text(
+                            "Limpiar datos", fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
@@ -382,8 +385,10 @@ fun CreateHospital(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Cerrar", fontSize = 20.sp,
-                            fontWeight = FontWeight.ExtraBold)
+                        Text(
+                            "Cerrar", fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
                     }
                 }
                 // Mensaje de respuesta del sistema
@@ -394,6 +399,7 @@ fun CreateHospital(
         }
     }
 }
+
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CreateUrgScreen(
@@ -401,8 +407,6 @@ fun CreateUrgScreen(
     viewModel: KrankenwagenViewModel,
     urgenciesViewModel: UrgenciesViewModel
 ) {
-    val id by urgenciesViewModel.id.collectAsState()
-    val message by urgenciesViewModel.message.collectAsState()
     val name by urgenciesViewModel.name.collectAsState()
     val doc by urgenciesViewModel.doc.collectAsState()
     val age by urgenciesViewModel.age.collectAsState()
@@ -418,6 +422,7 @@ fun CreateUrgScreen(
     Dialog(
         onDismissRequest = { viewModel.acCreateUrg() }
     ) {
+        val message by urgenciesViewModel.message.collectAsState()
         Box(
             modifier = Modifier
                 .size(width = 800.dp, height = 600.dp)
@@ -435,13 +440,6 @@ fun CreateUrgScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    TextField(
-                        value = id,
-                        onValueChange = { urgenciesViewModel.setId(it) },
-                        label = { Text("Id") },
-                        modifier = Modifier.weight(0.4f)
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
                     TextField(
                         value = priority.toString(),
                         onValueChange = { urgenciesViewModel.setPriority(it) },
@@ -487,7 +485,7 @@ fun CreateUrgScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
-                ){
+                ) {
                     TextField(
                         value = typeOfStreet,
                         onValueChange = { urgenciesViewModel.setTypeOfStreet(it) },
@@ -506,7 +504,7 @@ fun CreateUrgScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
-                ){
+                ) {
                     TextField(
                         value = streetNumber,
                         onValueChange = { urgenciesViewModel.setStreetNumber(it) },
@@ -525,7 +523,7 @@ fun CreateUrgScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
-                ){
+                ) {
                     TextField(
                         value = province,
                         onValueChange = { urgenciesViewModel.setProvince(it) },
@@ -555,14 +553,20 @@ fun CreateUrgScreen(
                     Button(
                         onClick = {
                             urgenciesViewModel.setAddress()
-                            urgenciesViewModel.createUrg {
-                                Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                            }
+                            urgenciesViewModel.createUrg(
+                                onSuccess = {
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                },
+                                onFailure = {
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                }
+                            )
                         },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Crear",
+                        Text(
+                            "Crear",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.ExtraBold
                         )
@@ -573,7 +577,8 @@ fun CreateUrgScreen(
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {
-                        Text("Borrar todo",
+                        Text(
+                            "Borrar todo",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.ExtraBold
                         )

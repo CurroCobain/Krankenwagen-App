@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.sql.Timestamp
@@ -84,43 +85,77 @@ class UrgenciesViewModel : ViewModel() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun createUrg(onSuccess: () -> Unit) {
+    fun createUrg(onSuccess: (String) -> Unit, onFailure: (String) -> Unit) {
         viewModelScope.launch {
             try {
+                // Verificar si los valores de edad y prioridad son enteros
+                val ageInt = age.value.toIntOrNull() ?: throw IllegalArgumentException("La edad no es un número entero válido")
+                val priorityInt = priority.value.toIntOrNull() ?: throw IllegalArgumentException("La prioridad no es un número entero válido")
+
+                // Obtener todas las urgencias para encontrar el id más alto
+                val querySnapshot = firestore.collection("Urgencias")
+                    .get()
+                    .await() // Utilizamos await para esperar el resultado de la consulta
+
+                // Encontrar el número más alto en los ids existentes
+                val highestId = querySnapshot.documents
+                    .mapNotNull { doc ->
+                        val id = doc.getString("id")
+                        id?.removePrefix("urg")?.toIntOrNull()
+                    }
+                    .maxOrNull() ?: 0
+
+                // Asignar el nuevo id basado en el más alto encontrado
+                val newId = "urg${highestId + 1}"
+
                 // Obtener las coordenadas antes de crear la urgencia
-                getCoordinatesFromAddress(address.value){
-                    // Crear la urgencia con las coordenadas obtenidas
-                    val newUrg = Urgencia(
-                        id.value,
-                        name.value,
-                        doc.value,
-                        age.value.toInt(),
-                        priority.value.toInt(),
-                        address.value,
-                        mutableMapOf("latitude" to latitude.value, "longitude" to longitude.value),
-                        Timestamp(System.currentTimeMillis()),
-                        issues.value,
-                        "No definida",
-                        complete.value
-                    )
-                    // Guardar la urgencia en la base de datos
-                    firestore.collection("Urgencias")
-                        .add(newUrg)
-                        .addOnSuccessListener {
-                            // Si se completa correctamente, modificamos el mensaje del sistema
-                            message.value = "Se actualizó la urgencia en la base de datos"
-                            onSuccess()
-                        }
-                        // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
-                        .addOnFailureListener {
-                            message.value = "No se pudo guardar la urgencia, revise los datos"
-                        }
+                getCoordinatesFromAddress(address.value) {
+                    try {
+                        // Crear la urgencia con las coordenadas obtenidas
+                        val newUrg = Urgencia(
+                            newId,
+                            name.value,
+                            doc.value,
+                            ageInt,
+                            priorityInt,
+                            address.value,
+                            mutableMapOf("latitude" to latitude.value, "longitude" to longitude.value),
+                            Timestamp(System.currentTimeMillis()),
+                            issues.value,
+                            "No definida",
+                            complete.value
+                        )
+
+                        // Guardar la urgencia en la base de datos
+                        firestore.collection("Urgencias")
+                            .add(newUrg)
+                            .addOnSuccessListener {
+                                // Si se completa correctamente, modificamos el mensaje del sistema
+                                val newMessage = "Se actualizó la urgencia en la base de datos"
+                                message.value = newMessage
+                                onSuccess(newMessage)
+                            }
+                            .addOnFailureListener {
+                                // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
+                                message.value = "No se pudo guardar la urgencia, revise los datos"
+                                onFailure(message.value )
+                            }
+                    } catch (e: Exception) {
+                        // Manejar cualquier excepción durante la creación de la urgencia
+                        message.value = "Hubo un fallo al crear la urgencia"
+                        onFailure(message.value )
+                    }
                 }
             } catch (e: Exception) {
-                message.value = "Hubo un fallo en la creación de la uurgencia, revise los datos"
+                // Manejar cualquier excepción durante la conversión de los valores a Int o consulta de Firestore
+                message.value = "Hubo un fallo en la creación de la urgencia, revise los datos"
+                onFailure(message.value )
             }
         }
     }
+
+
+
 
 
 
@@ -173,6 +208,12 @@ class UrgenciesViewModel : ViewModel() {
         issues.value = ""
         ambulance.value = "No definida"
         complete.value = false
+        typeOfStreet.value = ""
+        streetName.value = ""
+        streetNumber.value = ""
+        city.value = ""
+        province.value = ""
+        postalCode.value = ""
     }
 
 }
