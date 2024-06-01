@@ -114,7 +114,7 @@ class UrgenciesViewModel : ViewModel() {
                         // Crear la urgencia con las coordenadas obtenidas
                         val newUrg = Urgencia(
                             newId,
-                            name.value,
+                             name.value,
                             doc.value,
                             ageInt,
                             priorityInt,

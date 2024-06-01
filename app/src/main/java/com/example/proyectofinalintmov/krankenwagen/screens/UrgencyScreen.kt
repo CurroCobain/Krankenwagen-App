@@ -75,6 +75,7 @@ fun UrgencyScreen(
     val createUrg by viewModel.createUrg.collectAsState()
     val context = LocalContext.current
     val miListaUrg by viewModel.listUrgencies.collectAsState()
+    val updatedInfo by viewModel.updatedInfo.collectAsState()
 
     ModalNavigationDrawer(
         drawerState = drawerState1,
@@ -84,6 +85,7 @@ fun UrgencyScreen(
             }
         }
     ) {
+        Text(text = updatedInfo.toString(), color = Color.Transparent)
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
             ModalNavigationDrawer(
                 drawerState = drawerState2,
@@ -139,7 +141,6 @@ fun PrevContCreate(
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
-
     // Scaffold que compone la pantalla
     Scaffold(topBar = {
         Column(
@@ -175,19 +176,38 @@ fun PrevContCreate(
                 .fillMaxWidth()
                 .padding(top = 10.dp)
         ){
-            Button(onClick = { viewModel.acCreateUrg() },
-                colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
-                shape = RoundedCornerShape(
-                    topStart = 8.dp,
-                    topEnd = 8.dp,
-                    bottomStart = 8.dp,
-                    bottomEnd = 8.dp
-                )
-            ) {
-                Text(text = "Crear urgencia",
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 30.sp
-                )
+            Row(horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth(0.7f)) {
+                Button(onClick = { viewModel.acCreateUrg() },
+                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                    shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    )
+                ) {
+                    Text(text = "Crear urgencia",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 30.sp
+                    )
+                }
+                Button(onClick = { viewModel.getUrgencies {
+                    viewModel.increaseUpdateInfo()
+                } },
+                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                    shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    )
+                ) {
+                    Text(text = "Actualizar datos",
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 30.sp
+                    )
+                }
             }
         }
     })
@@ -221,11 +241,12 @@ fun ContenidoCreate(
             modifier = Modifier.fillMaxSize()
         )
         Column(
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.76f)
-                .padding(top = 4.dp)
+                .padding(top = 30.dp)
+
         ) {
             Row(
                 modifier = Modifier
@@ -297,7 +318,11 @@ fun LazyUrgency(
                 modifier = Modifier
                     .padding(start = 30.dp, top = 10.dp, end = 28.dp)
                     .background(
-                        color = if (!urgency.complete) Color.White else Color.Red,
+                        color = if (urgency.ambulance != "No definida") Color(
+                            71,
+                            248,
+                            152
+                        ) else Color.White,
                         shape = RoundedCornerShape(6.dp)
                     )
                     .fillMaxWidth()

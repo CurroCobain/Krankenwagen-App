@@ -72,6 +72,8 @@ class KrankenwagenViewModel : ViewModel() {
     // lista de urgencias
     val listUrgencies = MutableStateFlow(mutableListOf<Urgencia>())
 
+    val updatedInfo = MutableStateFlow(0)
+
 
 
 
@@ -282,5 +284,7 @@ class KrankenwagenViewModel : ViewModel() {
     fun setProv(text: String) {
         provinciaFiltrar.value = text
     }
-
+    fun increaseUpdateInfo(){
+        updatedInfo.value += 1
+    }
 }
