@@ -1,7 +1,10 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,7 +22,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Switch
 import androidx.compose.material3.Button
@@ -40,15 +45,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
+import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
-import kotlin.math.min
+import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewModel
 
 /**
  * Composable para la edición de hospitales
@@ -100,7 +107,8 @@ fun EditarHosp(
                     Text(
                         text = "Id: $idHosp",
                         fontSize = 30.sp,
-                        modifier = Modifier.background(color = Color.LightGray)
+                        modifier = Modifier
+                            .background(color = Color.LightGray)
                             .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
                         textAlign = TextAlign.Center
                     )
@@ -108,7 +116,8 @@ fun EditarHosp(
                     Text(
                         text = "Provincia: $county",
                         fontSize = 30.sp,
-                        modifier = Modifier.background(color = Color.LightGray)
+                        modifier = Modifier
+                            .background(color = Color.LightGray)
                             .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
                         textAlign = TextAlign.Center
                     )
@@ -116,7 +125,8 @@ fun EditarHosp(
                     Text(
                         text = "Ciudad: $city",
                         fontSize = 30.sp,
-                        modifier = Modifier.background(color = Color.LightGray)
+                        modifier = Modifier
+                            .background(color = Color.LightGray)
                             .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
                         textAlign = TextAlign.Center
                     )
@@ -409,7 +419,8 @@ fun EditarAmb(
                 Text(
                     text = "Matrícula: $plate",
                     fontSize = 30.sp,
-                    modifier = Modifier.background(color = Color.LightGray)
+                    modifier = Modifier
+                        .background(color = Color.LightGray)
                         .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
                     textAlign = TextAlign.Center
                 )
@@ -439,7 +450,8 @@ fun EditarAmb(
                     Text(
                         "Disponible",
                         fontSize = 30.sp,
-                        modifier = Modifier.background(color = Color.LightGray)
+                        modifier = Modifier
+                            .background(color = Color.LightGray)
                             .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
                         textAlign = TextAlign.Center
                     )
@@ -459,7 +471,8 @@ fun EditarAmb(
                     Text(
                         "Tipo de Ambulancia   ",
                         fontSize = 30.sp,
-                        modifier = Modifier.background(color = Color.LightGray)
+                        modifier = Modifier
+                            .background(color = Color.LightGray)
                             .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
                         textAlign = TextAlign.Center
                     )
@@ -598,6 +611,220 @@ fun EditarAmb(
                         fontStyle = FontStyle.Italic,
                         color = Color.Red
                     )
+                }
+            }
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun EditUrg(
+    context: Context,
+    viewModel: KrankenwagenViewModel,
+    urgenciesViewModel: UrgenciesViewModel
+) {
+    val id by urgenciesViewModel.id.collectAsState()
+    val name by urgenciesViewModel.name.collectAsState()
+    val doc by urgenciesViewModel.doc.collectAsState()
+    val age by urgenciesViewModel.age.collectAsState()
+    val priority by urgenciesViewModel.priority.collectAsState()
+    val typeOfStreet by urgenciesViewModel.typeOfStreet.collectAsState()
+    val streetName by urgenciesViewModel.streetName.collectAsState()
+    val streetNumber by urgenciesViewModel.streetNumber.collectAsState()
+    val city by urgenciesViewModel.city.collectAsState()
+    val province by urgenciesViewModel.province.collectAsState()
+    val postalCode by urgenciesViewModel.postalCode.collectAsState()
+    val issues by urgenciesViewModel.issues.collectAsState()
+
+    Dialog(
+        onDismissRequest = { viewModel.activaEditUrg() }
+    ) {
+        val message by urgenciesViewModel.message.collectAsState()
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.8f),
+            shape = RoundedCornerShape(10.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color(225, 241, 222))
+                    .verticalScroll(rememberScrollState(), true),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextField(
+                        value = priority.toString(),
+                        onValueChange = { urgenciesViewModel.setPriority(it) },
+                        label = { Text("Prioridad") },
+                        modifier = Modifier.weight(0.4f)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = doc,
+                        onValueChange = { urgenciesViewModel.setDoc(it) },
+                        label = { Text("Documento") },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextField(
+                        value = name,
+                        onValueChange = { urgenciesViewModel.setName(it) },
+                        label = { Text("Nombre") },
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = age.toString(),
+                        onValueChange = { urgenciesViewModel.setAge(it) },
+                        label = { Text("Edad") },
+                        modifier = Modifier.weight(0.2f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                // Campos de la dirección divididos
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextField(
+                        value = typeOfStreet,
+                        onValueChange = { urgenciesViewModel.setTypeOfStreet(it) },
+                        label = { Text("Tipo de vía") },
+                        modifier = Modifier.weight(0.4f)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = streetName,
+                        onValueChange = { urgenciesViewModel.setStreetName(it) },
+                        label = { Text("Nombre de la vía") },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextField(
+                        value = streetNumber,
+                        onValueChange = { urgenciesViewModel.setStreetNumber(it) },
+                        label = { Text("Número") },
+                        modifier = Modifier.weight(0.3f)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = city,
+                        onValueChange = { urgenciesViewModel.setCity(it) },
+                        label = { Text("Ciudad") },
+                        modifier = Modifier.weight(0.5f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    TextField(
+                        value = province,
+                        onValueChange = { urgenciesViewModel.setProvince(it) },
+                        label = { Text("Provincia") },
+                        modifier = Modifier.weight(0.5f)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    TextField(
+                        value = postalCode,
+                        onValueChange = { urgenciesViewModel.setPostalCode(it) },
+                        label = { Text("Código postal") },
+                        modifier = Modifier.weight(0.5f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp)
+                ) {
+                    TextField(
+                        value = issues,
+                        onValueChange = { urgenciesViewModel.setIssues(it) },
+                        label = { Text("Problemas") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp)
+                ) {
+                    Button(
+                        onClick = {
+                            urgenciesViewModel.setAddress()
+                            urgenciesViewModel.updateUrgency(
+                                id,
+                                onSuccess = {
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                },
+                                onFailure = {
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                }
+                            )
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                    ) {
+                        Text(
+                            "Guardar",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Button(
+                        onClick = {
+                            urgenciesViewModel.deleteUrgency(
+                                id,
+                                onSuccess = {
+                                    urgenciesViewModel.resetMiUrgencia()
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                },
+                                onFailure = {
+                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                        },
+                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                    ) {
+                        Text(
+                            "Borrar",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    }
                 }
             }
         }

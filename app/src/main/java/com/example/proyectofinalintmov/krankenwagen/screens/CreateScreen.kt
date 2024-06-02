@@ -1,15 +1,12 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -19,10 +16,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DropdownMenuItem
 //noinspection UsingMaterialAndMaterial3Libraries
@@ -31,7 +29,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,7 +45,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
@@ -423,21 +419,24 @@ fun CreateUrgScreen(
         onDismissRequest = { viewModel.acCreateUrg() }
     ) {
         val message by urgenciesViewModel.message.collectAsState()
-        Box(
+        Card(
             modifier = Modifier
-                .size(width = 800.dp, height = 600.dp)
-                .background(Color(225, 241, 222)),
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .fillMaxHeight(0.8f),
+            shape = RoundedCornerShape(10.dp)
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                    .fillMaxSize()
+                    .background(color = Color(225, 241, 222))
+                    .verticalScroll(rememberScrollState(), true),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     TextField(
@@ -456,7 +455,9 @@ fun CreateUrgScreen(
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     TextField(
@@ -474,16 +475,11 @@ fun CreateUrgScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-
-                }
-                Spacer(modifier = Modifier.height(16.dp))
                 // Campos de la dirección divididos
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     TextField(
@@ -502,7 +498,9 @@ fun CreateUrgScreen(
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     TextField(
@@ -521,7 +519,9 @@ fun CreateUrgScreen(
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     TextField(
@@ -539,16 +539,24 @@ fun CreateUrgScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                TextField(
-                    value = issues,
-                    onValueChange = { urgenciesViewModel.setIssues(it) },
-                    label = { Text("Problemas") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(32.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp)
+                ) {
+                    TextField(
+                        value = issues,
+                        onValueChange = { urgenciesViewModel.setIssues(it) },
+                        label = { Text("Problemas") },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(4.dp)
                 ) {
                     Button(
                         onClick = {
@@ -573,7 +581,7 @@ fun CreateUrgScreen(
                     }
                     Spacer(modifier = Modifier.width(16.dp))
                     Button(
-                        onClick = { urgenciesViewModel.deleteMiUrgencia() },
+                        onClick = { urgenciesViewModel.resetMiUrgencia() },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                         modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
                     ) {

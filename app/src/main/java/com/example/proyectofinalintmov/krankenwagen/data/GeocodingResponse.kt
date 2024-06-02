@@ -4,3 +4,4 @@ data class GeocodingResponse(
     val lat: Double,
     val lon: Double
 )
+

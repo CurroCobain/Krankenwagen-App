@@ -5,10 +5,8 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.proyectofinalintmov.krankenwagen.apis.GeocodingService
-import com.example.proyectofinalintmov.krankenwagen.data.Ambulance
 import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import kotlinx.coroutines.flow.MutableStateFlow
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
@@ -154,9 +152,97 @@ class UrgenciesViewModel : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateUrgency(
+        urgenciaId: String,
+        onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                // Verificar si los valores de edad y prioridad son enteros
+                val ageInt = age.value.toIntOrNull() ?: throw IllegalArgumentException("La edad no es un número entero válido")
+                val priorityInt = priority.value.toIntOrNull() ?: throw IllegalArgumentException("La prioridad no es un número entero válido")
 
+                // Obtener la referencia del documento de la urgencia a actualizar
+                val docRef = firestore.collection("Urgencias").document(urgenciaId)
 
+                // Obtener la urgencia existente
+                val snapshot = docRef.get().await()
+                if (snapshot.exists()) {
+                    // Obtener las coordenadas antes de actualizar la urgencia
+                    getCoordinatesFromAddress(address.value) {
+                        try {
+                            // Crear el mapa de actualización con los nuevos valores
+                            val updateData = mapOf(
+                                "name" to name.value,
+                                "doc" to doc.value,
+                                "age" to ageInt,
+                                "priority" to priorityInt,
+                                "address" to address.value,
+                                "location" to mutableMapOf("latitude" to latitude.value, "longitude" to longitude.value),
+                                "timestamp" to Timestamp(System.currentTimeMillis()),
+                                "issues" to issues.value,
+                                "ambulance" to "No definida",
+                                "complete" to complete.value
+                            )
 
+                            // Actualizar la urgencia en la base de datos
+                            docRef.update(updateData)
+                                .addOnSuccessListener {
+                                    val newMessage = "Urgencia actualizada correctamente"
+                                    message.value = newMessage
+                                    onSuccess(newMessage)
+                                }
+                                .addOnFailureListener {
+                                    message.value = "No se pudo actualizar la urgencia, revise los datos"
+                                    onFailure(message.value)
+                                }
+                        } catch (e: Exception) {
+                            message.value = "Hubo un fallo al actualizar la urgencia"
+                            onFailure(message.value)
+                        }
+                    }
+                } else {
+                    message.value = "La urgencia con ID $urgenciaId no existe"
+                    onFailure(message.value)
+                }
+            } catch (e: Exception) {
+                message.value = "Hubo un fallo al actualizar la urgencia, revise los datos"
+                onFailure(message.value)
+            }
+        }
+    }
+
+    fun deleteUrgency(
+        urgenciaId: String,
+        onSuccess: (String) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        viewModelScope.launch {
+            try {
+                // Obtener la referencia del documento de la urgencia a eliminar
+                val docRef = firestore.collection("Urgencias").document(urgenciaId)
+
+                // Eliminar la urgencia de la base de datos
+                docRef.delete()
+                    .addOnSuccessListener {
+                        val successMessage = "Urgencia eliminada correctamente"
+                        message.value = successMessage
+                        onSuccess(successMessage)
+                    }
+                    .addOnFailureListener { e ->
+                        val failureMessage = "Error al eliminar la urgencia: ${e.message}"
+                        message.value = failureMessage
+                        onFailure(failureMessage)
+                    }
+            } catch (e: Exception) {
+                val exceptionMessage = "Hubo un fallo al intentar eliminar la urgencia: ${e.message}"
+                message.value = exceptionMessage
+                onFailure(exceptionMessage)
+            }
+        }
+    }
 
 
     fun setId(value: String){
@@ -188,6 +274,20 @@ class UrgenciesViewModel : ViewModel() {
         address.value =
             "${typeOfStreet.value} ${streetName.value}, ${streetNumber.value}, ${city.value}, ${province.value}, ${postalCode.value}"
     }
+    private fun deserializeAddres(receivedAddres: String){
+        try {
+            val listAddress = receivedAddres.split(",")
+            val tipoYNombre = separarPrimeraPalabra(listAddress[0])
+            setTypeOfStreet(tipoYNombre.first)
+            setStreetName(tipoYNombre.second)
+            setStreetNumber(listAddress[1])
+            setCity(listAddress[2])
+            setProvince(listAddress[3])
+            setPostalCode(listAddress[4])
+        } catch (e: Exception){
+            message.value = "Hubo un fallo al convertir la dirección"
+        }
+    }
 
     fun setIssues(data: String) {
         issues.value = data
@@ -197,7 +297,20 @@ class UrgenciesViewModel : ViewModel() {
         complete.value = true
     }
 
-    fun deleteMiUrgencia() {
+    fun setAll(urgencia: Urgencia){
+        setId(urgencia.id)
+        setDoc(urgencia.doc)
+        setName(urgencia.name)
+        setAge(urgencia.age.toString())
+        setPriority(urgencia.priority.toString())
+        deserializeAddres(urgencia.address)
+        setAddress()
+        setIssues(urgencia.issues)
+
+
+    }
+
+    fun resetMiUrgencia() {
         id.value = ""
         name.value = ""
         doc.value = ""
@@ -216,4 +329,14 @@ class UrgenciesViewModel : ViewModel() {
         postalCode.value = ""
     }
 
+    private fun separarPrimeraPalabra(cadena: String): Pair<String, String> {
+        val indiceEspacio = cadena.indexOf(' ')
+        return if (indiceEspacio != -1) {
+            val primeraPalabra = cadena.substring(0, indiceEspacio)
+            val restoCadena = cadena.substring(indiceEspacio + 1)
+            Pair(primeraPalabra, restoCadena)
+        } else {
+            Pair(cadena, "")
+        }
+    }
 }

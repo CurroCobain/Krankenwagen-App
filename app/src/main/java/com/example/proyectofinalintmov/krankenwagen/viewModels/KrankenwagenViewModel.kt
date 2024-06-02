@@ -66,6 +66,9 @@ class KrankenwagenViewModel : ViewModel() {
     // variable que permite activar la edición de un hospital
     var editHosp = MutableStateFlow(false)
 
+    // variable que permite activar la edición de una urgencia
+    var editUrg = MutableStateFlow(false)
+
     //variable que se uso para determinar si se filtra por provincia o no
     val provinciaFiltrar = MutableStateFlow("")
 
@@ -256,6 +259,14 @@ class KrankenwagenViewModel : ViewModel() {
     fun activaEditHosp() {
         editHosp.value = !editHosp.value
     }
+
+    /**
+     * Cambia el valor  de editUrg
+     */
+    fun activaEditUrg() {
+        editUrg.value = !editUrg.value
+    }
+
 
     /**
      * Activa o desactiva la creación de ambulancias

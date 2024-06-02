@@ -73,6 +73,7 @@ fun UrgencyScreen(
     val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
     val createUrg by viewModel.createUrg.collectAsState()
+    val editUrg by viewModel.editUrg.collectAsState()
     val context = LocalContext.current
     val miListaUrg by viewModel.listUrgencies.collectAsState()
     val updatedInfo by viewModel.updatedInfo.collectAsState()
@@ -113,6 +114,7 @@ fun UrgencyScreen(
                         drawerState2,
                         urgenciesViewModel,
                         createUrg,
+                        editUrg,
                         miListaUrg,
                         context
                     )
@@ -136,6 +138,7 @@ fun PrevContCreate(
     drawerState2: DrawerState,
     urgenciesViewModel: UrgenciesViewModel,
     createUrg: Boolean,
+    editUrg: Boolean,
     miListaUrg: MutableList<Urgencia>,
     context: Context
 ) {
@@ -153,20 +156,23 @@ fun PrevContCreate(
     }, content = {
         // Contenido del Scaffold
         ContenidoCreate(
-            navController,
-            userRegistered,
-           viewModel,
-            sesionViewModel,
-            ambulancesViewModel,
-            hospitalViewModel,
+            viewModel,
             urgenciesViewModel,
             miListaUrg
         )
-        if(createUrg){
-            CreateUrgScreen(context,
-                viewModel,
-                urgenciesViewModel
-            )
+        when {
+            createUrg -> {
+                CreateUrgScreen(context,
+                    viewModel,
+                    urgenciesViewModel
+                )
+            }
+            editUrg -> {
+                EditUrg(context,
+                    viewModel,
+                    urgenciesViewModel
+                )
+            }
         }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
@@ -220,12 +226,7 @@ fun PrevContCreate(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ContenidoCreate(
-    navController: NavHostController,
-    userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
-    sesionViewModel: SesionViewModel,
-    ambulancesViewModel: AmbulancesViewModel,
-    hospitalViewModel: HospitalViewModel,
     urgenciesViewModel: UrgenciesViewModel,
     miListaUrg: MutableList<Urgencia>
 ) {
@@ -297,6 +298,7 @@ fun ContenidoCreate(
             }
             LazyUrgency(
                 viewModel,
+                urgenciesViewModel,
                 miListaUrg
             )
         }
@@ -306,6 +308,7 @@ fun ContenidoCreate(
 @Composable
 fun LazyUrgency(
     viewModel: KrankenwagenViewModel,
+    urgenciesViewModel: UrgenciesViewModel,
     miListaUrg: MutableList<Urgencia>
 ){
     LazyVerticalGrid(
@@ -327,7 +330,8 @@ fun LazyUrgency(
                     )
                     .fillMaxWidth()
                     .clickable {
-                        viewModel.activaEditAmb()
+                        viewModel.activaEditUrg()
+                        urgenciesViewModel.setAll(urgency)
                     }
             ) {
                 Text(
