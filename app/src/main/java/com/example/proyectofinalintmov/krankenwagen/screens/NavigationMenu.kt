@@ -188,13 +188,14 @@ fun NavigationMenu(
                         .height(60.dp)
                         .padding(top = 5.dp),
                     painter = painterResource(id = R.drawable.barra_lateral_vector),
-                    contentDescription = "Creación"
+                    contentDescription = "Urgencias"
                 )
                 Spacer(modifier = Modifier.padding(start = 20.dp))
                 Text(
-                    text = "Creación \n \n de recursos",
+                    text = "Urgencias",
                     fontSize = 40.sp,
-                    color = Color.White
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 5.dp)
                 )
             }
         }

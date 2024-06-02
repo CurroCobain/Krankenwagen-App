@@ -786,10 +786,10 @@ fun EditUrg(
                             urgenciesViewModel.updateUrgency(
                                 id,
                                 onSuccess = {
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Urgencia actualizada correctamente", Toast.LENGTH_LONG).show()
                                 },
                                 onFailure = {
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Hubo un fallo al actualizar la urgencia", Toast.LENGTH_LONG).show()
                                 }
                             )
                         },
@@ -809,10 +809,10 @@ fun EditUrg(
                                 id,
                                 onSuccess = {
                                     urgenciesViewModel.resetMiUrgencia()
-                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Urgencia eliminada", Toast.LENGTH_SHORT).show()
                                 },
                                 onFailure = {
-                                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Hubo un fallo al eliminar la urgencia", Toast.LENGTH_SHORT).show()
                                 }
                             )
                         },

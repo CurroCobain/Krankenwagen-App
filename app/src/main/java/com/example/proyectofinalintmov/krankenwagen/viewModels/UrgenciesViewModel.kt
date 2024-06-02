@@ -164,12 +164,16 @@ class UrgenciesViewModel : ViewModel() {
                 val ageInt = age.value.toIntOrNull() ?: throw IllegalArgumentException("La edad no es un número entero válido")
                 val priorityInt = priority.value.toIntOrNull() ?: throw IllegalArgumentException("La prioridad no es un número entero válido")
 
-                // Obtener la referencia del documento de la urgencia a actualizar
-                val docRef = firestore.collection("Urgencias").document(urgenciaId)
+                // Consultar para obtener la referencia del documento de la urgencia a actualizar
+                val querySnapshot = firestore.collection("Urgencias")
+                    .whereEqualTo("id", urgenciaId)
+                    .get()
+                    .await()
 
-                // Obtener la urgencia existente
-                val snapshot = docRef.get().await()
-                if (snapshot.exists()) {
+                if (querySnapshot.documents.isNotEmpty()) {
+                    val documentSnapshot = querySnapshot.documents[0]
+                    val docRef = documentSnapshot.reference
+
                     // Obtener las coordenadas antes de actualizar la urgencia
                     getCoordinatesFromAddress(address.value) {
                         try {
@@ -221,21 +225,32 @@ class UrgenciesViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             try {
-                // Obtener la referencia del documento de la urgencia a eliminar
-                val docRef = firestore.collection("Urgencias").document(urgenciaId)
+                // Consultar para obtener la referencia del documento de la urgencia a eliminar
+                val querySnapshot = firestore.collection("Urgencias")
+                    .whereEqualTo("id", urgenciaId)
+                    .get()
+                    .await()
 
-                // Eliminar la urgencia de la base de datos
-                docRef.delete()
-                    .addOnSuccessListener {
-                        val successMessage = "Urgencia eliminada correctamente"
-                        message.value = successMessage
-                        onSuccess(successMessage)
-                    }
-                    .addOnFailureListener { e ->
-                        val failureMessage = "Error al eliminar la urgencia: ${e.message}"
-                        message.value = failureMessage
-                        onFailure(failureMessage)
-                    }
+                if (querySnapshot.documents.isNotEmpty()) {
+                    val documentSnapshot = querySnapshot.documents[0]
+                    val docRef = documentSnapshot.reference
+
+                    // Eliminar la urgencia de la base de datos
+                    docRef.delete()
+                        .addOnSuccessListener {
+                            val successMessage = "Urgencia eliminada correctamente"
+                            message.value = successMessage
+                            onSuccess(successMessage)
+                        }
+                        .addOnFailureListener { e ->
+                            val failureMessage = "Error al eliminar la urgencia: ${e.message}"
+                            message.value = failureMessage
+                            onFailure(failureMessage)
+                        }
+                } else {
+                    message.value = "La urgencia con ID $urgenciaId no existe"
+                    onFailure(message.value)
+                }
             } catch (e: Exception) {
                 val exceptionMessage = "Hubo un fallo al intentar eliminar la urgencia: ${e.message}"
                 message.value = exceptionMessage
