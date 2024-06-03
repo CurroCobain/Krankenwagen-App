@@ -1,11 +1,11 @@
 {
   "name": "bienvenida",
-  "version": 32,
+  "version": 33,
   "source-key": {
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
     "node": "31:99",
-    "version": "5198619203",
+    "version": "5910277201",
     "component-id": "dcee1e9c80130582e5c7de401eea21c3577307f4"
   },
   "default": "Bienvenida",
@@ -26,7 +26,7 @@
         "rules": [
           {
             "id": "top_level",
-            "border-radius": "8.0",
+            "border-radius": 8.0,
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "shrink"
@@ -40,27 +40,27 @@
             "children": [
               "Bienvenido/a Dr. House"
             ],
-            "item-spacing": "10.0",
+            "item-spacing": 10.0,
             "background-color": {
-              "alpha": "1.0",
-              "hue": "111.81818181818181",
-              "saturation": "0.37606837606837606",
-              "value": "0.9176470588235294"
+              "alpha": 1.0,
+              "hue": 111.81818181818181,
+              "saturation": 0.37606837606837606,
+              "value": 0.9176470588235294
             }
           },
           {
             "id": "Bienvenido/a Dr. House",
             "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.125",
-              "value": "0.03137254901960784"
+              "alpha": 1.0,
+              "hue": 0.0,
+              "saturation": 0.125,
+              "value": 0.03137254901960784
             },
             "text-content": "$Bienvenido/a Dr. House text content",
             "overflow": "visible",
             "text-align-vertical": "center",
-            "text-size": "32.0",
-            "line-height": "1.2102272510528564",
+            "text-size": 32.0,
+            "line-height": 1.2102272510528564,
             "typeface": "Inter"
           }
         ]

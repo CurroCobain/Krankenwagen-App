@@ -1,11 +1,11 @@
 {
   "name": "sesion",
-  "version": 32,
+  "version": 33,
   "source-key": {
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
     "node": "54:155",
-    "version": "5198619203",
+    "version": "5910277201",
     "component-id": "9a485d3a42b028f331b7463aa70822895a1e7bc7"
   },
   "default": "Sesion",
@@ -27,10 +27,10 @@
           {
             "id": "top_level",
             "padding": {
-              "left": "10.0",
-              "top": "7.0",
-              "right": "10.0",
-              "bottom": "7.0"
+              "left": 10.0,
+              "top": 7.0,
+              "right": 10.0,
+              "bottom": 7.0
             },
             "tap-handler": "$on Sesion tapped",
             "size-constraints": {
@@ -47,19 +47,19 @@
             "children": [
               "Vector"
             ],
-            "item-spacing": "10.0",
-            "clip-content": "false"
+            "item-spacing": 10.0,
+            "clip-content": false
           },
           {
             "id": "Vector",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
-                "value": "60.0"
+                "value": 60.0
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
-                "value": "63.33333206176758"
+                "value": 63.33333206176758
               }
             },
             "vector-content": "vector.svg"
