@@ -75,12 +75,14 @@ fun CreateAmbulance(
     Dialog(
         onDismissRequest = { viewModel.acCreateAmb() }
     ) {
+        // Tarjeta para dar forma con esquinas redeondeadas a la ventana de diálogo
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.7f),
             shape = RoundedCornerShape(10.dp)
         ) {
+            // columna principal del diálogo
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -142,6 +144,7 @@ fun CreateAmbulance(
                             fontSize = 25.sp
                         )
                         Spacer(modifier = Modifier.padding(start = 8.dp))
+                        // Desplegable de los tipos de ambulancia
                         DropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
@@ -249,12 +252,14 @@ fun CreateHospital(
     Dialog(
         onDismissRequest = { viewModel.acCreateHosp() }
     ) {
+        // Tarjeta para dar forma con esquinas redeondeadas a la ventana de diálogo
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.7f),
             shape = RoundedCornerShape(10.dp)
         ) {
+            // Columna principal del diálogo
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -419,12 +424,14 @@ fun CreateUrgScreen(
         onDismissRequest = { viewModel.acCreateUrg() }
     ) {
         val message by urgenciesViewModel.message.collectAsState()
+        // Tarjeta para dar forma con esquinas redeondeadas a la ventana de diálogo
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.8f),
             shape = RoundedCornerShape(10.dp)
         ) {
+            // Columna principal del diálogo
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -439,6 +446,7 @@ fun CreateUrgScreen(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición de la prioridad
                     TextField(
                         value = priority.toString(),
                         onValueChange = { urgenciesViewModel.setPriority(it) },
@@ -446,6 +454,7 @@ fun CreateUrgScreen(
                         modifier = Modifier.weight(0.4f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición del documento de identidad
                     TextField(
                         value = doc,
                         onValueChange = { urgenciesViewModel.setDoc(it) },
@@ -460,6 +469,7 @@ fun CreateUrgScreen(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición del nombre
                     TextField(
                         value = name,
                         onValueChange = { urgenciesViewModel.setName(it) },
@@ -467,6 +477,7 @@ fun CreateUrgScreen(
                         modifier = Modifier.weight(1f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición de la edad
                     TextField(
                         value = age.toString(),
                         onValueChange = { urgenciesViewModel.setAge(it) },
@@ -482,6 +493,7 @@ fun CreateUrgScreen(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición del tipo de calle
                     TextField(
                         value = typeOfStreet,
                         onValueChange = { urgenciesViewModel.setTypeOfStreet(it) },
@@ -489,6 +501,7 @@ fun CreateUrgScreen(
                         modifier = Modifier.weight(0.4f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición del nombre de la calle
                     TextField(
                         value = streetName,
                         onValueChange = { urgenciesViewModel.setStreetName(it) },
@@ -503,6 +516,7 @@ fun CreateUrgScreen(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición del número de la calle
                     TextField(
                         value = streetNumber,
                         onValueChange = { urgenciesViewModel.setStreetNumber(it) },
@@ -510,6 +524,7 @@ fun CreateUrgScreen(
                         modifier = Modifier.weight(0.3f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición de la ciudad
                     TextField(
                         value = city,
                         onValueChange = { urgenciesViewModel.setCity(it) },
@@ -524,6 +539,7 @@ fun CreateUrgScreen(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición de la provincia
                     TextField(
                         value = province,
                         onValueChange = { urgenciesViewModel.setProvince(it) },
@@ -531,6 +547,7 @@ fun CreateUrgScreen(
                         modifier = Modifier.weight(0.5f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición del código postal
                     TextField(
                         value = postalCode,
                         onValueChange = { urgenciesViewModel.setPostalCode(it) },
@@ -544,6 +561,7 @@ fun CreateUrgScreen(
                         .fillMaxWidth()
                         .padding(4.dp)
                 ) {
+                    // Campo para la edición de la sintomatología del paciente
                     TextField(
                         value = issues,
                         onValueChange = { urgenciesViewModel.setIssues(it) },
@@ -552,12 +570,14 @@ fun CreateUrgScreen(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
+                // Botones
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)
                 ) {
+                    // Botón para crear una urgencia
                     Button(
                         onClick = {
                             urgenciesViewModel.setAddress()
@@ -580,6 +600,7 @@ fun CreateUrgScreen(
                         )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Botón para borrar los datos
                     Button(
                         onClick = { urgenciesViewModel.resetMiUrgencia() },
                         colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),

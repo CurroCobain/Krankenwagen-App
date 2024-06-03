@@ -15,10 +15,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -33,18 +31,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.R
-import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 
 /**
- * Composable que muestra un diálogo de sesión de usuario.
+ * Composable que muestra un menú de sesión.
  */
 @SuppressLint("RememberReturnType", "StateFlowValueCalledInComposition")
 @Composable
-fun DialogSesion(
-    viewModel: KrankenwagenViewModel,
+fun SesionMenu(
     sesionViewModel: SesionViewModel
 ) {
     // Variables para gestionar el registro y el inicio de sesión
@@ -57,21 +52,25 @@ fun DialogSesion(
 
     // Variable que almacena la respuesta del sistema
     val message by sesionViewModel.sesionMessage.collectAsState()
+    // Columna principal
     Column(
         Modifier
             .fillMaxWidth()
             .fillMaxHeight()
     )
-    {   // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
+    {
+        // Tarjeta principal que alberga las dos variantes registro e inicio de sesión
         // si la sesión no se ha iniciado aparece la opción de registrarse
         if (!initOrReg) {
             Box(modifier = Modifier.fillMaxSize()) {
+                // Banner de la app
                 Image(
                     painter = painterResource(id = R.drawable.bannersup),
                     contentDescription = "banner",
                     modifier = Modifier.fillMaxWidth()
                         .height(40.dp)
                 )
+                // Columna regsitro
                 Column(
                     modifier = Modifier
                         .padding(top = 40.dp)
@@ -206,12 +205,14 @@ fun DialogSesion(
         } else { // Si el usuario ya está registrado puede acceder a inicio de sesión
             Box(modifier = Modifier.fillMaxSize())
             {
+                // Banner de la app
                 Image(
                     painter = painterResource(id = R.drawable.bannersup),
                     contentDescription = "banner",
                     modifier = Modifier.fillMaxWidth()
                         .height(40.dp)
                 )
+                // Columna inicio de sesión
                 Column(
                     modifier = Modifier
                         .padding(top = 40.dp)

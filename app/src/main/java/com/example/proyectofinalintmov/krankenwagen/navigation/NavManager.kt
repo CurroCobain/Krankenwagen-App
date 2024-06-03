@@ -46,10 +46,15 @@ fun NavManager(
         composable(Routes.PantallaWelcome.route) {
             WelcomePage(navController, viewModel,userRegistered, sesionViewModel) }
         composable(Routes.PantallaAmbulances.route) {
-            Ambulances(navController, viewModel, userRegistered, sesionViewModel, ambulancesViewModel) }
+            Ambulances(navController, viewModel, sesionViewModel, ambulancesViewModel) }
         composable(Routes.PantallaHospitals.route) {
             Hospitals(navController, viewModel, userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
         composable(Routes.PantallaCreate.route) {
-            UrgencyScreen(navController, viewModel,userRegistered, sesionViewModel,ambulancesViewModel, hospitalViewModel, urgenciesViewModel) }
+            UrgencyScreen(
+                navController,
+                viewModel,
+                sesionViewModel,
+                urgenciesViewModel
+            ) }
     }
 }

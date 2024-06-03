@@ -2,6 +2,8 @@ package com.example.proyectofinalintmov.krankenwagen.screens
 
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -55,47 +56,56 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 /**
  * Composable que muestra la pantalla principal de las Ambulancias
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
 fun Ambulances(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
-    userRegistered: Boolean,
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel
 
 ) {
+    // Estado del menú lateral de navegación
     val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    // Estado del menú lateral de usuario
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    // Booleano que controla el estado del diálogo de creación de ambulancias
     val createAmb by viewModel.createAmb.collectAsState()
 
+    // Composable que sirve para generar el menú lateral de navegación en la app
     ModalNavigationDrawer(
         drawerState = drawerState1,
         drawerContent = {
+            //  Desplegable del menú lateral
             ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
+                // Contenido del menú lateral
                 NavigationMenu(navController, viewModel)
             }
         }
     ) {
+        // Invierte el contenido de la app para poder generar un segundo menú lateral en el lado contrario y que se despliegue de forma inversa
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
+            // Composable que sirve para generar el segundo menú lateral de navegación en la app
             ModalNavigationDrawer(
                 drawerState = drawerState2,
                 drawerContent = {
+                    // Contenido del segundo menú lateral
                     ModalDrawerSheet(
                         modifier = Modifier
                             .fillMaxWidth(0.3f)
                             .fillMaxHeight()
                     ) {
+                        // Invierte el contenido del menú de usuario para que aparezca de izquierda a derecha
                         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                            DialogSesion(viewModel = viewModel, sesionViewModel = sesionViewModel)
+                            SesionMenu(sesionViewModel = sesionViewModel)
                         }
                     }
                 }
             ) {
+                // Invierte el contenido de la app para que aparezca de izquierda a derecha
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                     PrevContAmb(
-                        navController,
-                        userRegistered,
                         viewModel,
                         sesionViewModel,
                         ambulancesViewModel,
@@ -109,19 +119,18 @@ fun Ambulances(
     }
 }
 
-
+/**
+ * Composable que muestra el contenido de la pantalla ambulancias y ayuda a conformar el menú inferior
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PrevContAmb(
-    navController: NavHostController,
-    userRegisterd: Boolean,
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
     ambulancesViewModel: AmbulancesViewModel,
     drawerState1: DrawerState,
     drawerState2: DrawerState,
     createAmb: Boolean
-    //miListaAmb: MutableList<Ambulance>
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
@@ -139,23 +148,22 @@ fun PrevContAmb(
     }, content = {
         // Contenido del Scaffold
         ContenidoAmbulances(
-            userDesplegado = userRegisterd,
             viewModel = viewModel,
-            sesionViewModel = sesionViewModel,
             ambulancesViewModel = ambulancesViewModel,
-            //miListaAmb = miListaAmb
         )
+        // Si cambia el valor de "createAmb" a true, muestra el diálogo de creación de ambulancias
         if(createAmb){
             CreateAmbulance(ambulancesViewModel, viewModel)
         }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel, drawerState1 = drawerState1, drawerState2 = drawerState2)
+        BarraMenu(drawerState1 = drawerState1, drawerState2 = drawerState2)
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp)
             ){
+            // Botón para desplegar el diálogo de creación de ambulancias
             Button(onClick = { viewModel.acCreateAmb() },
                 colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                 shape = RoundedCornerShape(
@@ -179,14 +187,9 @@ fun PrevContAmb(
  */
 @Composable
 fun ContenidoAmbulances(
-    userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
     ambulancesViewModel: AmbulancesViewModel,
-    sesionViewModel: SesionViewModel,
-    //miListaAmb: MutableList<Ambulance>
 ) {
-
-    val context = LocalContext.current
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -224,11 +227,12 @@ fun LazyAmbulance(
     ambulancesViewModel: AmbulancesViewModel,
     arrangement: Arrangement.HorizontalOrVertical,
     modifier: Modifier,
-    //miListaAmb: MutableList<Ambulance>
 ) {
     // variable que se usa para desplegar el mnú de edición de las ambulancias
     val editar by viewModel.editAmb.collectAsState()
+    // listado de ambulancias
     val miListaAmb by viewModel.listAmbulancias.collectAsState()
+    // LazyVerticalGrid que muestra las ambulancias
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp)

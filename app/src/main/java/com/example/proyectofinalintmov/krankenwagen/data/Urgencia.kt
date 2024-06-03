@@ -1,24 +1,23 @@
 package com.example.proyectofinalintmov.krankenwagen.data
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.DocumentSnapshot
 import java.sql.Timestamp
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 /**
  * Clase "Urgencia", que almacena la información de la emergencia para transmitirla al
  * servicio de emergencias
+ * @property id: identificador único de la urgencia
  * @property name: nombre y apellidos del paciente
  * @property doc: documento de identidad del usuario
  * @property age: edad del usuario
  * @property priority: indica el nivel de prioridad de la emergencia
+ * @property address: dirección en formato texto de la urgencia
  * @property location: localización del usuario
  * @property date: fecha de la urgencia
  * @property issues: descripción de la urgencia
+ * @property ambulance: ambulancia que está gestionando la urgencia
+ * @property complete: estado actual de la urgencia
  */
 data class Urgencia(
     var id: String,
@@ -36,6 +35,11 @@ data class Urgencia(
 
 
     companion object {
+        /**
+         * Función para deserializar un objeto Urgencia desde Firestore
+         * @param documentSnapshot El documento Firestore que contiene los datos de la urgencia
+         * @return Una instancia de Urgencia deserializada desde Firestore
+         */
         @SuppressLint("NewApi")
         fun fromDocumentSnapshot(documentSnapshot: DocumentSnapshot): Urgencia {
             val id = documentSnapshot.getString("id") ?: ""
@@ -75,6 +79,9 @@ data class Urgencia(
         false
     )
 
+    /**
+     * Función que devuelve los datos de la urgencia en formato String
+     */
     override fun toString(): String {
         return "${this.id} // Prioridad--> ${this.priority} Nombre--> ${this.name} Edad--> ${this.age} \n \n Dirección--> ${this.address}"
     }

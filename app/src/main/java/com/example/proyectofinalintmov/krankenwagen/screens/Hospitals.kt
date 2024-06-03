@@ -1,7 +1,8 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
-import android.widget.Toast
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -46,19 +47,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.proyectofinalintmov.R
-import com.example.proyectofinalintmov.barralateral.BarraLateral
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
-import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
@@ -67,6 +64,7 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 /**
  * Scaffold que alberga la página de hospitales
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "StateFlowValueCalledInComposition")
 @Composable
 fun Hospitals(
@@ -79,36 +77,46 @@ fun Hospitals(
     editHosp: Boolean,
     editAmb: Boolean
 ) {
+    // Estado del menú lateral de navegación
     val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    // Estado del menú lateral de usuario
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    // Booleano que controla el estado del diálogo de creación de hospitales
     val createHosp by viewModel.createHosp.collectAsState()
 
+    // Composable que sirve para generar el menú lateral de navegación en la app
     ModalNavigationDrawer(
         drawerState = drawerState1,
         drawerContent = {
+            //  Desplegable del menú lateral
             ModalDrawerSheet( modifier = Modifier.fillMaxWidth(0.3f)) {
+                // Contenido del menú lateral
                 NavigationMenu(navController, viewModel)
             }
         }
     ) {
+        // Invierte el contenido de la app para poder generar un segundo menú lateral en el lado contrario y que se despliegue de forma inversa
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ){
+            // Composable que sirve para generar el segundo menú lateral de navegación en la app
             ModalNavigationDrawer(
                 drawerState = drawerState2,
                 drawerContent = {
+                    // Contenido del segundo menú lateral
                     ModalDrawerSheet(
                         modifier = Modifier
                             .fillMaxWidth(0.3f)
                             .fillMaxHeight()
                     ) {
+                        // Invierte el contenido del menú de usuario para que aparezca de izquierda a derecha
                         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ){
-                            DialogSesion(viewModel = viewModel, sesionViewModel = sesionViewModel)
+                            SesionMenu(sesionViewModel = sesionViewModel)
                         }
                     }
                 }
             ) {
+                // Invierte el contenido de la app para que aparezca de izquierda a derecha
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
                     PrevContHosp(
-                        navController,
                         userRegistered,
                         viewModel,
                         sesionViewModel,
@@ -126,10 +134,12 @@ fun Hospitals(
     }
 }
 
+/**
+ * Composable que muestra el contenido de la pantalla hospitales y ayuda a conformar el menú inferior
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PrevContHosp(
-    navController: NavHostController,
     userRegistered: Boolean,
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
@@ -158,26 +168,25 @@ fun PrevContHosp(
     }, content = {
         // Contenido del Scaffold
         ContenidoHospitals(
-            navController = navController,
-            userDesplegado = userRegistered,
             viewModel = viewModel,
-            sesionViewModel = sesionViewModel,
             hospitalViewModel = hospitalViewModel,
-            editHosp = editHosp,
             ambulancesViewModel = ambulancesViewModel,
+            editHosp = editHosp,
             editAmb = editAmb
         )
+        // Si cambia el valor de "createHosp" a true, muestra el diálogo de creación de hospitales
         if(createHosp){
             CreateHospital(hospitalViewModel, viewModel)
         }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel = viewModel, drawerState1 = drawerState1, drawerState2 = drawerState2)
+        BarraMenu(drawerState1 = drawerState1, drawerState2 = drawerState2)
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp)
         ){
+            // Botón para desplegar el diálogo de creación de hospitales
             Button(onClick = { viewModel.acCreateHosp() },
                 colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
                 shape = RoundedCornerShape(
@@ -201,16 +210,12 @@ fun PrevContHosp(
  */
 @Composable
 fun ContenidoHospitals(
-    navController: NavHostController,
-    userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
-    sesionViewModel: SesionViewModel,
     hospitalViewModel: HospitalViewModel,
     ambulancesViewModel: AmbulancesViewModel,
     editHosp: Boolean,
     editAmb: Boolean,
 ) {
-    val context = LocalContext.current
     // Variable que se usa para gestionar el estado del dropDownMenu de selección de provincia
     var expanded by remember { mutableStateOf(false) }
     // Lista que almacena los nombres de las provincias para mostrarlos en el dropDownMenu, sólo se usa aquí
@@ -233,6 +238,7 @@ fun ContenidoHospitals(
             modifier = Modifier.fillMaxSize()
         )
         {
+            // Filtro de provincias
             Row(modifier = Modifier.padding(start = 60.dp, top = 100.dp)) {
                 Box(
                     modifier = Modifier
@@ -299,7 +305,6 @@ fun ContenidoHospitals(
         }
         // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
         when {
-            userDesplegado -> DialogSesion(viewModel, sesionViewModel)
             editHosp -> EditarHosp(viewModel, hospitalViewModel, ambulancesViewModel)
             editAmb -> EditarAmb(viewModel, ambulancesViewModel)
         }

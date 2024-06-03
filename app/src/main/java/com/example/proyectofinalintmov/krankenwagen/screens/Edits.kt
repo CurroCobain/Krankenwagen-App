@@ -88,6 +88,7 @@ fun EditarHosp(
             hospitalViewModel.resetFields()
         }
     ) {
+        // Tarjeta paradar forma con las esquinas redondeadas al diálogo
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -301,6 +302,7 @@ fun EditarHosp(
                     }
                     Spacer(modifier = Modifier.padding(8.dp))
                     Row(horizontalArrangement = Arrangement.Center) {
+                        // Mensaje del sistema
                         Text(
                             text = message,
                             fontStyle = FontStyle.Italic,
@@ -333,6 +335,7 @@ fun EditarHosp(
                             LazyColumn {
                                 items(listAmbs) { ambulance ->
                                     Button(
+                                        // Al clickar sobre cada botón nos abre el diálogo de edición de la ambulancia correspondiente
                                         onClick = {
                                             try {
                                                 ambulancesViewModel.asignAmbFields(ambulance)
@@ -402,12 +405,14 @@ fun EditarAmb(
             ambulancesViewModel.resetFields()
         },
     ) {
+        // Tarjeta para dar forma con las esquinas redondeadas al diálogo
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.8f),
             shape = RoundedCornerShape(10.dp)
         ) {
+            // Columna principal
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -456,6 +461,7 @@ fun EditarAmb(
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.width(8.dp))
+                    // Permite modificar la disponibilidad de la ambulancia mediante un switch
                     Switch(
                         checked = isFree,
                         onCheckedChange = { newValue ->
@@ -617,6 +623,9 @@ fun EditarAmb(
     }
 }
 
+/**
+ * Composable para la edición de urgencias
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun EditUrg(
@@ -640,13 +649,14 @@ fun EditUrg(
     Dialog(
         onDismissRequest = { viewModel.activaEditUrg() }
     ) {
-        val message by urgenciesViewModel.message.collectAsState()
+        // Tarjeta para dar forma con las esquinas redondeadas al diálogo
         Card(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.8f),
             shape = RoundedCornerShape(10.dp)
         ) {
+            // Columna principal
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -661,6 +671,7 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición de la prioridad
                     TextField(
                         value = priority.toString(),
                         onValueChange = { urgenciesViewModel.setPriority(it) },
@@ -668,6 +679,7 @@ fun EditUrg(
                         modifier = Modifier.weight(0.4f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición del documento de identidad
                     TextField(
                         value = doc,
                         onValueChange = { urgenciesViewModel.setDoc(it) },
@@ -682,6 +694,7 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición del nombre
                     TextField(
                         value = name,
                         onValueChange = { urgenciesViewModel.setName(it) },
@@ -689,6 +702,7 @@ fun EditUrg(
                         modifier = Modifier.weight(1f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición de la edad
                     TextField(
                         value = age.toString(),
                         onValueChange = { urgenciesViewModel.setAge(it) },
@@ -704,6 +718,7 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición del tipo de calle
                     TextField(
                         value = typeOfStreet,
                         onValueChange = { urgenciesViewModel.setTypeOfStreet(it) },
@@ -711,6 +726,7 @@ fun EditUrg(
                         modifier = Modifier.weight(0.4f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición del nombre de la calle
                     TextField(
                         value = streetName,
                         onValueChange = { urgenciesViewModel.setStreetName(it) },
@@ -725,6 +741,7 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición del número de la calle
                     TextField(
                         value = streetNumber,
                         onValueChange = { urgenciesViewModel.setStreetNumber(it) },
@@ -732,6 +749,7 @@ fun EditUrg(
                         modifier = Modifier.weight(0.3f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición de la ciudad
                     TextField(
                         value = city,
                         onValueChange = { urgenciesViewModel.setCity(it) },
@@ -746,6 +764,7 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    // Campo para la edición de la provincia
                     TextField(
                         value = province,
                         onValueChange = { urgenciesViewModel.setProvince(it) },
@@ -753,6 +772,7 @@ fun EditUrg(
                         modifier = Modifier.weight(0.5f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Campo para la edición del código postal
                     TextField(
                         value = postalCode,
                         onValueChange = { urgenciesViewModel.setPostalCode(it) },
@@ -766,6 +786,7 @@ fun EditUrg(
                         .fillMaxWidth()
                         .padding(4.dp)
                 ) {
+                    // Campo para la edición de la sintomatología del paciente
                     TextField(
                         value = issues,
                         onValueChange = { urgenciesViewModel.setIssues(it) },
@@ -774,12 +795,14 @@ fun EditUrg(
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
+                // Botones
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)
                 ) {
+                    // Botón para actualizar al urgencia
                     Button(
                         onClick = {
                             urgenciesViewModel.setAddress()
@@ -803,6 +826,7 @@ fun EditUrg(
                         )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
+                    // Botón para eliminar la urgencia
                     Button(
                         onClick = {
                             urgenciesViewModel.deleteUrgency(

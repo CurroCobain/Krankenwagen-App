@@ -1,7 +1,9 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -10,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DrawerState
@@ -46,6 +47,7 @@ import com.example.proyectofinalintmov.scrollprovincias.ScrollProvincias
 /**
  * Scaffold que alberga la página de bienvenida
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint(
     "RememberReturnType", "UnusedMaterial3ScaffoldPaddingParameter",
     "StateFlowValueCalledInComposition"
@@ -57,32 +59,42 @@ fun WelcomePage(
     userRegistered: Boolean,
     sesionViewModel: SesionViewModel
 ) {
+    // Estado del menú lateral de navegación
     val drawerState1 = rememberDrawerState(initialValue = DrawerValue.Closed)
+    // Estado del menú lateral de usuario
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
 
+    // Composable que sirve para generar el menú lateral de navegación en la app
     ModalNavigationDrawer(
         drawerState = drawerState1,
         drawerContent = {
+            //  Desplegable del menú lateral
             ModalDrawerSheet( modifier = Modifier.fillMaxWidth(0.3f)) {
+                // Contenido del menú lateral
                 NavigationMenu(navController, viewModel)
             }
         }
     ) {
+        // Invierte el contenido de la app para poder generar un segundo menú lateral en el lado contrario y que se despliegue de forma inversa
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl ){
+            // Composable que sirve para generar el segundo menú lateral de navegación en la app
             ModalNavigationDrawer(
                 drawerState = drawerState2,
                 drawerContent = {
+                    // Contenido del segundo menú lateral
                     ModalDrawerSheet(
                         modifier = Modifier
                             .fillMaxWidth(0.3f)
                             .fillMaxHeight()
                     ) {
+                        // Invierte el contenido del menú de usuario para que aparezca de izquierda a derecha
                         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ){
-                            DialogSesion(viewModel = viewModel, sesionViewModel = sesionViewModel)
+                            SesionMenu(sesionViewModel = sesionViewModel)
                         }
                     }
                 }
             ) {
+                // Invierte el contenido de la app para que aparezca de izquierda a derecha
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
                     PrevContWelc(
                         navController,
@@ -98,9 +110,9 @@ fun WelcomePage(
     }
 }
 
-
-
-
+/**
+ * Composable que muestra el contenido de la pantalla de bienvenida y ayuda a conformar el menú inferior
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PrevContWelc(
@@ -135,7 +147,7 @@ fun PrevContWelc(
         )
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
-        BarraMenu(viewModel, drawerState1, drawerState2)
+        BarraMenu(drawerState1, drawerState2)
     })
 }
 
@@ -293,20 +305,5 @@ fun ContenidoWelcome(
                 }
             )
         }
-        // Cuando se modifica alguna de las variables que lo gestionan se muestran los distintos menús
-        if (userDesplegado){
-            // Si se pulsa sobre usuario se abre el diálogo correspondiente
-            DialogSesion(viewModel, sesionViewModel)
-        }
     }
-}
-
-
-@Preview
-@Composable
-fun WelcomePagePreview() {
-    val navController = rememberNavController()
-    val viewModel = KrankenwagenViewModel()
-    val sesionViewModel = SesionViewModel()
-    WelcomePage(navController, viewModel, false, sesionViewModel)
 }

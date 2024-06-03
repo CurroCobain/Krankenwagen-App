@@ -13,6 +13,7 @@ enum class AmbulanceTypes { doctor, nurse, driver }
  * @property free indica si la ambulancia está disponible
  * @property types indica de que tipo es la ambulancia
  * @property hospital indica el hospital de referencia
+ * @property ambLocation indica la localización actual de la ambulancia
  */
 data class Ambulance(
     val id: String,

@@ -9,16 +9,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.iconmenu.IconMenu
@@ -43,18 +38,23 @@ import com.example.proyectofinalintmov.sesion.Sesion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * Composable que crea el menú lateral de navegación de la app
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationMenu(
     navController: NavController,
     viewModel: KrankenwagenViewModel
 ) {
+    // Variables para los efectos de color de las distintas opciones del menú
     var row1Color by remember { mutableStateOf(Color.Transparent) }
     var row2Color by remember { mutableStateOf(Color.Transparent) }
     var row3Color by remember { mutableStateOf(Color.Transparent) }
     var row4Color by remember { mutableStateOf(Color.Transparent) }
     Box(modifier = Modifier.fillMaxSize())
     {
+        // Banner de la app
         Image(
             painter = painterResource(id = R.drawable.bannersup),
             contentDescription = "banner",
@@ -85,6 +85,7 @@ fun NavigationMenu(
                     })
             {
                 Spacer(modifier = Modifier.padding(start = 40.dp))
+                // Icono de inicio
                 Image(
                     modifier = Modifier
                         .width(60.dp)
@@ -116,6 +117,7 @@ fun NavigationMenu(
                     })
             {
                 Spacer(modifier = Modifier.padding(start = 40.dp))
+                // Icono de hospitales
                 Image(
                     modifier = Modifier
                         .width(60.dp)
@@ -149,6 +151,7 @@ fun NavigationMenu(
                     })
             {
                 Spacer(modifier = Modifier.padding(start = 40.dp))
+                // Icono de ambulancias
                 Image(
                     modifier = Modifier
                         .width(60.dp)
@@ -182,6 +185,7 @@ fun NavigationMenu(
                     })
             {
                 Spacer(modifier = Modifier.padding(start = 40.dp))
+                // Icono de urgencias
                 Image(
                     modifier = Modifier
                         .width(60.dp)
@@ -220,7 +224,6 @@ fun RowColorEffect(color: Color, onColorChange: (Color) -> Unit) {
  */
 @Composable
 fun BarraMenu(
-    viewModel: KrankenwagenViewModel,
     drawerState1: DrawerState,
     drawerState2: DrawerState
 ) {
