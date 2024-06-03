@@ -262,7 +262,7 @@ fun SesionMenu(
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     sesionViewModel.setMessage("")
-                                }
+                                  }
                             },
                             colors = ButtonDefaults.buttonColors(Color.LightGray)
                         )

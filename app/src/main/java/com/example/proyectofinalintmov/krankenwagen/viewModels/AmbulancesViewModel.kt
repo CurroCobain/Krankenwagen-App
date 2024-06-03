@@ -287,6 +287,4 @@ class AmbulancesViewModel : ViewModel() {
         type.value = ambulance.types
         hosp.value = ambulance.hospital
     }
-
-
 }
