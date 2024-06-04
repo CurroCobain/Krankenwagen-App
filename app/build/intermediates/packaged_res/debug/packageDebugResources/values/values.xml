@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">ProyectoFinalIntMov</string>
+    <string name="bienvenido">Bienvenido Dr House</string>
+    <string name="bienvenido_dr_house">Bienvenido Dr House</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="gcm_defaultSenderId" translatable="false">343736859964</string>
+    <string name="google_api_key" translatable="false">AIzaSyCjj8IC_-PFRsQHUMIXqmNqEHxxRZ87MF8</string>
+    <string name="google_app_id" translatable="false">1:343736859964:android:1db4eabf042398539bf239</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCjj8IC_-PFRsQHUMIXqmNqEHxxRZ87MF8</string>
+    <string name="google_storage_bucket" translatable="false">finalintmovil.appspot.com</string>
+    <string name="iniciar_sesi_n">Iniciar sesión</string>
+    <string name="project_id" translatable="false">finalintmovil</string>
+    <string name="welcome">Welcome Dr House</string>
+    <style name="Theme.ProyectoFinalIntMov" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>
