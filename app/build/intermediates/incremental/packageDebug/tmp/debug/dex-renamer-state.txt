@@ -1,19 +1,19 @@
-#Sun Jun 02 18:52:18 CEST 2024
-base.0=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.10=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
-base.11=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
-base.12=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
-base.13=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
-base.14=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
-base.2=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
-base.3=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.4=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
-base.5=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
-base.6=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
-base.7=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
-base.8=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
-base.9=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\FinalInterfacesMovil\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
+#Tue Jun 04 19:19:08 CEST 2024
+base.0=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.10=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
+base.11=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
+base.12=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
+base.13=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.14=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
+base.2=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
+base.3=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
+base.4=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.5=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
+base.6=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
+base.7=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
+base.8=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
+base.9=C\:\\Users\\Cobain\\Documents\\Programacion\\Proyectos\\KrankenwagenApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.10=7/classes.dex

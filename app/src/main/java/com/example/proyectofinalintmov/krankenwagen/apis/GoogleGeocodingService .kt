@@ -5,13 +5,10 @@ import com.example.proyectofinalintmov.krankenwagen.data.GeocodingResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * Interfaz para el servicio de geolocalización
- */
-interface GeocodingService {
-    @GET("search")
+interface GoogleGeocodingService {
+    @GET("geocode/json")
     suspend fun getCoordinates(
-        @Query("format") format: String,
-        @Query("q") address: String
-    ): List<GeocodingResponse>
+        @Query("address") address: String,
+        @Query("key") apiKey: String
+    ): GeocodingResponse
 }

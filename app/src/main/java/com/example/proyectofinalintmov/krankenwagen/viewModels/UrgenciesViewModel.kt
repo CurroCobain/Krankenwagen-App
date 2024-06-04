@@ -4,11 +4,12 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.proyectofinalintmov.krankenwagen.apis.GeocodingService
+import com.example.proyectofinalintmov.krankenwagen.apis.GoogleGeocodingService
+import com.example.proyectofinalintmov.krankenwagen.data.GeocodingResponse
 import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
-import kotlinx.coroutines.flow.MutableStateFlow
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.Retrofit
@@ -41,11 +42,14 @@ class UrgenciesViewModel : ViewModel() {
     val postalCode = MutableStateFlow("")
     private val firestore = Firebase.firestore
 
-    // URL base del servicio de geocodificación
-    private val BASE_URL = "https://nominatim.openstreetmap.org/"
+    // URL base del servicio de geocodificación de Google
+    private val BASE_URL = "https://maps.googleapis.com/maps/api/"
+
+    // Clave API de Google Maps
+    private val API_KEY = "AIzaSyDPyoQIrr78e7sUzqWcUUFsC0GBLlSNzBc"
 
     // Servicio de geocodificación
-    private val geocodingService: GeocodingService
+    private val geocodingService: GoogleGeocodingService
 
     init {
         // Configurar Retrofit
@@ -55,7 +59,7 @@ class UrgenciesViewModel : ViewModel() {
             .build()
 
         // Crear instancia del servicio de geocodificación
-        geocodingService = retrofit.create(GeocodingService::class.java)
+        geocodingService = retrofit.create(GoogleGeocodingService::class.java)
     }
 
     // Función para obtener las coordenadas a partir de una dirección
@@ -63,13 +67,13 @@ class UrgenciesViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 // Llamar al método de servicio para obtener las coordenadas
-                val response = geocodingService.getCoordinates("json", address)
+                val response: GeocodingResponse = geocodingService.getCoordinates(address, API_KEY)
 
                 // Procesar la respuesta
-                if (response.isNotEmpty()) {
-                    val firstResult = response.first() // Tomar el primer resultado
-                    latitude.value = firstResult.lat
-                    longitude.value = firstResult.lon
+                if (response.results.isNotEmpty()) {
+                    val location = response.results.first().geometry.location
+                    latitude.value = location.lat
+                    longitude.value = location.lng
                     onSuccess()
                 } else {
                     message.value = "Respuesta vacía"
@@ -80,6 +84,7 @@ class UrgenciesViewModel : ViewModel() {
             }
         }
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

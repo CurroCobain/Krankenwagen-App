@@ -1,10 +1,22 @@
 package com.example.proyectofinalintmov.krankenwagen.data
 
-/**
- * Clase que representa la respuesta tipo del servicio de geolocaliazión
- */
+import com.google.gson.annotations.SerializedName
+
 data class GeocodingResponse(
-    val lat: Double,
-    val lon: Double
+    @SerializedName("results") val results: List<GeocodingResult>
 )
+
+data class GeocodingResult(
+    @SerializedName("geometry") val geometry: Geometry
+)
+
+data class Geometry(
+    @SerializedName("location") val location: Location
+)
+
+data class Location(
+    @SerializedName("lat") val lat: Double,
+    @SerializedName("lng") val lng: Double
+)
+
 
