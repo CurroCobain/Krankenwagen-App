@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
     "node": "31:99",
-    "version": "5910277201",
+    "version": "5940045180",
     "component-id": "dcee1e9c80130582e5c7de401eea21c3577307f4"
   },
   "default": "Bienvenida",
@@ -29,7 +29,8 @@
             "border-radius": 8.0,
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "shrink"
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "shrink"
@@ -43,9 +44,9 @@
             "item-spacing": 10.0,
             "background-color": {
               "alpha": 1.0,
-              "hue": 111.81818181818181,
-              "saturation": 0.37606837606837606,
-              "value": 0.9176470588235294
+              "hue": 241.13207547169813,
+              "saturation": 0.40151515151515155,
+              "value": 0.5176470588235295
             }
           },
           {
@@ -53,8 +54,8 @@
             "color": {
               "alpha": 1.0,
               "hue": 0.0,
-              "saturation": 0.125,
-              "value": 0.03137254901960784
+              "saturation": 0.0,
+              "value": 1.0
             },
             "text-content": "$Bienvenido/a Dr. House text content",
             "overflow": "visible",
@@ -78,7 +79,7 @@
     {
       "design": "Bienvenida",
       "size": {
-        "width": 353.0,
+        "width": 400.0,
         "height": 39.0
       },
       "parameters": {

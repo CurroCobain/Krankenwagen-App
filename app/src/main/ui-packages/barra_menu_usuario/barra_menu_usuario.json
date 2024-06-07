@@ -1,11 +1,11 @@
 {
   "name": "barra_menu_usuario",
-  "version": 32,
+  "version": 33,
   "source-key": {
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
     "node": "70:105",
-    "version": "5197156221",
+    "version": "5939787176",
     "component-id": "e2dec6fdd021c8ee2b538b6521e87e3a9a367cdb"
   },
   "default": "BarraMenuUsuario",
@@ -44,10 +44,10 @@
           {
             "id": "top_level",
             "padding": {
-              "left": "56.0",
-              "top": "12.0",
-              "right": "56.0",
-              "bottom": "12.0"
+              "left": 56.0,
+              "top": 12.0,
+              "right": 56.0,
+              "bottom": 12.0
             },
             "size-constraints": {
               "width-constraints": {
@@ -63,29 +63,27 @@
               "menu",
               "Sesion"
             ],
-            "item-spacing": "778.0"
+            "item-spacing": 778.0
           },
           {
             "id": "menu",
-            "tap-handler": "$on menu tapped",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
-                "value": "80.0"
+                "value": 80.0
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
-                "value": "80.0"
+                "value": 80.0
               }
             },
-            "is-structured": "false",
+            "is-structured": false,
             "children": [
               "Group"
             ]
           },
           {
             "id": "Sesion",
-            "tap-handler": "$on Sesion tapped",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "shrink"
@@ -97,60 +95,48 @@
           },
           {
             "id": "Group",
-            "is-structured": "false",
+            "is-structured": false,
             "children": [
               "Vector",
               "rayas"
             ],
-            "clip-content": "false"
+            "clip-content": false
           },
           {
             "id": "Vector",
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               }
             }
           },
           {
             "id": "rayas",
             "margin": {
-              "left": "8.333328247070312",
-              "top": "11.66668701171875",
-              "right": "8.33333969116211",
-              "bottom": "11.666645050048828"
+              "left": 8.3333740234375,
+              "top": 11.666748046875,
+              "right": 8.333293914794922,
+              "bottom": 11.666584014892578
             },
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               }
             },
             "vector-content": "rayas.svg"
           }
         ]
       }
-    }
-  },
-  "parameters": {
-    "on menu tapped": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
-    },
-    "on Sesion tapped": {
-      "data-type": "void-callback",
-      "required": false,
-      "description": ""
     }
   },
   "previews": [

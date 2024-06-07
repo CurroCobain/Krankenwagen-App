@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
@@ -158,11 +159,15 @@ fun PrevContHosp(
     // Scaffold que compone la pantalla
     Scaffold(topBar = {
         Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            // Mensaje de bienvenida al Dr, se muestra el nombre una vez iniciada la sesión
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg",
+                modifier = Modifier.wrapContentSize()
+                    .fillMaxWidth(0.35f)
+                    .padding(8.dp)
             )
         }
     }, content = {
@@ -188,7 +193,16 @@ fun PrevContHosp(
         ){
             // Botón para desplegar el diálogo de creación de hospitales
             Button(onClick = { viewModel.acCreateHosp() },
-                colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                colors = ButtonDefaults.buttonColors(Color.White),
+                modifier = Modifier.border(
+                    width = 4.dp, color = Color.Black,
+                    shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    )
+                ),
                 shape = RoundedCornerShape(
                     topStart = 8.dp,
                     topEnd = 8.dp,
@@ -198,7 +212,8 @@ fun PrevContHosp(
             ) {
                 Text(text = "Crear hospital",
                     fontWeight = FontWeight.ExtraBold,
-                    fontSize = 30.sp
+                    fontSize = 30.sp,
+                    color = Color.Black
                 )
             }
         }
@@ -228,7 +243,7 @@ fun ContenidoHospitals(
     ) {
         // Fondo de la pantalla
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.newfondo),
             contentScale = ContentScale.FillWidth,
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()

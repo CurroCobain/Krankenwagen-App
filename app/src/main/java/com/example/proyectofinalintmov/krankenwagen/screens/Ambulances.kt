@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -138,11 +140,16 @@ fun PrevContAmb(
     // Scaffold que compone la pantalla
     Scaffold(topBar = {
         Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            // Mensaje de bienvenida al Dr, se muestra el nombre una vez iniciada la sesión
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg",
+                modifier = Modifier
+                    .wrapContentSize()
+                    .fillMaxWidth(0.35f)
+                    .padding(8.dp)
             )
         }
     }, content = {
@@ -152,31 +159,44 @@ fun PrevContAmb(
             ambulancesViewModel = ambulancesViewModel,
         )
         // Si cambia el valor de "createAmb" a true, muestra el diálogo de creación de ambulancias
-        if(createAmb){
+        if (createAmb) {
             CreateAmbulance(ambulancesViewModel, viewModel)
         }
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(drawerState1 = drawerState1, drawerState2 = drawerState2)
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp)
-            ){
+        ) {
             // Botón para desplegar el diálogo de creación de ambulancias
-            Button(onClick = { viewModel.acCreateAmb() },
-                colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+            Button(
+                onClick = { viewModel.acCreateAmb() },
+                colors = ButtonDefaults.buttonColors(Color.White),
+                modifier = Modifier.border(
+                    width = 4.dp, color = Color.Black,
+                    shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    )
+                ),
                 shape = RoundedCornerShape(
                     topStart = 8.dp,
                     topEnd = 8.dp,
                     bottomStart = 8.dp,
                     bottomEnd = 8.dp
                 )
-                ) {
-                Text(text = "Crear ambulancia",
+            ) {
+                Text(
+                    text = "Crear ambulancia",
                     fontWeight = FontWeight.ExtraBold,
-                    fontSize = 30.sp
-                    )
+                    fontSize = 30.sp,
+                    color = Color.Black
+                )
             }
         }
     })
@@ -195,7 +215,7 @@ fun ContenidoAmbulances(
     ) {
         // Fondo de la pantalla
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.newfondo),
             contentScale = ContentScale.FillWidth,
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()

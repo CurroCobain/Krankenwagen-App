@@ -1,14 +1,14 @@
 {
   "name": "menu",
-  "version": 32,
+  "version": 33,
   "source-key": {
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
-    "node": "12:890",
-    "version": "5190186219",
-    "component-id": "e52be53d2459e19dc5177e3415a8cb9b79c396b6"
+    "node": "99:794",
+    "version": "5939825451",
+    "component-id": "776a5d51bd9194dea7837ea0e751aa2f476bca16"
   },
-  "default": "Menu",
+  "default": "menu",
   "design": {
     "atoms": [
       {
@@ -18,90 +18,76 @@
       },
       {
         "type": "group",
-        "id": "top_level_synth"
+        "id": "Group"
       },
       {
         "type": "vector",
-        "id": "b"
+        "id": "Vector"
       },
       {
         "type": "vector",
-        "id": "a"
+        "id": "rayas"
       }
     ],
     "modes": {
-      "Menu": {
+      "menu": {
         "rules": [
           {
             "id": "top_level",
-            "tap-handler": "$on Menu tapped",
-            "is-structured": "false",
+            "tap-handler": "$on menu tapped",
+            "is-structured": false,
             "children": [
-              "top_level_synth",
-              "b"
-            ],
-            "clip-content": "false"
+              "Group"
+            ]
           },
           {
-            "id": "top_level_synth",
-            "opacity": "100.0",
+            "id": "Group",
+            "is-structured": false,
+            "children": [
+              "Vector",
+              "rayas"
+            ],
+            "clip-content": false
+          },
+          {
+            "id": "Vector",
             "size-constraints": {
               "width-constraints": {
-                "sizing-mode": "shrink"
+                "sizing-mode": "proportional",
+                "value": 1.0
               },
               "height-constraints": {
-                "sizing-mode": "shrink"
+                "sizing-mode": "proportional",
+                "value": 1.0
               }
-            },
-            "arrangement": "row",
-            "main-axis-align": "end",
-            "cross-axis-align": "start",
-            "children": [
-              "a"
-            ],
-            "item-spacing": "10.0",
-            "clip-content": "false"
+            }
           },
           {
-            "id": "b",
+            "id": "rayas",
             "margin": {
-              "left": "20.0",
-              "top": "19.9320068359375",
-              "right": "20.0",
-              "bottom": "19.931991577148438"
+              "left": 8.333343505859375,
+              "top": 11.66668701171875,
+              "right": 8.333324432373047,
+              "bottom": 11.666645050048828
             },
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               }
             },
-            "vector-content": "b.svg"
-          },
-          {
-            "id": "a",
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "80.0"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "80.0"
-              }
-            },
-            "vector-content": "a.svg"
+            "vector-content": "rayas.svg"
           }
         ]
       }
     }
   },
   "parameters": {
-    "on Menu tapped": {
+    "on menu tapped": {
       "data-type": "void-callback",
       "required": false,
       "description": ""
@@ -109,7 +95,7 @@
   },
   "previews": [
     {
-      "design": "Menu",
+      "design": "menu",
       "size": {
         "width": 80.0,
         "height": 80.0

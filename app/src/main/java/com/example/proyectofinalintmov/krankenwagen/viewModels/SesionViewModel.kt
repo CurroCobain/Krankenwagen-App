@@ -177,12 +177,13 @@ class SesionViewModel : ViewModel() {
     /**
      * Cierra la sesión del usuario actual
      */
-    fun cerrarSesion() {
+    fun cerrarSesion(onSuccess: () -> Unit) {
         auth.signOut()
         nombreDoc.value = ""
         nuevoMail.value = ""
         nuevoPass.value = ""
         sesionMessage.value = ""
+        onSuccess()
     }
 
     /**
@@ -190,6 +191,13 @@ class SesionViewModel : ViewModel() {
      */
     fun setMessage(text: String) {
         sesionMessage.value = text
+    }
+
+    fun borrarTodo(){
+        nombreDoc.value = ""
+        nuevoMail.value = ""
+        nuevoPass.value = ""
+        sesionMessage.value = ""
     }
 }
 

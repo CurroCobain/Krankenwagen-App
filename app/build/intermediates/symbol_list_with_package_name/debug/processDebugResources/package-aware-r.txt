@@ -124,6 +124,7 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+drawable address
 drawable ambulancia
 drawable arrow_back_vector
 drawable bannersup
@@ -172,6 +173,9 @@ drawable icon_menu_a
 drawable icon_menu_b
 drawable menu_a
 drawable menu_b
+drawable menu_rayas
+drawable newbanner
+drawable newfondo
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -185,6 +189,8 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable patient
+drawable report
 drawable scroll_provincias_image_1
 drawable scroll_provincias_image_10
 drawable scroll_provincias_image_2

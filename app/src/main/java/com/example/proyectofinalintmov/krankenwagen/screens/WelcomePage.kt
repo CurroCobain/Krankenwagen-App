@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -30,11 +32,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.bienvenida.Bienvenida
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
@@ -131,10 +131,14 @@ fun PrevContWelc(
     Scaffold(topBar = {
         Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg",
+                modifier = Modifier.wrapContentSize()
+                    .fillMaxWidth(0.35f)
+                    .padding(8.dp)
             )
         }
     }, content = {
@@ -169,7 +173,7 @@ fun ContenidoWelcome(
     ) {
         // Fondo de la pantalla
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.newfondo),
             contentScale = ContentScale.FillWidth,
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()

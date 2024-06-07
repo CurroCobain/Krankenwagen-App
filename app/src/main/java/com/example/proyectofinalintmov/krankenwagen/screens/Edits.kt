@@ -5,7 +5,9 @@ import android.content.Context
 import android.os.Build
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -25,7 +28,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.DropdownMenuItem
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Switch
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -41,8 +46,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -50,6 +58,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
 import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
@@ -100,7 +109,18 @@ fun EditarHosp(
                     modifier = Modifier
                         .fillMaxWidth(0.7f)
                         .fillMaxSize()
-                        .background(color = Color(225, 241, 222)),
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = listOf(
+                                    Color(0xFFE0FFFF), // Light Cyan (rgb(224, 255, 255))
+                                    Color(0xFF87CEEB), // Light Sky Blue (rgb(135, 206, 235))
+                                    Color(0xFF4682B4)  // Steel Blue (rgb(70, 130, 180))
+                                ),
+                                start = Offset(0f, 0f),
+                                end = Offset.Infinite
+                            )
+                        )
+                        .verticalScroll(rememberScrollState(), true),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -181,7 +201,18 @@ fun EditarHosp(
                                 }
 
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            colors = ButtonDefaults.buttonColors(Color.White),
+                            modifier = Modifier
+                                .border(
+                                    width = 4.dp, color = Color.Black,
+                                    shape = RoundedCornerShape(
+                                        topStart = 8.dp,
+                                        topEnd = 8.dp,
+                                        bottomStart = 8.dp,
+                                        bottomEnd = 8.dp
+                                    )
+                                )
+                                .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                             shape = RoundedCornerShape(
                                 topStart = 8.dp,
                                 topEnd = 8.dp,
@@ -191,7 +222,9 @@ fun EditarHosp(
                         ) {
                             Text(
                                 text = " Guardar ",
-                                fontSize = 20.sp
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.Black
                             )
                         }
                         Spacer(modifier = Modifier.padding(8.dp))
@@ -210,7 +243,18 @@ fun EditarHosp(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            colors = ButtonDefaults.buttonColors(Color.White),
+                            modifier = Modifier
+                                .border(
+                                    width = 4.dp, color = Color.Black,
+                                    shape = RoundedCornerShape(
+                                        topStart = 8.dp,
+                                        topEnd = 8.dp,
+                                        bottomStart = 8.dp,
+                                        bottomEnd = 8.dp
+                                    )
+                                )
+                                .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                             shape = RoundedCornerShape(
                                 topStart = 8.dp,
                                 topEnd = 8.dp,
@@ -220,7 +264,9 @@ fun EditarHosp(
                         ) {
                             Text(
                                 text = " Borrar ",
-                                fontSize = 20.sp
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.Black
                             )
                         }
                     }
@@ -244,7 +290,18 @@ fun EditarHosp(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            colors = ButtonDefaults.buttonColors(Color.White),
+                            modifier = Modifier
+                                .border(
+                                    width = 4.dp, color = Color.Black,
+                                    shape = RoundedCornerShape(
+                                        topStart = 8.dp,
+                                        topEnd = 8.dp,
+                                        bottomStart = 8.dp,
+                                        bottomEnd = 8.dp
+                                    )
+                                )
+                                .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                             shape = RoundedCornerShape(
                                 topStart = 8.dp,
                                 topEnd = 8.dp,
@@ -254,7 +311,9 @@ fun EditarHosp(
                         ) {
                             Text(
                                 text = "Ver ambulancias",
-                                fontSize = 20.sp
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.Black
                             )
                         }
                         // Botón para volver a la pantalla anterior
@@ -286,7 +345,18 @@ fun EditarHosp(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                            colors = ButtonDefaults.buttonColors(Color.White),
+                            modifier = Modifier
+                                .border(
+                                    width = 4.dp, color = Color.Black,
+                                    shape = RoundedCornerShape(
+                                        topStart = 8.dp,
+                                        topEnd = 8.dp,
+                                        bottomStart = 8.dp,
+                                        bottomEnd = 8.dp
+                                    )
+                                )
+                                .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                             shape = RoundedCornerShape(
                                 topStart = 8.dp,
                                 topEnd = 8.dp,
@@ -296,7 +366,9 @@ fun EditarHosp(
                         ) {
                             Text(
                                 text = "Volver",
-                                fontSize = 20.sp
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.ExtraBold,
+                                color = Color.Black
                             )
                         }
                     }
@@ -416,7 +488,18 @@ fun EditarAmb(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color(225, 241, 222)),
+                    .background(
+                        brush = Brush.linearGradient(
+                            colors = listOf(
+                                Color(0xFFE0FFFF), // Light Cyan (rgb(224, 255, 255))
+                                Color(0xFF87CEEB), // Light Sky Blue (rgb(135, 206, 235))
+                                Color(0xFF4682B4)  // Steel Blue (rgb(70, 130, 180))
+                            ),
+                            start = Offset(0f, 0f),
+                            end = Offset.Infinite
+                        )
+                    )
+                    .verticalScroll(rememberScrollState(), true),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -530,7 +613,18 @@ fun EditarAmb(
                                 ).show()
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        colors = ButtonDefaults.buttonColors(Color.White),
+                        modifier = Modifier
+                            .border(
+                                width = 4.dp, color = Color.Black,
+                                shape = RoundedCornerShape(
+                                    topStart = 8.dp,
+                                    topEnd = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                )
+                            )
+                            .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                         shape = RoundedCornerShape(
                             topStart = 8.dp,
                             topEnd = 8.dp,
@@ -540,7 +634,9 @@ fun EditarAmb(
                     ) {
                         Text(
                             text = "Guardar",
-                            fontSize = 20.sp
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.padding(8.dp))
@@ -560,7 +656,18 @@ fun EditarAmb(
                                 ).show()
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        colors = ButtonDefaults.buttonColors(Color.White),
+                        modifier = Modifier
+                            .border(
+                                width = 4.dp, color = Color.Black,
+                                shape = RoundedCornerShape(
+                                    topStart = 8.dp,
+                                    topEnd = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                )
+                            )
+                            .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                         shape = RoundedCornerShape(
                             topStart = 8.dp,
                             topEnd = 8.dp,
@@ -570,7 +677,9 @@ fun EditarAmb(
                     ) {
                         Text(
                             text = "Borrar ambulancia",
-                            fontSize = 20.sp
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.Black
                         )
                     }
                 }
@@ -595,7 +704,18 @@ fun EditarAmb(
                                 ).show()
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                        colors = ButtonDefaults.buttonColors(Color.White),
+                        modifier = Modifier
+                            .border(
+                                width = 4.dp, color = Color.Black,
+                                shape = RoundedCornerShape(
+                                    topStart = 8.dp,
+                                    topEnd = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                )
+                            )
+                            .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                         shape = RoundedCornerShape(
                             topStart = 8.dp,
                             topEnd = 8.dp,
@@ -605,7 +725,9 @@ fun EditarAmb(
                     ) {
                         Text(
                             text = "Volver",
-                            fontSize = 20.sp
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.Black
                         )
                     }
                 }
@@ -660,7 +782,16 @@ fun EditUrg(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color(225, 241, 222))
+                    .background(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                Color(0xFFE0FFFF), // Light Cyan (rgb(224, 255, 255))
+                                Color(0xFF87CEEB), // Light Sky Blue (rgb(135, 206, 235))
+                                Color(0xFF4682B4)  // Steel Blue (rgb(70, 130, 180))
+                            ),
+                            radius = 800f // Adjust radius as needed
+                        )
+                    )
                     .verticalScroll(rememberScrollState(), true),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -671,6 +802,13 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.urgencia),
+                        contentDescription = "icono urgencia",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .padding(end = 8.dp)
+                    )
                     // Campo para la edición de la prioridad
                     TextField(
                         value = priority.toString(),
@@ -694,6 +832,13 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.patient),
+                        contentDescription = "icono datos",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .padding(end = 8.dp)
+                    )
                     // Campo para la edición del nombre
                     TextField(
                         value = name,
@@ -718,6 +863,13 @@ fun EditUrg(
                         .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.address),
+                        contentDescription = "icono dirección",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .padding(end = 8.dp)
+                    )
                     // Campo para la edición del tipo de calle
                     TextField(
                         value = typeOfStreet,
@@ -786,11 +938,18 @@ fun EditUrg(
                         .fillMaxWidth()
                         .padding(4.dp)
                 ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.report),
+                        contentDescription = "icono clínica",
+                        modifier = Modifier
+                            .size(60.dp)
+                            .padding(end = 8.dp)
+                    )
                     // Campo para la edición de la sintomatología del paciente
                     TextField(
                         value = issues,
                         onValueChange = { urgenciesViewModel.setIssues(it) },
-                        label = { Text("Problemas") },
+                        label = { Text("Descripción") },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -816,13 +975,30 @@ fun EditUrg(
                                 }
                             )
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
-                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                        colors = ButtonDefaults.buttonColors(Color.White),
+                        modifier = Modifier
+                            .border(
+                                width = 4.dp, color = Color.Black,
+                                shape = RoundedCornerShape(
+                                    topStart = 8.dp,
+                                    topEnd = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                )
+                            )
+                            .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
                     ) {
                         Text(
-                            "Guardar",
+                            "Guardar cambios",
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.ExtraBold
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.Black
                         )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
@@ -840,13 +1016,30 @@ fun EditUrg(
                                 }
                             )
                         },
-                        colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
-                        modifier = Modifier.sizeIn(minWidth = 150.dp, minHeight = 50.dp)
+                        colors = ButtonDefaults.buttonColors(Color.White),
+                        modifier = Modifier
+                            .border(
+                                width = 4.dp, color = Color.Black,
+                                shape = RoundedCornerShape(
+                                    topStart = 8.dp,
+                                    topEnd = 8.dp,
+                                    bottomStart = 8.dp,
+                                    bottomEnd = 8.dp
+                                )
+                            )
+                            .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
                     ) {
                         Text(
-                            "Borrar",
+                            "Borrar urgencia",
                             fontSize = 20.sp,
-                            fontWeight = FontWeight.ExtraBold
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color.Black
                         )
                     }
                 }
@@ -854,3 +1047,4 @@ fun EditUrg(
         }
     }
 }
+

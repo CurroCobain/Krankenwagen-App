@@ -7,6 +7,7 @@ color purple_700
 color teal_200
 color teal_700
 color white
+drawable address
 drawable ambulancia
 drawable arrow_back_vector
 drawable bannersup
@@ -25,6 +26,11 @@ drawable icon_menu_a
 drawable icon_menu_b
 drawable menu_a
 drawable menu_b
+drawable menu_rayas
+drawable newbanner
+drawable newfondo
+drawable patient
+drawable report
 drawable scroll_provincias_image_1
 drawable scroll_provincias_image_10
 drawable scroll_provincias_image_2

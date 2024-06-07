@@ -1,11 +1,11 @@
 {
   "name": "botoncito",
-  "version": 32,
+  "version": 33,
   "source-key": {
     "type": "figma",
     "file": "pWXI4Vcqx2jEuM5dYJzrT7",
     "node": "12:647",
-    "version": "5198619203",
+    "version": "5939825451",
     "component-id": "148388fc300fa4a69e4193839a070ea21c946d5d"
   },
   "default": "Botoncito",
@@ -35,32 +35,32 @@
           {
             "id": "top_level",
             "tap-handler": "$on Botoncito tapped",
-            "is-structured": "false",
+            "is-structured": false,
             "children": [
               "Boton"
             ],
-            "clip-content": "false"
+            "clip-content": false
           },
           {
             "id": "Boton",
-            "is-structured": "false",
+            "is-structured": false,
             "children": [
               "Rectangle 1",
               "Iniciar sesión"
             ],
-            "clip-content": "false"
+            "clip-content": false
           },
           {
             "id": "Rectangle 1",
-            "border-radius": "8.0",
+            "border-radius": 8.0,
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               },
               "height-constraints": {
                 "sizing-mode": "proportional",
-                "value": "1.0"
+                "value": 1.0
               }
             },
             "vector-content": "rectangle_1.svg"
@@ -70,36 +70,30 @@
             "alignment": {
               "horizontal": {
                 "attachment": "center",
-                "offset": "0.0"
+                "offset": 0.0
               },
               "vertical": {
                 "attachment": "center",
-                "offset": "0.0"
+                "offset": 0.0
               }
             },
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
-                "value": "240.0"
+                "value": 240.0
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
-                "value": "64.0"
+                "value": 64.0
               }
             },
-            "font-weight": "700.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.0"
-            },
+            "font-weight": 700.0,
             "text-content": "$Iniciar sesión text content",
             "overflow": "visible",
-            "max-lines": "-1",
+            "max-lines": -1,
             "text-align-vertical": "center",
-            "text-size": "24.0",
-            "line-height": "1.2102272510528564",
+            "text-size": 24.0,
+            "line-height": 1.2102272510528564,
             "typeface": "Inter"
           }
         ]

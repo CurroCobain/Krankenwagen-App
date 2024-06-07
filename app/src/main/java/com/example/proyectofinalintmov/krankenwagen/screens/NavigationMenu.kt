@@ -34,6 +34,7 @@ import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.iconmenu.IconMenu
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.menu.Menu
 import com.example.proyectofinalintmov.sesion.Sesion
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -56,7 +57,7 @@ fun NavigationMenu(
     {
         // Banner de la app
         Image(
-            painter = painterResource(id = R.drawable.bannersup),
+            painter = painterResource(id = R.drawable.newbanner),
             contentDescription = "banner",
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,7 +67,7 @@ fun NavigationMenu(
             Modifier
                 .padding(top = 40.dp)
                 .fillMaxSize()
-                .background(color = Color(74, 121, 66))
+                .background(color = Color(80, 79, 132))
         ) {
             Spacer(modifier = Modifier.padding(50.dp))
 
@@ -235,7 +236,7 @@ fun BarraMenu(
     ) {
         Spacer(modifier = Modifier.padding(start = 60.dp))
         // Icono de menú
-        IconMenu(
+        Menu(
             modifier = Modifier
                 .width(80.dp)
                 .height(80.dp),

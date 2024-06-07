@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.bienvenida
 
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
@@ -31,11 +32,16 @@ fun Bienvenida(
     }
 }
 
-@Preview(widthDp = 353, heightDp = 39)
+@Preview(widthDp = 400, heightDp = 39)
 @Composable
 private fun BienvenidaPreview() {
     MaterialTheme {
-        Bienvenida(bienvenidoADrHouseTextContent = "Bienvenido/a Dr. House")
+        RelayContainer {
+            Bienvenida(
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr. House",
+                modifier = Modifier.rowWeight(1.0f)
+            )
+        }
     }
 }
 
@@ -50,9 +56,9 @@ fun BienvenidoADrHouse(
         fontFamily = inter,
         color = Color(
             alpha = 255,
-            red = 8,
-            green = 7,
-            blue = 7
+            red = 255,
+            green = 255,
+            blue = 255
         ),
         height = 1.2102272510528564.em,
         modifier = modifier.wrapContentHeight(
@@ -70,15 +76,15 @@ fun TopLevel(
     RelayContainer(
         backgroundColor = Color(
             alpha = 255,
-            red = 158,
-            green = 234,
-            blue = 146
+            red = 80,
+            green = 79,
+            blue = 132
         ),
         crossAxisAlignment = CrossAxisAlignment.Start,
         arrangement = RelayContainerArrangement.Row,
         itemSpacing = 10.0,
         radius = 8.0,
         content = content,
-        modifier = modifier.height(IntrinsicSize.Min)
+        modifier = modifier.height(IntrinsicSize.Min).fillMaxWidth(1.0f)
     )
 }

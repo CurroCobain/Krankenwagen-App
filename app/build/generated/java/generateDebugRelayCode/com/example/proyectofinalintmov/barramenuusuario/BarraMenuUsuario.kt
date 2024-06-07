@@ -21,26 +21,21 @@ import com.google.relay.compose.RelayContainer
 import com.google.relay.compose.RelayContainerArrangement
 import com.google.relay.compose.RelayContainerScope
 import com.google.relay.compose.RelayVector
-import com.google.relay.compose.tappable
 
 /**
  * This composable was generated from the UI Package 'barra_menu_usuario'.
  * Generated code; do not edit directly
  */
 @Composable
-fun BarraMenuUsuario(
-    modifier: Modifier = Modifier,
-    onMenuTapped: () -> Unit = {},
-    onSesionTapped: () -> Unit = {}
-) {
+fun BarraMenuUsuario(modifier: Modifier = Modifier) {
     TopLevel(modifier = modifier) {
-        Menu(onMenuTapped = onMenuTapped) {
+        Menu {
             Group(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f)) {
                 Vector(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f))
                 Rayas(modifier = Modifier.rowWeight(1.0f).columnWeight(1.0f))
             }
         }
-        SesionInstance(onSesionTapped = onSesionTapped)
+        SesionInstance()
     }
 }
 
@@ -48,10 +43,7 @@ fun BarraMenuUsuario(
 @Composable
 private fun BarraMenuUsuarioPreview() {
     MaterialTheme {
-        BarraMenuUsuario(
-            onMenuTapped = {},
-            onSesionTapped = {}
-        )
+        BarraMenuUsuario()
     }
 }
 
@@ -66,10 +58,10 @@ fun Rayas(modifier: Modifier = Modifier) {
         vector = painterResource(R.drawable.barra_menu_usuario_rayas),
         modifier = modifier.padding(
             paddingValues = PaddingValues(
-                start = 8.333328247070312.dp,
-                top = 11.66668701171875.dp,
-                end = 8.33333969116211.dp,
-                bottom = 11.666645050048828.dp
+                start = 8.3333740234375.dp,
+                top = 11.666748046875.dp,
+                end = 8.333293914794922.dp,
+                bottom = 11.666584014892578.dp
             )
         ).fillMaxWidth(1.0f).fillMaxHeight(1.0f)
     )
@@ -90,23 +82,19 @@ fun Group(
 
 @Composable
 fun Menu(
-    onMenuTapped: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable RelayContainerScope.() -> Unit
 ) {
     RelayContainer(
         isStructured = false,
         content = content,
-        modifier = modifier.tappable(onTap = onMenuTapped).requiredWidth(80.0.dp).requiredHeight(80.0.dp)
+        modifier = modifier.requiredWidth(80.0.dp).requiredHeight(80.0.dp)
     )
 }
 
 @Composable
-fun SesionInstance(
-    onSesionTapped: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Sesion(modifier = modifier.tappable(onTap = onSesionTapped))
+fun SesionInstance(modifier: Modifier = Modifier) {
+    Sesion(modifier = modifier)
 }
 
 @Composable

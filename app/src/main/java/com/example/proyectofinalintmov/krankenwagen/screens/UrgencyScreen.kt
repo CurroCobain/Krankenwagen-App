@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -149,10 +151,15 @@ fun PrevContUrgencies(
     // Scaffold que compone la pantalla
     Scaffold(topBar = {
         Column(
-            modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
             Bienvenida(
-                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg"
+                bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg",
+                modifier = Modifier.wrapContentSize()
+                    .fillMaxWidth(0.35f)
+                    .padding(8.dp)
             )
         }
     }, content = {
@@ -189,7 +196,16 @@ fun PrevContUrgencies(
                 modifier = Modifier.fillMaxWidth(0.7f)) {
                 // Botón para activar el diálogo de creación
                 Button(onClick = { viewModel.acCreateUrg() },
-                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    modifier = Modifier.border(
+                        width = 4.dp, color = Color.Black,
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
+                    ),
                     shape = RoundedCornerShape(
                         topStart = 8.dp,
                         topEnd = 8.dp,
@@ -199,14 +215,24 @@ fun PrevContUrgencies(
                 ) {
                     Text(text = "Crear urgencia",
                         fontWeight = FontWeight.ExtraBold,
-                        fontSize = 30.sp
+                        fontSize = 30.sp,
+                        color = Color.Black
                     )
                 }
                 // Botón para actualizar el listado de las urgencias
                 Button(onClick = { viewModel.getUrgencies {
                     viewModel.increaseUpdateInfo()
                 } },
-                    colors = ButtonDefaults.buttonColors(Color(74, 121, 66)),
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    modifier = Modifier.border(
+                        width = 4.dp, color = Color.Black,
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
+                    ),
                     shape = RoundedCornerShape(
                         topStart = 8.dp,
                         topEnd = 8.dp,
@@ -216,7 +242,8 @@ fun PrevContUrgencies(
                 ) {
                     Text(text = "Actualizar datos",
                         fontWeight = FontWeight.ExtraBold,
-                        fontSize = 30.sp
+                        fontSize = 30.sp,
+                        color = Color.Black
                     )
                 }
             }
@@ -241,7 +268,7 @@ fun ContenidoUrgencies(
     ) {
         // Fondo de la pantalla
         Image(
-            painter = painterResource(id = R.drawable.fondo),
+            painter = painterResource(id = R.drawable.newfondo),
             contentScale = ContentScale.FillWidth,
             contentDescription = "Fondo",
             modifier = Modifier.fillMaxSize()
@@ -337,12 +364,10 @@ fun LazyUrgency(
             Row(
                 modifier = Modifier
                     .padding(start = 30.dp, top = 10.dp, end = 28.dp)
+                    .border(width = 1.dp, color = Color.Black)
                     .background(
-                        color = if (urgency.ambulance != "No definida") Color(
-                            71,
-                            248,
-                            152
-                        ) else Color.White,
+                        color = if (urgency.ambulance != "No definida") Color.LightGray
+                        else Color.White,
                         shape = RoundedCornerShape(6.dp)
                     )
                     .fillMaxWidth()

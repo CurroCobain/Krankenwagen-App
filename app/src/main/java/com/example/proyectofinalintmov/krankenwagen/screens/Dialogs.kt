@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -65,7 +66,7 @@ fun SesionMenu(
             Box(modifier = Modifier.fillMaxSize()) {
                 // Banner de la app
                 Image(
-                    painter = painterResource(id = R.drawable.bannersup),
+                    painter = painterResource(id = R.drawable.newbanner),
                     contentDescription = "banner",
                     modifier = Modifier.fillMaxWidth()
                         .height(40.dp)
@@ -75,7 +76,7 @@ fun SesionMenu(
                     modifier = Modifier
                         .padding(top = 40.dp)
                         .fillMaxSize()
-                        .background(color = Color(74, 121, 66)),
+                        .background(color = Color(80, 79, 132)),
                     verticalArrangement = Arrangement.Center
                 )
                 {
@@ -132,7 +133,13 @@ fun SesionMenu(
                                     ).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(Color.LightGray)
+                            colors = ButtonDefaults.buttonColors(Color.LightGray),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         )
                         {
                             Text(
@@ -143,13 +150,19 @@ fun SesionMenu(
                             )
                         }
                         Spacer(modifier = Modifier.padding(10.dp))
-                        // -------------------------- Botón volver ---------------------------------
+                        // -------------------------- Botón borrar datos ---------------------------------
                         Button(
                             onClick = {
                                 // Cierra el diálogo y resetea el valor del mensaje del sistema
-                                sesionViewModel.setMessage("")
+                                sesionViewModel.borrarTodo()
                             },
-                            colors = ButtonDefaults.buttonColors(Color.LightGray)
+                            colors = ButtonDefaults.buttonColors(Color.LightGray),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         )
                         {
                             Text(
@@ -180,7 +193,13 @@ fun SesionMenu(
                                 sesionViewModel.cambiaInit()
                                 sesionViewModel.setMessage("")
                             },
-                            colors = ButtonDefaults.buttonColors(Color.LightGray)
+                            colors = ButtonDefaults.buttonColors(Color.LightGray),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         )
                         {
                             Text(
@@ -217,7 +236,7 @@ fun SesionMenu(
                     modifier = Modifier
                         .padding(top = 40.dp)
                         .fillMaxSize()
-                        .background(color = Color(74, 121, 66)),
+                        .background(color = Color(80, 79, 132)),
                     verticalArrangement = Arrangement.Center
                 )
                 {
@@ -264,7 +283,13 @@ fun SesionMenu(
                                     sesionViewModel.setMessage("")
                                   }
                             },
-                            colors = ButtonDefaults.buttonColors(Color.LightGray)
+                            colors = ButtonDefaults.buttonColors(Color.LightGray),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         )
                         {
                             Text(
@@ -275,6 +300,33 @@ fun SesionMenu(
                             )
                         }
                         Spacer(modifier = Modifier.padding(20.dp))
+                        // ------------------------ Botón cerrar sesión ------------------------
+                        Button(
+                            onClick = {
+                                // cierra sesión y resetea todos los valores
+                                sesionViewModel.cerrarSesion {
+                                    Toast.makeText(context, "Sesión cerrada correctamente", Toast.LENGTH_SHORT).show()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(Color.LightGray),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
+                        )
+                        {
+                            Text(
+                                text = "Cerrar sesión",
+                                fontSize = 18.sp,
+                                color = Color.Black,
+                                fontWeight = FontWeight.ExtraBold
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.padding(20.dp))
+                    Row(modifier = Modifier.align(Alignment.CenterHorizontally)){
                         // ------------------------ Botón volver a registro ------------------------
                         Button(
                             onClick = {
@@ -282,11 +334,17 @@ fun SesionMenu(
                                 sesionViewModel.cambiaInit()
                                 sesionViewModel.setMessage("")
                             },
-                            colors = ButtonDefaults.buttonColors(Color.LightGray)
+                            colors = ButtonDefaults.buttonColors(Color.LightGray),
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         )
                         {
                             Text(
-                                text = "Volver a registro",
+                                text = " Volver ",
                                 fontSize = 18.sp,
                                 color = Color.Black,
                                 fontWeight = FontWeight.ExtraBold
