@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -78,6 +80,7 @@ fun UrgencyScreen(
     // listado de urgencias actuales
     val miListaUrg by viewModel.listUrgencies.collectAsState()
     val updatedInfo by viewModel.updatedInfo.collectAsState()
+    val filteredUrgencies by viewModel.filteredUrgencies.collectAsState()
 
     // Composable que sirve para generar el menú lateral de navegación en la app
     ModalNavigationDrawer(
@@ -86,7 +89,7 @@ fun UrgencyScreen(
             //  Desplegable del menú lateral
             ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
                 // Contenido del menú lateral
-                NavigationMenu(navController, viewModel)
+                NavigationMenu(navController, viewModel, sesionViewModel)
             }
         }
     ) {
@@ -121,7 +124,8 @@ fun UrgencyScreen(
                         createUrg,
                         editUrg,
                         miListaUrg,
-                        context
+                        context,
+                        filteredUrgencies
                     )
                 }
             }
@@ -144,7 +148,8 @@ fun PrevContUrgencies(
     createUrg: Boolean,
     editUrg: Boolean,
     miListaUrg: MutableList<Urgencia>,
-    context: Context
+    context: Context,
+    filteredUrgencies: Boolean
 ) {
     // Se almacena el nombre del Dr para mostrarlo en pantalla
     val nombreDocReg by sesionViewModel.nombreDoc.collectAsState()
@@ -157,7 +162,8 @@ fun PrevContUrgencies(
         ) {
             Bienvenida(
                 bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg",
-                modifier = Modifier.wrapContentSize()
+                modifier = Modifier
+                    .wrapContentSize()
                     .fillMaxWidth(0.35f)
                     .padding(8.dp)
             )
@@ -167,18 +173,22 @@ fun PrevContUrgencies(
         ContenidoUrgencies(
             viewModel,
             urgenciesViewModel,
-            miListaUrg
+            miListaUrg,
+            filteredUrgencies
         )
         // cuando se modifica alguno de los valores que los gestionan se muestran los diálogos de edición y creación
         when {
             createUrg -> {
-                CreateUrgScreen(context,
+                CreateUrgScreen(
+                    context,
                     viewModel,
                     urgenciesViewModel
                 )
             }
+
             editUrg -> {
-                EditUrg(context,
+                EditUrg(
+                    context,
                     viewModel,
                     urgenciesViewModel
                 )
@@ -187,15 +197,19 @@ fun PrevContUrgencies(
     }, bottomBar = {
         // Barra para acceder al menú y a las opciones de sesión
         BarraMenu(drawerState1, drawerState2)
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp)
-        ){
-            Row(horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.fillMaxWidth(0.7f)) {
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth(0.7f)
+            ) {
                 // Botón para activar el diálogo de creación
-                Button(onClick = { viewModel.acCreateUrg() },
+                Button(
+                    onClick = { viewModel.acCreateUrg() },
                     colors = ButtonDefaults.buttonColors(Color.White),
                     modifier = Modifier.border(
                         width = 4.dp, color = Color.Black,
@@ -213,16 +227,20 @@ fun PrevContUrgencies(
                         bottomEnd = 8.dp
                     )
                 ) {
-                    Text(text = "Crear urgencia",
+                    Text(
+                        text = "Crear urgencia",
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 30.sp,
                         color = Color.Black
                     )
                 }
                 // Botón para actualizar el listado de las urgencias
-                Button(onClick = { viewModel.getUrgencies {
-                    viewModel.increaseUpdateInfo()
-                } },
+                Button(
+                    onClick = {
+                        viewModel.getUrgencies {
+                            viewModel.increaseUpdateInfo()
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(Color.White),
                     modifier = Modifier.border(
                         width = 4.dp, color = Color.Black,
@@ -240,7 +258,8 @@ fun PrevContUrgencies(
                         bottomEnd = 8.dp
                     )
                 ) {
-                    Text(text = "Actualizar datos",
+                    Text(
+                        text = "Actualizar datos",
                         fontWeight = FontWeight.ExtraBold,
                         fontSize = 30.sp,
                         color = Color.Black
@@ -260,9 +279,9 @@ fun PrevContUrgencies(
 fun ContenidoUrgencies(
     viewModel: KrankenwagenViewModel,
     urgenciesViewModel: UrgenciesViewModel,
-    miListaUrg: MutableList<Urgencia>
+    miListaUrg: MutableList<Urgencia>,
+    filteredUrgencies: Boolean
 ) {
-
     Box(
         modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
     ) {
@@ -279,9 +298,43 @@ fun ContenidoUrgencies(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.76f)
-                .padding(top = 30.dp)
-
         ) {
+            Row (
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 40.dp)) {
+                Button(
+                    onClick = {
+                        viewModel.setFiltered()
+                        viewModel.getUrgencies {
+                            viewModel.increaseUpdateInfo()
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    modifier = Modifier.border(
+                        width = 4.dp, color = Color.Black,
+                        shape = RoundedCornerShape(
+                            topStart = 8.dp,
+                            topEnd = 8.dp,
+                            bottomStart = 8.dp,
+                            bottomEnd = 8.dp
+                        )
+                    )
+                        .sizeIn(minWidth = 200.dp),
+                    shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    )
+                ) {
+                Text(text = if (!filteredUrgencies) "Ver finalizadas" else "Ver activas",
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color.Black,
+                    fontSize = 26.sp)
+            }
+            }
+            Spacer(modifier = Modifier.padding(8.dp))
             // Cabecera con el tipo de datos de cada columna
             Row(
                 modifier = Modifier
@@ -353,7 +406,7 @@ fun LazyUrgency(
     viewModel: KrankenwagenViewModel,
     urgenciesViewModel: UrgenciesViewModel,
     miListaUrg: MutableList<Urgencia>
-){
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(1),
         contentPadding = PaddingValues(horizontal = 5.dp, vertical = 5.dp)

@@ -82,7 +82,7 @@ fun Ambulances(
             //  Desplegable del menú lateral
             ModalDrawerSheet(modifier = Modifier.fillMaxWidth(0.3f)) {
                 // Contenido del menú lateral
-                NavigationMenu(navController, viewModel)
+                NavigationMenu(navController, viewModel, sesionViewModel)
             }
         }
     ) {
@@ -278,9 +278,9 @@ fun LazyAmbulance(
                         // Si la ambulancia está ocupada cambiamos el fondo a color rojo
                         .background(
                             color = if (!ambulance.free)
-                                Color.Red
+                                Color.Gray
                             else
-                                Color.Transparent
+                                Color(70, 130, 180)
                         )
                 ) {
                     Row(
@@ -302,7 +302,9 @@ fun LazyAmbulance(
                         // Matrícula de la ambulancia
                         Text(
                             text = ambulance.plate,
-                            fontSize = 30.sp
+                            fontSize = 30.sp,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 }

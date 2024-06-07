@@ -32,6 +32,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -60,7 +61,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.krankenwagen.data.AmbulanceTypes
-import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
@@ -101,7 +101,7 @@ fun EditarHosp(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.9f),
+                .fillMaxHeight(0.75f),
             shape = RoundedCornerShape(10.dp)
         ) {
             Row(modifier = Modifier.fillMaxSize()) {
@@ -124,32 +124,41 @@ fun EditarHosp(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    // Texto id del hospital, no editable
-                    Text(
-                        text = "Id: $idHosp",
-                        fontSize = 30.sp,
-                        modifier = Modifier
-                            .background(color = Color.LightGray)
-                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
-                        textAlign = TextAlign.Center
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        modifier = Modifier.padding(top = 8.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.hospital),
+                            contentDescription = "icono amb",
+                            modifier = Modifier
+                                .size(60.dp)
+                                .padding(10.dp)
+                        )
+                        // Texto id del hospital, no editable
+                        Text(
+                            text = "Id -> $idHosp",
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(start = 20.dp)
+                        )
+                    }
+
                     // Texto provincia del hospital, no editable
                     Text(
-                        text = "Provincia: $county",
+                        text = "Provincia -> $county",
                         fontSize = 30.sp,
-                        modifier = Modifier
-                            .background(color = Color.LightGray)
-                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.ExtraBold
                     )
                     // Texto ciudad del hospital, no editable
                     Text(
                         text = "Ciudad: $city",
                         fontSize = 30.sp,
-                        modifier = Modifier
-                            .background(color = Color.LightGray)
-                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.ExtraBold
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -163,29 +172,41 @@ fun EditarHosp(
                         label = {
                             Text(
                                 "Nombre",
-                                fontSize = 30.sp
+                                fontSize = 20.sp
                             )
                         },
-                        modifier = Modifier.padding(8.dp),
+                        modifier = Modifier.padding(8.dp)
+                            .fillMaxWidth(0.9f),
                         textStyle = TextStyle(fontSize = 30.sp)
                     )
-                    // Campo de edición para la dirección del hospital
-                    TextField(
-                        value = address,
-                        onValueChange = { newValue ->
-                            hospitalViewModel.setAddress(newValue)
-                        },
-                        label = {
-                            Text(
-                                "Dirección",
-                                fontSize = 30.sp
-                            )
-                        },
-                        modifier = Modifier.padding(8.dp),
-                        textStyle = TextStyle(fontSize = 30.sp)
-                    )
-
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ){
+                        Image(
+                            painter = painterResource(id = R.drawable.address),
+                            contentDescription = "icono amb",
+                            modifier = Modifier
+                                .size(60.dp)
+                                .padding(10.dp)
+                        )
+                        // Campo de edición para la dirección del hospital
+                        TextField(
+                            value = address,
+                            onValueChange = { newValue ->
+                                hospitalViewModel.setAddress(newValue)
+                            },
+                            label = {
+                                Text(
+                                    "Dirección",
+                                    fontSize = 20.sp
+                                )
+                            },
+                            modifier = Modifier.padding(8.dp),
+                            textStyle = TextStyle(fontSize = 30.sp)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(40.dp))
                     Row(horizontalArrangement = Arrangement.SpaceEvenly) {
                         // Botón para actualizar el hospital
                         Button(
@@ -386,6 +407,7 @@ fun EditarHosp(
                     modifier = Modifier.fillMaxSize()
                 )
                 {
+                    Spacer(modifier = Modifier.padding(10.dp))
                     // Columna que muestra la lista de ambulancias asociadas al hospital
                     if (muestrAmbs.value) {
                         Row(verticalAlignment = Alignment.Top)
@@ -393,7 +415,8 @@ fun EditarHosp(
                             Text(
                                 text = "Listado de ambulancias:",
                                 textAlign = TextAlign.Center,
-                                fontSize = 20.sp
+                                fontSize = 26.sp,
+                                fontWeight = FontWeight.ExtraBold
                             )
                         }
                         Row(
@@ -421,14 +444,26 @@ fun EditarHosp(
                                                 ).show()
                                             }
                                         },
-                                        modifier = Modifier.wrapContentSize(),
                                         colors = ButtonDefaults.buttonColors(
                                             // Si la ambulancia está ocupada se muestra en rojo
                                             if (!ambulance.free)
-                                                Color.Red
+                                                Color.Gray
                                             else
-                                                Color(74, 121, 66)
+                                                Color(70, 130, 180)
                                         ),
+                                        modifier = Modifier
+                                            .wrapContentSize()
+                                            .padding(6.dp)
+                                            .border(
+                                                width = 4.dp, color = Color.Black,
+                                                shape = RoundedCornerShape(
+                                                    topStart = 8.dp,
+                                                    topEnd = 8.dp,
+                                                    bottomStart = 8.dp,
+                                                    bottomEnd = 8.dp
+                                                )
+                                            )
+                                            .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
                                         shape = RoundedCornerShape(
                                             topStart = 8.dp,
                                             topEnd = 8.dp,
@@ -436,7 +471,10 @@ fun EditarHosp(
                                             bottomEnd = 8.dp
                                         )
                                     ) {
-                                        Text(text = ambulance.plate)
+                                        Text(text = ambulance.plate,
+                                            fontWeight = FontWeight.ExtraBold,
+                                            fontSize = 20.sp
+                                            )
                                     }
                                 }
                             }
@@ -503,78 +541,92 @@ fun EditarAmb(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Campo de texto de la matrícula, no editable
-                Text(
-                    text = "Matrícula: $plate",
-                    fontSize = 30.sp,
-                    modifier = Modifier
-                        .background(color = Color.LightGray)
-                        .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
-                    textAlign = TextAlign.Center
-                )
-
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier = Modifier.padding(top = 8.dp)
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.ambulancia),
+                        contentDescription = "icono amb",
+                        modifier = Modifier
+                            .size(80.dp)
+                            .padding(10.dp)
+                    )
+                    // Campo de texto de la matrícula, no editable
+                    Text(
+                        text = "Matrícula -> $plate",
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
-
-                // Campo de edición para el hospital de referencia
-                TextField(
-                    value = hosp,
-                    onValueChange = { newValue ->
-                        ambulancesViewModel.setHosp(newValue)
-                    },
-                    label = {
-                        Text(
-                            "Hospital de referencia",
-                            fontSize = 30.sp
-                        )
-                    },
-                    modifier = Modifier.padding(8.dp),
-                    textStyle = TextStyle(fontSize = 30.sp)
-                )
-
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.hospital),
+                        contentDescription = "icono hospital",
+                        modifier = Modifier
+                            .size(80.dp)
+                            .padding(end = 8.dp)
+                    )
+                    // Campo de edición para el hospital de referencia
+                    TextField(
+                        value = hosp,
+                        onValueChange = { newValue ->
+                            ambulancesViewModel.setHosp(newValue)
+                        },
+                        label = {
+                            Text(
+                                "Hospital de referencia",
+                                fontSize = 20.sp
+                            )
+                        },
+                        modifier = Modifier.padding(8.dp),
+                        textStyle = TextStyle(fontSize = 30.sp)
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
-
                 // Campo de edición para la disponibilidad
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        "Disponible",
-                        fontSize = 30.sp,
-                        modifier = Modifier
-                            .background(color = Color.LightGray)
-                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
-                        textAlign = TextAlign.Center
-                    )
+                    Text("Disponible", fontSize = 30.sp, fontWeight = FontWeight.ExtraBold)
                     Spacer(modifier = Modifier.width(8.dp))
-                    // Permite modificar la disponibilidad de la ambulancia mediante un switch
                     Switch(
                         checked = isFree,
                         onCheckedChange = { newValue ->
                             ambulancesViewModel.setIsFree(newValue)
                         },
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(8.dp),
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.Blue, // Color del interruptor activado
+                            checkedTrackColor = Color.Blue.copy(alpha = 0.5f), // Color de la pista del interruptor activado
+                            uncheckedThumbColor = Color.White, // Color del interruptor desactivado
+                            uncheckedTrackColor = Color.White.copy(alpha = 0.5f) // Color de la pista del interruptor desactivado
+                        )
                     )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                // Campo de edición del tipo de ambulanacia
+                // Campo de edición para el tipo de ambulancia
                 Row {
                     Text(
-                        "Tipo de Ambulancia   ",
-                        fontSize = 30.sp,
-                        modifier = Modifier
-                            .background(color = Color.LightGray)
-                            .sizeIn(minWidth = 260.dp, minHeight = 40.dp),
-                        textAlign = TextAlign.Center
+                        "Tipo de Ambulancia ->  ", fontSize = 30.sp,
+                        fontWeight = FontWeight.ExtraBold
                     )
                     Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
                         Text(
                             text = type.name, // Mostrar el tipo de ambulancia actual
                             modifier = Modifier
-                                .padding(8.dp)
-                                .align(Alignment.CenterHorizontally),
-                            fontSize = 30.sp
+                                .padding(start = 6.dp)
+                                .background(Color.White, RoundedCornerShape(2.dp)),
+                            fontSize = 25.sp
                         )
                         Spacer(modifier = Modifier.padding(start = 8.dp))
-                        // Desplegable que muestra las distintas opciones entre los tipos de ambulancia
+                        // Desplegable de los tipos de ambulancia
                         DropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false },
@@ -585,14 +637,12 @@ fun EditarAmb(
                                     ambulancesViewModel.setType(type)
                                     expanded = false
                                 }) {
-                                    Text(
-                                        text = type.name,
-                                        fontSize = 30.sp
-                                    )
+                                    Text(text = type.name, fontSize = 25.sp)
                                 }
                             }
                         }
                     }
+
                 }
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -968,10 +1018,18 @@ fun EditUrg(
                             urgenciesViewModel.updateUrgency(
                                 id,
                                 onSuccess = {
-                                    Toast.makeText(context, "Urgencia actualizada correctamente", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Urgencia actualizada correctamente",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 },
                                 onFailure = {
-                                    Toast.makeText(context, "Hubo un fallo al actualizar la urgencia", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Hubo un fallo al actualizar la urgencia",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                 }
                             )
                         },
@@ -1009,10 +1067,18 @@ fun EditUrg(
                                 id,
                                 onSuccess = {
                                     urgenciesViewModel.resetMiUrgencia()
-                                    Toast.makeText(context, "Urgencia eliminada", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Urgencia eliminada",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 },
                                 onFailure = {
-                                    Toast.makeText(context, "Hubo un fallo al eliminar la urgencia", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Hubo un fallo al eliminar la urgencia",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             )
                         },

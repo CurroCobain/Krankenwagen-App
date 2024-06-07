@@ -1,6 +1,7 @@
 package com.example.proyectofinalintmov.krankenwagen.screens
 
 import android.os.Build
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,6 +19,7 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +37,7 @@ import com.example.proyectofinalintmov.R
 import com.example.proyectofinalintmov.iconmenu.IconMenu
 import com.example.proyectofinalintmov.krankenwagen.model.Routes
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
+import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 import com.example.proyectofinalintmov.menu.Menu
 import com.example.proyectofinalintmov.sesion.Sesion
 import kotlinx.coroutines.delay
@@ -46,13 +50,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun NavigationMenu(
     navController: NavController,
-    viewModel: KrankenwagenViewModel
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel
 ) {
+    val context = LocalContext.current
     // Variables para los efectos de color de las distintas opciones del menú
     var row1Color by remember { mutableStateOf(Color.Transparent) }
     var row2Color by remember { mutableStateOf(Color.Transparent) }
     var row3Color by remember { mutableStateOf(Color.Transparent) }
     var row4Color by remember { mutableStateOf(Color.Transparent) }
+    val nombreDoc by sesionViewModel.nombreDoc.collectAsState()
     Box(modifier = Modifier.fillMaxSize())
     {
         // Banner de la app
@@ -81,8 +88,17 @@ fun NavigationMenu(
                     .fillMaxWidth()
                     .background(color = row1Color)
                     .clickable {
-                        row1Color = Color.LightGray
-                        navController.navigate(Routes.PantallaWelcome.route)
+                        if (nombreDoc.isEmpty()) {
+                            Toast
+                                .makeText(
+                                    context, "Debe iniciar sesión para acceder al área de gestión",
+                                    Toast.LENGTH_LONG
+                                )
+                                .show()
+                        } else {
+                            row1Color = Color.LightGray
+                            navController.navigate(Routes.PantallaWelcome.route)
+                        }
                     })
             {
                 Spacer(modifier = Modifier.padding(start = 40.dp))
@@ -113,8 +129,17 @@ fun NavigationMenu(
                     .fillMaxWidth()
                     .background(color = row2Color)
                     .clickable {
-                        row2Color = Color.LightGray
-                        navController.navigate(Routes.PantallaHospitals.route)
+                        if (nombreDoc.isEmpty()) {
+                            Toast
+                                .makeText(
+                                    context, "Debe iniciar sesión para acceder al área de gestión",
+                                    Toast.LENGTH_LONG
+                                )
+                                .show()
+                        } else {
+                            row2Color = Color.LightGray
+                            navController.navigate(Routes.PantallaHospitals.route)
+                        }
                     })
             {
                 Spacer(modifier = Modifier.padding(start = 40.dp))
@@ -145,9 +170,18 @@ fun NavigationMenu(
                     .fillMaxWidth()
                     .background(color = row3Color)
                     .clickable {
-                        row3Color = Color.LightGray
-                        viewModel.getAllAmb {
-                            navController.navigate(Routes.PantallaAmbulances.route)
+                        if (nombreDoc.isEmpty()) {
+                            Toast
+                                .makeText(
+                                    context, "Debe iniciar sesión para acceder al área de gestión",
+                                    Toast.LENGTH_LONG
+                                )
+                                .show()
+                        } else {
+                            row3Color = Color.LightGray
+                            viewModel.getAllAmb {
+                                navController.navigate(Routes.PantallaAmbulances.route)
+                            }
                         }
                     })
             {
@@ -179,9 +213,18 @@ fun NavigationMenu(
                     .fillMaxWidth()
                     .background(color = row4Color)
                     .clickable {
-                        row4Color = Color.LightGray
-                        viewModel.getUrgencies {
-                            navController.navigate(Routes.PantallaCreate.route)
+                        if (nombreDoc.isEmpty()) {
+                            Toast
+                                .makeText(
+                                    context, "Debe iniciar sesión para acceder al área de gestión",
+                                    Toast.LENGTH_LONG
+                                )
+                                .show()
+                        } else {
+                            row4Color = Color.LightGray
+                            viewModel.getUrgencies {
+                                navController.navigate(Routes.PantallaCreate.route)
+                            }
                         }
                     })
             {

@@ -142,7 +142,9 @@ fun CreateAmbulance(
                             onValueChange = { newValue ->
                                 ambulancesViewModel.setPlate(newValue)
                             },
-                            textStyle = TextStyle(fontSize = 25.sp),
+                            textStyle = TextStyle(fontSize = 25.sp,
+                                fontWeight = FontWeight.ExtraBold
+                            ),
                             placeholder = { Text("Matrícula", fontSize = 25.sp) },
                             modifier = Modifier
                                 .padding(8.dp)
@@ -151,7 +153,7 @@ fun CreateAmbulance(
                     }
                     // Campo de edición para la disponibilidad
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Disponible", fontSize = 25.sp)
+                        Text("Disponible", fontSize = 25.sp, fontWeight = FontWeight.ExtraBold)
                         Spacer(modifier = Modifier.width(8.dp))
                         Switch(
                             checked = isFree,
@@ -167,11 +169,11 @@ fun CreateAmbulance(
                             )
                         )
                     }
-
                     // Campo de edición para el tipo de ambulancia
                     Row {
                         Text(
-                            "Tipo de Ambulancia ->  ", fontSize = 25.sp
+                            "Tipo de Ambulancia ->  ", fontSize = 25.sp,
+                            fontWeight = FontWeight.ExtraBold
                         )
                         Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
                             Text(
@@ -220,7 +222,7 @@ fun CreateAmbulance(
                                 ambulancesViewModel.setHosp(newValue)
                             },
                             textStyle = TextStyle(fontSize = 25.sp),
-                            placeholder = { Text("Hospital de referencia", fontSize = 25.sp) },
+                            label = { Text("Hospital de referencia", fontSize = 20.sp) },
                             modifier = Modifier
                                 .padding(8.dp)
                                 .sizeIn(minWidth = 300.dp, minHeight = 50.dp)

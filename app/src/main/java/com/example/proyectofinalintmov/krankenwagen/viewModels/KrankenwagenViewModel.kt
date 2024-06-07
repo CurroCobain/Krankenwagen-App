@@ -70,10 +70,15 @@ class KrankenwagenViewModel : ViewModel() {
     // lista de urgencias
     val listUrgencies = MutableStateFlow(mutableListOf<Urgencia>())
 
+    val filteredUrgencies = MutableStateFlow(false)
     val updatedInfo = MutableStateFlow(0)
 
-
-
+    /**
+     * Función para cambiar el valor de filteredUrgencias
+     */
+    fun setFiltered(){
+        filteredUrgencies.value = !filteredUrgencies.value
+    }
 
     /**
      * Obtiene la lista de hospitales para una provincia específica desde Firestore.
@@ -213,7 +218,7 @@ class KrankenwagenViewModel : ViewModel() {
     fun getUrgencies(onSuccess: () -> Unit) {
         listUrgencies.value.clear()
         viewModelScope.launch {
-            firestore.collection(("Urgencias"))
+            firestore.collection(("Urgencias")).whereEqualTo("complete", filteredUrgencies.value)
                 .get()
                 .addOnSuccessListener { documents ->
                     for (document in documents) {
@@ -293,4 +298,5 @@ class KrankenwagenViewModel : ViewModel() {
     fun increaseUpdateInfo(){
         updatedInfo.value += 1
     }
+
 }

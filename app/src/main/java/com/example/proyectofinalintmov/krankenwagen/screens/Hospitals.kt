@@ -92,7 +92,7 @@ fun Hospitals(
             //  Desplegable del menú lateral
             ModalDrawerSheet( modifier = Modifier.fillMaxWidth(0.3f)) {
                 // Contenido del menú lateral
-                NavigationMenu(navController, viewModel)
+                NavigationMenu(navController, viewModel, sesionViewModel)
             }
         }
     ) {
