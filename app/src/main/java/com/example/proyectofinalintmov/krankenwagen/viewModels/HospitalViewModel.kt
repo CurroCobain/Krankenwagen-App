@@ -22,9 +22,6 @@ class HospitalViewModel : ViewModel() {
     // Inicialización del objeto de Firestore para acceder a la base de datos Firestore de Firebase
     private val firestore = Firebase.firestore
 
-    // Inicialización del viewModel KrakenwagenViewModel
-    private val krankenwagenViewModel = KrankenwagenViewModel()
-
     // Almacena el id del hospital actual
     var idHosp = MutableStateFlow("")
         private set
@@ -253,7 +250,6 @@ class HospitalViewModel : ViewModel() {
         county.value = ""
         city.value = ""
         address.value = ""
-        krankenwagenViewModel.listAmbulancias.value.clear()
         hospMessage.value = ""
     }
 
