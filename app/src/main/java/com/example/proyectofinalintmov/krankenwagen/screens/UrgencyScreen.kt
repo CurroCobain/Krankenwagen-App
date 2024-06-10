@@ -55,6 +55,8 @@ import com.example.proyectofinalintmov.krankenwagen.data.Urgencia
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewModel
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
 
 /**
  * Composable que alberga la pantalla de las urgencias
@@ -312,15 +314,16 @@ fun ContenidoUrgencies(
                         }
                     },
                     colors = ButtonDefaults.buttonColors(Color.White),
-                    modifier = Modifier.border(
-                        width = 4.dp, color = Color.Black,
-                        shape = RoundedCornerShape(
-                            topStart = 8.dp,
-                            topEnd = 8.dp,
-                            bottomStart = 8.dp,
-                            bottomEnd = 8.dp
+                    modifier = Modifier
+                        .border(
+                            width = 4.dp, color = Color.Black,
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
                         )
-                    )
                         .sizeIn(minWidth = 200.dp),
                     shape = RoundedCornerShape(
                         topStart = 8.dp,
@@ -365,7 +368,7 @@ fun ContenidoUrgencies(
                 Text(
                     text = "Nombre",
                     modifier = Modifier
-                        .weight(0.8f)
+                        .weight(0.6f)
                         .padding(8.dp),
                     color = Color.White,
                     fontSize = 20.sp
@@ -383,7 +386,16 @@ fun ContenidoUrgencies(
                 Text(
                     text = "Dirección",
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(0.7f)
+                        .padding(8.dp),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+                // Hora de creación de la urgencia
+                Text(
+                    text = "Fecha y hora",
+                    modifier = Modifier
+                        .weight(0.3f)
                         .padding(8.dp),
                     color = Color.White,
                     fontSize = 20.sp
@@ -451,7 +463,7 @@ fun LazyUrgency(
                 Text(
                     text = urgency.name,
                     modifier = Modifier
-                        .weight(0.8f)
+                        .weight(0.6f)
                         .padding(8.dp),
                     fontSize = 20.sp
                 )
@@ -467,11 +479,27 @@ fun LazyUrgency(
                 Text(
                     text = urgency.address,
                     modifier = Modifier
-                        .weight(1f)
+                        .weight(0.7f)
+                        .padding(8.dp),
+                    fontSize = 20.sp
+                )
+                // Fecha y hora
+                Text(
+                    text = dateToString(urgency.date!!),
+                    modifier = Modifier
+                        .weight(0.3f)
                         .padding(8.dp),
                     fontSize = 20.sp
                 )
             }
         }
     }
+}
+
+
+@SuppressLint("SimpleDateFormat")
+private fun dateToString(date: Timestamp): String{
+    val sdf = SimpleDateFormat("HH:mm:ss dd/MM")
+    val todate = date.toDate()
+    return sdf.format(todate)
 }

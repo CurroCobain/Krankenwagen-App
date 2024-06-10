@@ -254,8 +254,8 @@ fun LazyAmbulance(
     val miListaAmb by viewModel.listAmbulancias.collectAsState()
     // LazyVerticalGrid que muestra las ambulancias
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 10.dp)
+        columns = GridCells.Fixed(3 ),
+        contentPadding = PaddingValues(horizontal = 2.dp, vertical = 6.dp)
     ) {
         // Item ambulancia conformado por una imagen y la matrícula de la ambulancia
         items(miListaAmb) { ambulance ->

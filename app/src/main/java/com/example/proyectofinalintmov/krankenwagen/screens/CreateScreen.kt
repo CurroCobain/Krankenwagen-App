@@ -629,7 +629,10 @@ fun CreateUrgScreen(
     val issues by urgenciesViewModel.issues.collectAsState()
 
     Dialog(
-        onDismissRequest = { viewModel.acCreateUrg() }
+        onDismissRequest = {
+            viewModel.acCreateUrg()
+            urgenciesViewModel.resetMiUrgencia()
+        }
     ) {
         val message by urgenciesViewModel.message.collectAsState()
         // Tarjeta para dar forma con esquinas redeondeadas a la ventana de diálogo

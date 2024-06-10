@@ -32,6 +32,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenuItem
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Switch
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -65,6 +66,8 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.AmbulancesViewMod
 import com.example.proyectofinalintmov.krankenwagen.viewModels.HospitalViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.KrankenwagenViewModel
 import com.example.proyectofinalintmov.krankenwagen.viewModels.UrgenciesViewModel
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
 
 /**
  * Composable para la edición de hospitales
@@ -176,7 +179,8 @@ fun EditarHosp(
                                 fontSize = 20.sp
                             )
                         },
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier
+                            .padding(8.dp)
                             .fillMaxWidth(0.9f),
                         textStyle = TextStyle(fontSize = 30.sp)
                     )
@@ -819,9 +823,13 @@ fun EditUrg(
     val province by urgenciesViewModel.province.collectAsState()
     val postalCode by urgenciesViewModel.postalCode.collectAsState()
     val issues by urgenciesViewModel.issues.collectAsState()
+    val date by urgenciesViewModel.date.collectAsState()
 
     Dialog(
-        onDismissRequest = { viewModel.activaEditUrg() }
+        onDismissRequest = {
+            viewModel.activaEditUrg()
+            urgenciesViewModel.resetMiUrgencia()
+        }
     ) {
         // Tarjeta para dar forma con las esquinas redondeadas al diálogo
         Card(
@@ -876,7 +884,16 @@ fun EditUrg(
                         value = doc,
                         onValueChange = { urgenciesViewModel.setDoc(it) },
                         label = { Text("Documento") },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(0.5f)
+                    )
+                    Spacer(modifier = Modifier.padding(start = 40.dp))
+                    Text(
+                        text = "Fecha y hora: \n ${dateToString(date!!)}",
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 20.dp, top = 6.dp),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.ExtraBold
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -1118,3 +1135,9 @@ fun EditUrg(
     }
 }
 
+@SuppressLint("SimpleDateFormat")
+private fun dateToString(date: Timestamp): String{
+    val sdf = SimpleDateFormat("HH:mm:ss dd/MM")
+    val todate = date.toDate()
+    return sdf.format(todate)
+}
