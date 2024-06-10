@@ -32,8 +32,6 @@ fun NavManager(
     urgenciesViewModel: UrgenciesViewModel)
 {
     val navController = rememberNavController()
-    val showMenu by viewModel.showMenu.collectAsState()
-    val userRegistered by viewModel.userRegistererd.collectAsState()
     val editHosp by viewModel.editHosp.collectAsState()
     val editAmb by viewModel.editAmb.collectAsState()
 
@@ -44,11 +42,19 @@ fun NavManager(
     ) {
         // Definición de las diferentes pantallas y sus rutas
         composable(Routes.PantallaWelcome.route) {
-            WelcomePage(navController, viewModel,userRegistered, sesionViewModel) }
+            WelcomePage(navController, viewModel, sesionViewModel) }
         composable(Routes.PantallaAmbulances.route) {
             Ambulances(navController, viewModel, sesionViewModel, ambulancesViewModel) }
         composable(Routes.PantallaHospitals.route) {
-            Hospitals(navController, viewModel, userRegistered, sesionViewModel, hospitalViewModel, ambulancesViewModel, editHosp, editAmb) }
+            Hospitals(
+                navController,
+                viewModel,
+                sesionViewModel,
+                hospitalViewModel,
+                ambulancesViewModel,
+                editHosp,
+                editAmb
+            ) }
         composable(Routes.PantallaCreate.route) {
             UrgencyScreen(
                 navController,

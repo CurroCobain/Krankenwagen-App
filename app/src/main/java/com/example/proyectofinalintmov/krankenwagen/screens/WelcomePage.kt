@@ -64,7 +64,6 @@ import com.example.proyectofinalintmov.scrollprovincias.ScrollProvincias
 fun WelcomePage(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
-    userRegistered: Boolean,
     sesionViewModel: SesionViewModel
 ) {
     // Estado del menú lateral de navegación
@@ -106,7 +105,6 @@ fun WelcomePage(
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
                     PrevContWelc(
                         navController,
-                        userRegistered,
                         viewModel,
                         sesionViewModel,
                         drawerState1,
@@ -124,10 +122,9 @@ fun WelcomePage(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PrevContWelc(
-    navController : NavHostController,
-    userDesplegado : Boolean,
-    viewModel : KrankenwagenViewModel,
-    sesionViewModel : SesionViewModel,
+    navController: NavHostController,
+    viewModel: KrankenwagenViewModel,
+    sesionViewModel: SesionViewModel,
     drawerState1: DrawerState,
     drawerState2: DrawerState
 
@@ -153,7 +150,6 @@ fun PrevContWelc(
         // Contenido del Scaffold
         ContenidoWelcome(
             navController = navController,
-            userDesplegado = userDesplegado,
             viewModel = viewModel,
             sesionViewModel = sesionViewModel
         )
@@ -204,7 +200,6 @@ fun PrevContWelc(
 @Composable
 fun ContenidoWelcome(
     navController: NavHostController,
-    userDesplegado: Boolean,
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel
 ) {

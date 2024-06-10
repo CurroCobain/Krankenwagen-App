@@ -80,6 +80,7 @@ fun UrgencyScreen(
     // listado de urgencias actuales
     val miListaUrg by viewModel.listUrgencies.collectAsState()
     val updatedInfo by viewModel.updatedInfo.collectAsState()
+    // booleano que filtra las urgencias finalizadas o sin terminar según su valor
     val filteredUrgencies by viewModel.filteredUrgencies.collectAsState()
 
     // Composable que sirve para generar el menú lateral de navegación en la app

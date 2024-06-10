@@ -2,7 +2,7 @@ package com.example.proyectofinalintmov.krankenwagen.data
 
 import android.annotation.SuppressLint
 import com.google.firebase.firestore.DocumentSnapshot
-import java.sql.Timestamp
+import com.google.firebase.Timestamp
 
 /**
  * Clase "Urgencia", que almacena la información de la emergencia para transmitirla al
@@ -33,7 +33,6 @@ data class Urgencia(
     var complete: Boolean
 ){
 
-
     companion object {
         /**
          * Función para deserializar un objeto Urgencia desde Firestore
@@ -54,10 +53,7 @@ data class Urgencia(
                 val longitude = locationMap["longitude"] as? Double ?: 0.0
                 mutableMapOf("latitude" to latitude, "longitude" to longitude)             } else {
                 mutableMapOf("latitude" to 0.0, "longitude" to 0.0)            }
-            var date = documentSnapshot.getDate("date") as? Timestamp
-            if(date == null){
-                date = Timestamp(System.currentTimeMillis())
-            }
+            val date = documentSnapshot.getTimestamp("date") ?: Timestamp.now()
             val issues = documentSnapshot.getString("issues") ?: ""
             val ambulance = documentSnapshot.getString("ambulance") ?: ""
             return Urgencia(id, name, doc, age, priority, adress, location, date, issues, ambulance,false)
@@ -73,8 +69,8 @@ data class Urgencia(
         1,
         "",
         mutableMapOf("latitude" to 0.0, "longitude" to 0.0),
-        Timestamp(System.currentTimeMillis()),
-        "Sin definir",
+        Timestamp.now(),
+        "",
         "No definida",
         false
     )
@@ -85,4 +81,5 @@ data class Urgencia(
     override fun toString(): String {
         return "${this.id} // Prioridad--> ${this.priority} Nombre--> ${this.name} Edad--> ${this.age} \n \n Dirección--> ${this.address}"
     }
+
 }

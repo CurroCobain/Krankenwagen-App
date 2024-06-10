@@ -16,25 +16,20 @@ import kotlin.system.exitProcess
 
 /**
  * ViewModel de la página principal y que gestiona funciones comunes a varias screens
- * @property showMenu se usa para desplegar el menú de opciones
- * @property userRegistererd se usa para gestionar el acceso a las funciones de edición de la app
  * @property listAmbulancias lista que almacena las ambulancias filtradas
  * @property listHospitals lista que almacena los hospitales filtrados
+ * @property listUrgencies lista que almacena las urgencias filtradas
  * @property message se usa para mostrar la respuesta del sistema
  * @property createAmb se usa para desplegar el diálogo de creación de ambulancias
  * @property createHosp se usa para desplegar el diálogo de creación de hospitales
  * @property editAmb se usa para desplegar el diálogo de edición de ambulancias
  * @property editHosp se usa para desplegar el diálogo de edición de hospitales
  * @property provinciaFiltrar se usa para almacenar la provincia por la que se filtran los hospitales
+ * @property filteredUrgencies se usa para filtrar las urgencias completadas o sin finalizar en función de su valor
  */
 class KrankenwagenViewModel : ViewModel() {
     private val firestore = Firebase.firestore
     val message = MutableStateFlow("")
-
-
-    // variable que se usa para desplegar el menú de opciones
-    var showMenu = MutableStateFlow(false)
-        private set
 
     // variable que permite activar la creación de una ambulancia
     var createAmb = MutableStateFlow(false)
@@ -45,9 +40,6 @@ class KrankenwagenViewModel : ViewModel() {
     // variable que permite activar la creación de un hospital
     var createHosp = MutableStateFlow(false)
 
-    // variable que vamos a usar para acceder al panel de usario
-    var userRegistererd = MutableStateFlow(false)
-        private set
 
     // lista de ambulancias filtradas
     var listAmbulancias = MutableStateFlow(mutableListOf<Ambulance>())
@@ -70,6 +62,7 @@ class KrankenwagenViewModel : ViewModel() {
     // lista de urgencias
     val listUrgencies = MutableStateFlow(mutableListOf<Urgencia>())
 
+    // variable booleana que sirve para filtrar las urgencias completas o sin finalizar en función de su valor
     val filteredUrgencies = MutableStateFlow(false)
     val updatedInfo = MutableStateFlow(0)
 
@@ -234,12 +227,6 @@ class KrankenwagenViewModel : ViewModel() {
     }
 
     /**
-     * Muestra el registro de usuario
-     */
-    fun openCloseSesion() {
-        userRegistererd.value = !userRegistererd.value
-    }
-    /**
      * Cierra la aplicación
      */
     fun closeApp() {
@@ -295,6 +282,10 @@ class KrankenwagenViewModel : ViewModel() {
     fun setProv(text: String) {
         provinciaFiltrar.value = text
     }
+
+    /**
+     * Aumenta el valor de updatedInfo, se usa para forzar la actualización de la pantalla
+     */
     fun increaseUpdateInfo(){
         updatedInfo.value += 1
     }

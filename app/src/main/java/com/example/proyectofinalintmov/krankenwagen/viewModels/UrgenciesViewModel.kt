@@ -1,5 +1,6 @@
 package com.example.proyectofinalintmov.krankenwagen.viewModels
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
@@ -14,9 +15,32 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.sql.Timestamp
-import java.time.LocalDateTime
+import com.google.firebase.Timestamp
 
+/**
+ * ViewModel para la gestión de las urgencias
+ *
+ * @property id representa el id de la urgencia
+ * @property name representa el nombre del paciente
+ * @property doc representa el documento de identidad del paciente
+ * @property age representa la edad del paciente
+ * @property priority representa el nivel de prioridad de la urgencia
+ * @property address representa la dirección de la urgencia en formato cadena
+ * @property latitude representa la latitud de la localizaión de la urgencia
+ * @property longitude representa la longitud de la localizaión de la urgencia
+ * @property location variable de tipo LatLng que representa la latitud y longitud de la localizaión de la urgencia
+ * @property date representa la fecha de creación de la urgencia
+ * @property issues representa la sintomatología del paciente
+ * @property complete variable booleana que indica si la urgencia esta finalizada o no
+ * @property message representa el mensaje del sistema
+ * @property typeOfStreet representa el tipo de vía de la dirección
+ * @property streetName representa el nombre de la vía
+ * @property streetNumber representa el número de la dirección
+ * @property city representa la ciudad de la dirección
+ * @property province representa la provincia de la dirección
+ * @property postalCode representa el código postal de la dirección
+ *
+ */
 class UrgenciesViewModel : ViewModel() {
 
     var id = MutableStateFlow("")
@@ -29,7 +53,7 @@ class UrgenciesViewModel : ViewModel() {
     var longitude = MutableStateFlow(0.0)
     var location = MutableStateFlow<MutableMap<String, Double>>(mutableMapOf())
     @RequiresApi(Build.VERSION_CODES.O)
-    var date = MutableStateFlow<LocalDateTime?>(null)
+    var date = MutableStateFlow<Timestamp?>(null)
     var issues = MutableStateFlow("")
     var ambulance = MutableStateFlow("No definida")
     var complete = MutableStateFlow(false)
@@ -62,7 +86,9 @@ class UrgenciesViewModel : ViewModel() {
         geocodingService = retrofit.create(GoogleGeocodingService::class.java)
     }
 
-    // Función para obtener las coordenadas a partir de una dirección
+    /**
+     * Función para obtener las coordenadas a partir de una dirección
+     */
     private fun getCoordinatesFromAddress(address: String, onSuccess: () -> Unit) {
         viewModelScope.launch {
             try {
@@ -86,7 +112,9 @@ class UrgenciesViewModel : ViewModel() {
     }
 
 
-
+    /**
+     * Función para crear una urgencia nueva
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     fun createUrg(onSuccess: (String) -> Unit, onFailure: (String) -> Unit) {
         viewModelScope.launch {
@@ -123,7 +151,7 @@ class UrgenciesViewModel : ViewModel() {
                             priorityInt,
                             address.value,
                             mutableMapOf("latitude" to latitude.value, "longitude" to longitude.value),
-                            Timestamp(System.currentTimeMillis()),
+                            date.value,
                             issues.value,
                             "No definida",
                             complete.value
@@ -157,6 +185,9 @@ class UrgenciesViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Función para actualizar una urgencia
+     */
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateUrgency(
         urgenciaId: String,
@@ -190,7 +221,7 @@ class UrgenciesViewModel : ViewModel() {
                                 "priority" to priorityInt,
                                 "address" to address.value,
                                 "location" to mutableMapOf("latitude" to latitude.value, "longitude" to longitude.value),
-                                "timestamp" to Timestamp(System.currentTimeMillis()),
+                                "timestamp" to date.value,
                                 "issues" to issues.value,
                                 "ambulance" to "No definida",
                                 "complete" to complete.value
@@ -223,6 +254,9 @@ class UrgenciesViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Función para borrar una urgencia
+     */
     fun deleteUrgency(
         urgenciaId: String,
         onSuccess: (String) -> Unit,
@@ -265,35 +299,91 @@ class UrgenciesViewModel : ViewModel() {
     }
 
 
+    /**
+     * Función para asignar valor la propiedad id
+     */
     fun setId(value: String){
         id.value = value
     }
+
+    /**
+     * Función para asignar valor la propiedad name
+     */
     fun setName(data: String) {
         name.value = data
     }
 
+    /**
+     * Función para asignar valor la propiedad doc
+     */
     fun setDoc(data: String) {
         doc.value = data
     }
 
+    /**
+     * Función para asignar valor la propiedad age
+     */
     fun setAge(data: String) {
         age.value = data
     }
 
+    /**
+     * Función para asignar valor la propiedad date
+     */
+     @RequiresApi(Build.VERSION_CODES.O)
+     fun setDate(data: Timestamp){
+         date.value = data
+     }
+
+    /**
+     * Función para asignar valor la propiedad priority
+     */
     fun setPriority(data: String) {
         priority.value = data
     }
+
+    /**
+     * Función para asignar valor la propiedad typeOfStreet
+     */
     fun setTypeOfStreet(value: String) { typeOfStreet.value = value }
+
+    /**
+     * Función para asignar valor la propiedad streetName
+     */
     fun setStreetName(value: String) { streetName.value = value }
+
+    /**
+     * Función para asignar valor la propiedad streetNumber
+     */
     fun setStreetNumber(value: String) { streetNumber.value = value }
+
+    /**
+     * Función para asignar valor la propiedad city
+     */
     fun setCity(value: String) { city.value = value }
+
+    /**
+     * Función para asignar valor la propiedad province
+     */
     fun setProvince(value: String) { province.value = value }
+
+    /**
+     * Función para asignar valor la propiedad postalcode
+     */
     fun setPostalCode(value: String) { postalCode.value = value }
 
+
+    /**
+     * Función para asignar valor la propiedad address
+     */
     fun setAddress() {
         address.value =
             "${typeOfStreet.value} ${streetName.value}, ${streetNumber.value}, ${city.value}, ${province.value}, ${postalCode.value}"
     }
+
+    /**
+     * Función para convertir una cadena y asignar los valores a las propiedades necesarias
+     */
     private fun deserializeAddres(receivedAddres: String){
         try {
             val listAddress = receivedAddres.split(",")
@@ -309,14 +399,24 @@ class UrgenciesViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Función para asignar valor la propiedad issues
+     */
     fun setIssues(data: String) {
         issues.value = data
     }
 
+    /**
+     * Función para asignar valor la propiedad complete, actualmente no se usa pero se mantiene para posbiles mejoras
+     */
     fun setComplete() {
         complete.value = true
     }
 
+    /**
+     * Función para asignar valor a las propiedades de una urgencia recibida
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
     fun setAll(urgencia: Urgencia){
         setId(urgencia.id)
         setDoc(urgencia.doc)
@@ -326,10 +426,12 @@ class UrgenciesViewModel : ViewModel() {
         deserializeAddres(urgencia.address)
         setAddress()
         setIssues(urgencia.issues)
-
-
+        setDate(urgencia.date!!)
     }
 
+    /**
+     * Función para resetear los valores de las propiedades a su valor por defecto
+     */
     fun resetMiUrgencia() {
         id.value = ""
         name.value = ""
@@ -349,6 +451,9 @@ class UrgenciesViewModel : ViewModel() {
         postalCode.value = ""
     }
 
+    /**
+     * Función para separar el tipo de vía del resto de la dirección
+     */
     private fun separarPrimeraPalabra(cadena: String): Pair<String, String> {
         val indiceEspacio = cadena.indexOf(' ')
         return if (indiceEspacio != -1) {
@@ -359,4 +464,5 @@ class UrgenciesViewModel : ViewModel() {
             Pair(cadena, "")
         }
     }
+
 }

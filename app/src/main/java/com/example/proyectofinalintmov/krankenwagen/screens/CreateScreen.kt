@@ -94,6 +94,7 @@ fun CreateAmbulance(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    // Degradado del fondo de la pantalla
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(
@@ -376,6 +377,7 @@ fun CreateHospital(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    // Degradado del fondo de la pantalla
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(
@@ -604,6 +606,9 @@ fun CreateHospital(
     }
 }
 
+/**
+ * Composable para la creación de urgencias
+ */
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CreateUrgScreen(
@@ -638,14 +643,16 @@ fun CreateUrgScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
+                    // Degradado del fondo de la pantalla
                     .background(
-                        brush = Brush.radialGradient(
+                        brush = Brush.linearGradient(
                             colors = listOf(
                                 Color(0xFFE0FFFF), // Light Cyan (rgb(224, 255, 255))
                                 Color(0xFF87CEEB), // Light Sky Blue (rgb(135, 206, 235))
                                 Color(0xFF4682B4)  // Steel Blue (rgb(70, 130, 180))
                             ),
-                            radius = 800f // Adjust radius as needed
+                            start = Offset(0f, 0f),
+                            end = Offset.Infinite
                         )
                     )
                     .verticalScroll(rememberScrollState(), true),

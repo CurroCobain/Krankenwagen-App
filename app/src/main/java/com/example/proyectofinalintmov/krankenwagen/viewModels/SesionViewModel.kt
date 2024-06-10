@@ -193,6 +193,9 @@ class SesionViewModel : ViewModel() {
         sesionMessage.value = text
     }
 
+    /**
+     * Resetea todos los valores
+     */
     fun borrarTodo(){
         nombreDoc.value = ""
         nuevoMail.value = ""
@@ -202,4 +205,3 @@ class SesionViewModel : ViewModel() {
 }
 
 
-// Prueba de git

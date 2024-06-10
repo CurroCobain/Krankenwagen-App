@@ -71,7 +71,6 @@ import com.example.proyectofinalintmov.krankenwagen.viewModels.SesionViewModel
 fun Hospitals(
     navController: NavHostController,
     viewModel: KrankenwagenViewModel,
-    userRegistered: Boolean,
     sesionViewModel: SesionViewModel,
     hospitalViewModel: HospitalViewModel,
     ambulancesViewModel: AmbulancesViewModel,
@@ -118,7 +117,6 @@ fun Hospitals(
                 // Invierte el contenido de la app para que aparezca de izquierda a derecha
                 CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr ) {
                     PrevContHosp(
-                        userRegistered,
                         viewModel,
                         sesionViewModel,
                         hospitalViewModel,
@@ -141,7 +139,6 @@ fun Hospitals(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun PrevContHosp(
-    userRegistered: Boolean,
     viewModel: KrankenwagenViewModel,
     sesionViewModel: SesionViewModel,
     hospitalViewModel: HospitalViewModel,
