@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.items
@@ -83,6 +84,9 @@ fun Hospitals(
     val drawerState2 = rememberDrawerState(initialValue = DrawerValue.Closed)
     // Booleano que controla el estado del diálogo de creación de hospitales
     val createHosp by viewModel.createHosp.collectAsState()
+    val updatedInfo by viewModel.updatedInfo.collectAsState()
+
+    Text(text = updatedInfo.toString(), color = Color.Transparent)
 
     // Composable que sirve para generar el menú lateral de navegación en la app
     ModalNavigationDrawer(
@@ -162,7 +166,8 @@ fun PrevContHosp(
         ) {
             Bienvenida(
                 bienvenidoADrHouseTextContent = "Bienvenido/a Dr $nombreDocReg",
-                modifier = Modifier.wrapContentSize()
+                modifier = Modifier
+                    .wrapContentSize()
                     .fillMaxWidth(0.35f)
                     .padding(8.dp)
             )
@@ -262,13 +267,13 @@ fun ContenidoHospitals(
                         modifier = Modifier.background(color = Color.LightGray)
                     )
                 }
+                Spacer(modifier = Modifier.padding(start = 8.dp))
 
                 // Columna que muestra la provincia actual seleccionada y el dropDownMenu
                 Column(modifier = Modifier.clickable(onClick = { expanded = true })) {
                     Text(
                         text = selectedProvincia.value,
                         modifier = Modifier
-                            .padding(8.dp)
                             .background(Color.White, RoundedCornerShape(2.dp)),
                         fontSize = 30.sp
                     )
@@ -298,6 +303,43 @@ fun ContenidoHospitals(
                             }
                         }
                     }
+                }
+            }
+            Spacer(modifier = Modifier.padding(8.dp))
+            Row(modifier = Modifier.padding(start = 60.dp)) {
+                // Botón ver todos los hospitales
+                Button(
+                    onClick = {
+                        viewModel.getAllHosp {
+                            viewModel.setProv("")
+                            selectedProvincia.value = "Selecciona una provincia"
+                            viewModel.increaseUpdateInfo()
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(Color.White),
+                    modifier = Modifier
+                        .border(
+                            width = 4.dp, color = Color.Black,
+                            shape = RoundedCornerShape(
+                                topStart = 8.dp,
+                                topEnd = 8.dp,
+                                bottomStart = 8.dp,
+                                bottomEnd = 8.dp
+                            )
+                        )
+                        .sizeIn(minWidth = 150.dp, minHeight = 40.dp),
+                    shape = RoundedCornerShape(
+                        topStart = 8.dp,
+                        topEnd = 8.dp,
+                        bottomStart = 8.dp,
+                        bottomEnd = 8.dp
+                    )
+                ) {
+                    Text(
+                        "Ver todos", fontSize = 20.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.Black
+                    )
                 }
             }
             Spacer(modifier = Modifier.padding(30.dp))
