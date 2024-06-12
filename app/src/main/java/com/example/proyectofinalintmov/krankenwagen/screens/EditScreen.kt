@@ -217,7 +217,17 @@ fun EditarHosp(
                         Button(
                             onClick = {
                                 try {
-                                    hospitalViewModel.updateHosp() {}
+                                    hospitalViewModel.updateHosp() {
+                                        if(prov.isNotEmpty()){
+                                            viewModel.getHosp(prov){
+                                                viewModel.increaseUpdateInfo()
+                                            }
+                                        } else {
+                                            viewModel.getAllHosp {
+                                                viewModel.increaseUpdateInfo()
+                                            }
+                                        }
+                                    }
                                 } catch (e: Exception) {
                                     Toast.makeText(
                                         context,
@@ -260,6 +270,7 @@ fun EditarHosp(
                                 try {
                                     hospitalViewModel.deleteHosp(idHosp) {
                                         hospitalViewModel.ambulanceCoherence(idHosp)
+                                        viewModel.increaseUpdateInfo()
                                     }
                                 } catch (e: Exception) {
                                     Toast.makeText(
@@ -359,6 +370,7 @@ fun EditarHosp(
                                         viewModel.getAllAmb {
                                             viewModel.getHosp(prov) {
                                                 hospitalViewModel.resetFields()
+                                                viewModel.increaseUpdateInfo()
                                             }
                                         }
                                         viewModel.activaEditHosp()
@@ -702,7 +714,9 @@ fun EditarAmb(
                         onClick = {
                             try {
                                 // Se borra la ambulancia actual
-                                ambulancesViewModel.deleteAmbulance() {}
+                                ambulancesViewModel.deleteAmbulance() {
+                                    viewModel.getAllAmb {  }
+                                }
                                 viewModel.activaEditAmb()
                             } catch (e: Exception) {
                                 Toast.makeText(
@@ -876,7 +890,7 @@ fun EditUrg(
                         value = priority.toString(),
                         onValueChange = { urgenciesViewModel.setPriority(it) },
                         label = { Text("Prioridad") },
-                        modifier = Modifier.weight(0.4f)
+                        modifier = Modifier.weight(0.45f)
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     // Campo para la edición del documento de identidad
@@ -1039,6 +1053,9 @@ fun EditUrg(
                             urgenciesViewModel.updateUrgency(
                                 id,
                                 onSuccess = {
+                                    viewModel.getUrgencies {
+                                        viewModel.increaseUpdateInfo()
+                                    }
                                     Toast.makeText(
                                         context,
                                         "Urgencia actualizada correctamente",
@@ -1087,6 +1104,9 @@ fun EditUrg(
                             urgenciesViewModel.deleteUrgency(
                                 id,
                                 onSuccess = {
+                                    viewModel.getUrgencies {
+                                        viewModel.increaseUpdateInfo()
+                                    }
                                     urgenciesViewModel.resetMiUrgencia()
                                     Toast.makeText(
                                         context,

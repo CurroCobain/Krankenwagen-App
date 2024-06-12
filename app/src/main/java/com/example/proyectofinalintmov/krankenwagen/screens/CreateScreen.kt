@@ -238,7 +238,9 @@ fun CreateAmbulance(
                         Button(
                             onClick = {
                                 // crea la ambulancia con los datos recibidos
-                                ambulancesViewModel.saveAmbulance() {}
+                                ambulancesViewModel.saveAmbulance() {
+                                    viewModel.getAllAmb {  }
+                                }
                             },
                             colors = ButtonDefaults.buttonColors(Color.White),
                             modifier = Modifier
@@ -833,10 +835,13 @@ fun CreateUrgScreen(
                             urgenciesViewModel.setAddress()
                             urgenciesViewModel.createUrg(
                                 onSuccess = {
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                    viewModel.getUrgencies {
+                                        viewModel.increaseUpdateInfo()
+                                    }
+                                    Toast.makeText(context, "Urgencia creda", Toast.LENGTH_LONG).show()
                                 },
                                 onFailure = {
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                    Toast.makeText(context, "Fallo al crear la urgencia", Toast.LENGTH_LONG).show()
                                 }
                             )
                         },

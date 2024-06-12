@@ -16,6 +16,8 @@ import kotlinx.coroutines.tasks.await
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.google.firebase.Timestamp
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 /**
  * ViewModel para la gestión de las urgencias
@@ -142,16 +144,21 @@ class UrgenciesViewModel : ViewModel() {
                 // Obtener las coordenadas antes de crear la urgencia
                 getCoordinatesFromAddress(address.value) {
                     try {
+                        // Obtener la hora actual en la zona horaria local
+                        val now = LocalDateTime.now()
+                        val localZoneId = ZoneId.systemDefault()
+                        val localDateTime = now.atZone(localZoneId).toInstant()
+
                         // Crear la urgencia con las coordenadas obtenidas
                         val newUrg = Urgencia(
                             newId,
-                             name.value,
+                            name.value,
                             doc.value,
                             ageInt,
                             priorityInt,
                             address.value,
                             mutableMapOf("latitude" to latitude.value, "longitude" to longitude.value),
-                            date.value,
+                            Timestamp(localDateTime.epochSecond, localDateTime.nano),  // Guardar el tiempo local
                             issues.value,
                             "No definida",
                             complete.value
@@ -169,21 +176,22 @@ class UrgenciesViewModel : ViewModel() {
                             .addOnFailureListener {
                                 // Si hay fallo en el proceso lo indicamos mediante el mensaje del sistema
                                 message.value = "No se pudo guardar la urgencia, revise los datos"
-                                onFailure(message.value )
+                                onFailure(message.value)
                             }
                     } catch (e: Exception) {
                         // Manejar cualquier excepción durante la creación de la urgencia
                         message.value = "Hubo un fallo al crear la urgencia"
-                        onFailure(message.value )
+                        onFailure(message.value)
                     }
                 }
             } catch (e: Exception) {
                 // Manejar cualquier excepción durante la conversión de los valores a Int o consulta de Firestore
                 message.value = "Hubo un fallo en la creación de la urgencia, revise los datos"
-                onFailure(message.value )
+                onFailure(message.value)
             }
         }
     }
+
 
     /**
      * Función para actualizar una urgencia
@@ -223,7 +231,7 @@ class UrgenciesViewModel : ViewModel() {
                                 "location" to mutableMapOf("latitude" to latitude.value, "longitude" to longitude.value),
                                 "timestamp" to date.value,
                                 "issues" to issues.value,
-                                "ambulance" to "No definida",
+                                "ambulance" to ambulance.value,
                                 "complete" to complete.value
                             )
 

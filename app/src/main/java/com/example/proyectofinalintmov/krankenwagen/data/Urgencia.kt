@@ -3,6 +3,9 @@ package com.example.proyectofinalintmov.krankenwagen.data
 import android.annotation.SuppressLint
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.Timestamp
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.util.Date
 
 /**
  * Clase "Urgencia", que almacena la información de la emergencia para transmitirla al
@@ -46,17 +49,28 @@ data class Urgencia(
             val doc = documentSnapshot.getString("doc") ?: ""
             val age = documentSnapshot.getLong("age")?.toInt() ?: 0
             val priority = documentSnapshot.getLong("priority")?.toInt() ?: 0
-            val adress = documentSnapshot.getString("address") ?: ""
+            val address = documentSnapshot.getString("address") ?: ""
             val locationMap = documentSnapshot.get("location") as? Map<*, *>
             val location = if (locationMap != null) {
                 val latitude = locationMap["latitude"] as? Double ?: 0.0
                 val longitude = locationMap["longitude"] as? Double ?: 0.0
-                mutableMapOf("latitude" to latitude, "longitude" to longitude)             } else {
-                mutableMapOf("latitude" to 0.0, "longitude" to 0.0)            }
-            val date = documentSnapshot.getTimestamp("date") ?: Timestamp.now()
+                mutableMapOf("latitude" to latitude, "longitude" to longitude)
+            } else {
+                mutableMapOf("latitude" to 0.0, "longitude" to 0.0)
+            }
+
+            // Obtener el timestamp y convertirlo a la zona horaria local
+            val timestamp = documentSnapshot.getTimestamp("date")
+            val date = timestamp?.let {
+                val instant = it.toDate().toInstant()
+                val zonedDateTime = ZonedDateTime.ofInstant(instant, ZoneId.systemDefault())
+                Timestamp(Date.from(zonedDateTime.toInstant()))
+            }
+
             val issues = documentSnapshot.getString("issues") ?: ""
             val ambulance = documentSnapshot.getString("ambulance") ?: ""
-            return Urgencia(id, name, doc, age, priority, adress, location, date, issues, ambulance,false)
+
+            return Urgencia(id, name, doc, age, priority, address, location, date, issues, ambulance, false)
         }
     }
 

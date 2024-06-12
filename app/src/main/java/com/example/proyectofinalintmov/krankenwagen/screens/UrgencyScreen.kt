@@ -337,6 +337,11 @@ fun ContenidoUrgencies(
                     color = Color.Black,
                     fontSize = 26.sp)
             }
+                Spacer(modifier = Modifier.padding(start = 280.dp))
+                Text(text = if (!filteredUrgencies) "Urgencias activas" else " Urgencias finalizadas",
+                    fontWeight = FontWeight.ExtraBold,
+                    color = Color.Black,
+                    fontSize = 26.sp)
             }
             Spacer(modifier = Modifier.padding(8.dp))
             // Cabecera con el tipo de datos de cada columna
@@ -357,9 +362,18 @@ fun ContenidoUrgencies(
                 )
                 // Prioridad e la urgencia
                 Text(
-                    text = "Prioridad",
+                    text = "P",
                     modifier = Modifier
-                        .weight(0.4f)
+                        .weight(0.1f)
+                        .padding(8.dp),
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+                // Ambulancia
+                Text(
+                    text = "Ambulancia",
+                    modifier = Modifier
+                        .weight(0.3f)
                         .padding(8.dp),
                     color = Color.White,
                     fontSize = 20.sp
@@ -414,6 +428,7 @@ fun ContenidoUrgencies(
 /**
  * Composable que muestra un lazy vertical grid con la lista de urgencias
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun LazyUrgency(
     viewModel: KrankenwagenViewModel,
@@ -455,7 +470,15 @@ fun LazyUrgency(
                 Text(
                     text = urgency.priority.toString(),
                     modifier = Modifier
-                        .weight(0.4f)
+                        .weight(0.1f)
+                        .padding(8.dp),
+                    fontSize = 20.sp
+                )
+                // Ambulancia
+                Text(
+                    text = urgency.ambulance,
+                    modifier = Modifier
+                        .weight(0.3f)
                         .padding(8.dp),
                     fontSize = 20.sp
                 )
